@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Features/splash/presentation/views/widgets/splash_view_body.dart';
+import 'package:mazraaty/constants.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
@@ -8,7 +9,7 @@ class SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xff3E7B27),
+        backgroundColor: kMainColor,
         body: SplashViewBody(),
       ),
     );

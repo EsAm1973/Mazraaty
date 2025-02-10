@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mazraaty/Features/onboardeing/presentation/views/widgets/screen1_view_body.dart';
 import 'package:mazraaty/constants.dart';
 //import 'package:mazraaty/home.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kPrimaryColor,
         textTheme: GoogleFonts.inderTextTheme(),
       ),
-      home: const SplashView(),
+      home: const OnboardingViewBody(),
     );
   }
 }
