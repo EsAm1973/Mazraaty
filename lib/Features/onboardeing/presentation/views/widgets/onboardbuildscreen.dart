@@ -6,7 +6,7 @@ class OnboardingPage extends StatelessWidget {
   final String title;
   final String subtitle;
   final String imagePath;
-  final Color primaryColor; // Add color parameters
+  final Color primaryColor;
   final Color secondaryColor;
 
   const OnboardingPage({
@@ -20,57 +20,59 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 26),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 35,
-          ),
-          SizedBox(
-            width: double.infinity,
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.contain,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AspectRatio(
+          aspectRatio: 5 / 3.5,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                image: AssetImage(imagePath),
+                fit: BoxFit.contain, // Changed to contain for consistent sizing
+              ),
             ),
           ),
-          buildMultiColorTitle(),
-          const SizedBox(
-            height: 20,
+        ),
+        const SizedBox(height: 20),
+        buildMultiColorTitle(),
+        const SizedBox(height: 20),
+        SizedBox(
+          width: 290,
+          child: Text(
+            textAlign: TextAlign.center,
+            subtitle,
+            style: Styles.textStyle16,
           ),
-          SizedBox(
-            width: 300,
-            child: Text(
-              textAlign: TextAlign.center,
-              subtitle,
-              style: Styles.textStyle16,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 40), // Add bottom spacing
+      ],
     );
   }
 
   Widget buildMultiColorTitle() {
-    final parts = title.split('*'); // Use '*' as color separator
+    final parts = title.split('*');
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         children: [
           TextSpan(
-              text: parts.first,
-              style: Styles.textStyle38.copyWith(
-                color: Colors.black,
-                fontFamily: kfontFamily,
-              )),
+            text: parts.first,
+            style: Styles.textStyle38.copyWith(
+              color: Colors.black,
+              fontFamily: kfontFamily,
+            ),
+          ),
           if (parts.length > 1)
             TextSpan(
-                text: parts.last,
-                style: Styles.textStyle38.copyWith(
-                  color: primaryColor,
-                  fontFamily: kfontFamily,
-                )),
+              text: parts.last,
+              style: Styles.textStyle38.copyWith(
+                color: primaryColor,
+                fontFamily: kfontFamily,
+              ),
+            ),
         ],
       ),
     );

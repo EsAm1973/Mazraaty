@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Features/onboardeing/presentation/views/widgets/screen1_view_body.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/constants.dart';
-//import 'package:mazraaty/home.dart';
-import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,14 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
       title: 'Mazraaty',
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: kPrimaryColor,
         textTheme: GoogleFonts.inderTextTheme(),
       ),
-      home: const OnboardingViewBody(),
     );
   }
 }

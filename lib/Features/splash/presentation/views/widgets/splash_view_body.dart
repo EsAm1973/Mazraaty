@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
@@ -44,9 +46,9 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       setState(() {
         _opacirty = 1.0;
       });
-      // Future.delayed(const Duration(seconds: 2), () {
-      //   GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
-      // });
+      Future.delayed(const Duration(seconds: 2), () {
+        GoRouter.of(context).pushReplacement(AppRouter.kOnboardingView);
+      });
     });
   }
 }

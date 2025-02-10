@@ -12,18 +12,21 @@ const List<Map<String, String>> onboardingData = [
     "image": "assets/images/onboard1.png",
   },
   {
-    "title": "Instant Disease\nDetection",
-    "subtitle": "Quickly identify plant diseases\nusing AI-powered scanning",
-    "image": "assets/images/onboard1.png",
+    "title": "Revolutionizing\n Agriculture\n* with AI",
+    "subtitle":
+        "Mazraaty leverages advanced AI technology to analyze plant images and detect diseases with precision, helping farmers achieve better yields",
+    "image": "assets/images/onboard2.png",
   },
   {
-    "title": "Actionable Insights",
-    "subtitle": "Get practical solutions and\ntreatment recommendations",
-    "image": "assets/images/onboard1.png",
+    "title": "Comprehensive*\n Plant Library",
+    "subtitle":
+        "Mazraaty provides a complete library of plants, featuring detailed information about different species, their common diseases, and effective care methods",
+    "image": "assets/images/onboard3.png",
   },
   {
-    "title": "Healthier Crops",
-    "subtitle": "Improve your yield with\npersonalized care plans",
-    "image": "assets/images/onboard1.png",
+    "title": "Empower Your*\n Farming Journey",
+    "subtitle":
+        "Join Mazraaty today to access smart tools, tailored solutions, and expert guidance for your agricultural needs",
+    "image": "assets/images/onboard4.png",
   },
 ];

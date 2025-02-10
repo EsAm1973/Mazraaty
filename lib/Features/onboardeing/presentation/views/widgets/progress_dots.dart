@@ -9,7 +9,7 @@ class ProgressDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 50,
+      bottom: 30,
       left: 0,
       right: 0,
       child: Column(
