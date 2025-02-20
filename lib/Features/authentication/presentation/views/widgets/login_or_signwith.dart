@@ -17,11 +17,13 @@ class OrSignWithWidget extends StatelessWidget {
               height: 40,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Text(
               'Or sign in with',
-              style: Styles.textStyle16,
+              style: Styles.textStyle16.copyWith(
+                color: const Color(0xff939393),
+              ),
             ),
           ),
           Expanded(

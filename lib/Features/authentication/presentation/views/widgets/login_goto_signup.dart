@@ -12,9 +12,11 @@ class LoginGoToSignUpScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           'Don\'t have an account?',
-          style: Styles.textStyle15,
+          style: Styles.textStyle15.copyWith(
+            color: const Color(0xff939393),
+          ),
         ),
         TextButton(
           child: Text(

@@ -12,7 +12,12 @@ class SignUpMoveToLogin extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Already have an account?', style: Styles.textStyle15),
+        Text(
+          'Already have an account?',
+          style: Styles.textStyle15.copyWith(
+            color: const Color(0xff939393),
+          ),
+        ),
         TextButton(
           child: Text('Login',
               style: Styles.textStyle15.copyWith(
