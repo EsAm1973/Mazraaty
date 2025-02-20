@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_forgetpass.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_name_textfeild.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_or_signwith.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_password_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_welcome_message.dart';
@@ -46,6 +48,10 @@ class LoginViewBody extends StatelessWidget {
                       }
                     },
                   ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const OrSignWithWidget(),
                 ],
               ),
             ),
@@ -55,3 +61,4 @@ class LoginViewBody extends StatelessWidget {
     );
   }
 }
+
