@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mazraaty/Core/widgets/custom_button.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_forgetpass.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_name_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_password_textfeild.dart';
@@ -28,6 +30,8 @@ class LoginViewBody extends StatelessWidget {
                 passwordController: passwordController,
               ),
               const LoginForgetPassword(),
+              const SizedBox(height: 20),
+              const LoginButton(),
             ],
           ),
         ),
@@ -35,4 +39,3 @@ class LoginViewBody extends StatelessWidget {
     );
   }
 }
-
