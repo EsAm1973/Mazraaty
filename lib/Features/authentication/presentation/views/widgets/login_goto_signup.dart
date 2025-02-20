@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
@@ -23,7 +25,7 @@ class LoginGoToSignUpScreen extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            //GoRouter.of(context).pushReplacement(AppRouter.kSignupView);
+            GoRouter.of(context).pushReplacement(AppRouter.kSignupView);
           },
         ),
       ],

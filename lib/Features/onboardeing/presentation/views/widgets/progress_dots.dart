@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/constants.dart';
 
 class ProgressDots extends StatelessWidget {
@@ -30,7 +32,7 @@ class ProgressDots extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (currentPage == onboardingData.length - 1) {
-                    // Navigate to main screen
+                    GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
                   } else {
                     pageController.nextPage(
                       duration: const Duration(milliseconds: 300),
