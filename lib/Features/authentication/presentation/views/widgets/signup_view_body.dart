@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mazraaty/Core/widgets/custom_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_confirmpass.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_email_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_name_textfeild.dart';
@@ -40,6 +42,9 @@ class SignupViewBody extends StatelessWidget {
                   confirmPasswordController: confirmPasswordController,
                 ),
                 const SizedBox(height: 20),
+                SignUpButton(onPressed: () {
+                  
+                }),
               ],
             ),
           ),
