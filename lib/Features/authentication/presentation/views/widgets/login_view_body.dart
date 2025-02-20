@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mazraaty/Core/widgets/custom_textfeild.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_forgetpass.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_name_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_password_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_welcome_message.dart';
-import 'package:mazraaty/constants.dart';
 
 class LoginViewBody extends StatelessWidget {
   LoginViewBody({super.key});
@@ -29,6 +27,7 @@ class LoginViewBody extends StatelessWidget {
               LoginPasswordTextFeild(
                 passwordController: passwordController,
               ),
+              const LoginForgetPassword(),
             ],
           ),
         ),
@@ -36,3 +35,4 @@ class LoginViewBody extends StatelessWidget {
     );
   }
 }
+

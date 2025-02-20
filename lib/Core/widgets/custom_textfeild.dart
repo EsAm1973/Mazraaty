@@ -56,8 +56,7 @@ class CustomTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         prefixIcon: preffixIcon,
       ),
-      style:
-          const TextStyle(color: Colors.black), // Change text color if needed
+      style: const TextStyle(color: Colors.black),
     );
   }
 }
