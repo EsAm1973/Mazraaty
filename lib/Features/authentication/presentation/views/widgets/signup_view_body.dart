@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Core/widgets/custom_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_name_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_welcome_message.dart';
 import 'package:mazraaty/constants.dart';
 
 class SignupViewBody extends StatelessWidget {
-  const SignupViewBody({super.key});
-
+  SignupViewBody({super.key});
+  final TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -18,6 +21,8 @@ class SignupViewBody extends StatelessWidget {
             child: Column(
               children: [
                 const SignUpWelcomeMessage(),
+                const SizedBox(height: 20),
+                SignUpNameTextFeild(nameController: nameController),
               ],
             ),
           ),
@@ -26,4 +31,3 @@ class SignupViewBody extends StatelessWidget {
     );
   }
 }
-

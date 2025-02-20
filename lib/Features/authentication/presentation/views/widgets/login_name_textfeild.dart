@@ -11,6 +11,7 @@ class LoginEmailTextFeild extends StatelessWidget {
     return CustomTextField(
       controller: emailController,
       hintText: 'Email',
+      keyboardType: TextInputType.emailAddress,
       preffixIcon: const Icon(
         FontAwesomeIcons.solidEnvelope,
         color: kMainColor,
