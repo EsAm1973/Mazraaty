@@ -7,8 +7,8 @@ import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 abstract class AppRouter {
   //static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
-  static const String kLoginView = '/login_view';
-  static const String kSignupView = '/';
+  static const String kLoginView = '/';
+  static const String kSignupView = '/signup_view';
   static const String kHomeView = '/home_view';
 
   static final router = GoRouter(routes: [
