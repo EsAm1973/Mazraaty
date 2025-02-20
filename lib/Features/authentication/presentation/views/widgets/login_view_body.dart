@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_name_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_welcome_message.dart';
 
@@ -15,6 +16,8 @@ class LoginViewBody extends StatelessWidget {
           child: Column(
             children: [
               LoginWelcomeMessage(),
+              SizedBox(height: 20),
+              LoginFullNameTextFeild(),
             ],
           ),
         ),
@@ -22,3 +25,4 @@ class LoginViewBody extends StatelessWidget {
     );
   }
 }
+
