@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_forgetpass.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_goto_signup.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_name_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_or_signwith.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_password_textfeild.dart';
@@ -56,6 +57,13 @@ class LoginViewBody extends StatelessWidget {
                     height: 25,
                   ),
                   const LoginSocialMedia(),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const LoginGoToSignUpScreen(),
+                  const SizedBox(
+                    height: 30,
+                  ),
                 ],
               ),
             ),

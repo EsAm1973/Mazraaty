@@ -13,7 +13,7 @@ class LoginWelcomeMessage extends StatelessWidget {
           'Welcome Back',
           style: Styles.textStyle34.copyWith(fontFamily: kfontFamily),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         const Text(
           'Login to your account',
           style: Styles.textStyle18,
