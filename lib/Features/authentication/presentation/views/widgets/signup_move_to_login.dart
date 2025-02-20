@@ -15,7 +15,8 @@ class SignUpMoveToLogin extends StatelessWidget {
         const Text('Already have an account?', style: Styles.textStyle15),
         TextButton(
           child: Text('Login',
-              style: Styles.textStyle15.copyWith(color: kMainColor)),
+              style: Styles.textStyle15.copyWith(
+                  color: kMainColor, decoration: TextDecoration.underline)),
           onPressed: () {
             GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
           },

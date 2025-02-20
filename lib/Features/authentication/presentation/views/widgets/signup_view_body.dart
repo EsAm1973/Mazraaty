@@ -49,6 +49,11 @@ class SignupViewBody extends StatelessWidget {
                   SignUpButton(onPressed: () {
                     if (formKey.currentState!.validate()) {
                       // Navigate to main screen
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Sign Up successful!'),
+                        ),
+                      );
                     }
                   }),
                   const SizedBox(height: 20),
