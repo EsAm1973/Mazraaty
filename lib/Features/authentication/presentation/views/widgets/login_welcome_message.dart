@@ -14,9 +14,11 @@ class LoginWelcomeMessage extends StatelessWidget {
           style: Styles.textStyle34.copyWith(fontFamily: kfontFamily),
         ),
         const SizedBox(height: 10),
-        const Text(
+        Text(
           'Login to your account',
-          style: Styles.textStyle18,
+          style: Styles.textStyle18.copyWith(
+            color: const Color(0xff939393),
+          ),
         ),
       ],
     );

@@ -25,7 +25,7 @@ class SignUpPhoneTextFeild extends StatelessWidget {
         if (!phoneRegExp.hasMatch(value)) {
           return 'Please enter a valid phone number (only digits are allowed)';
         }
-        if (value.length != 10) {
+        if (value.length != 11) {
           return 'Phone number must be 10 digits long';
         }
         return null;

@@ -14,9 +14,11 @@ class SignUpWelcomeMessage extends StatelessWidget {
           style: Styles.textStyle34.copyWith(fontFamily: kfontFamily),
         ),
         const SizedBox(height: 10),
-        const Text(
+        Text(
           'Create your new account',
-          style: Styles.textStyle18,
+          style: Styles.textStyle18.copyWith(
+            color: const Color(0xff939393),
+          ),
         ),
       ],
     );
