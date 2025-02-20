@@ -5,6 +5,7 @@ import 'package:mazraaty/Core/widgets/custom_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_email_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_name_textfeild.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_phone_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_welcome_message.dart';
 import 'package:mazraaty/constants.dart';
 
@@ -12,6 +13,7 @@ class SignupViewBody extends StatelessWidget {
   SignupViewBody({super.key});
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -27,6 +29,8 @@ class SignupViewBody extends StatelessWidget {
                 SignUpNameTextFeild(nameController: nameController),
                 const SizedBox(height: 20),
                 SignUpEmailTextFeild(emailController: emailController),
+                const SizedBox(height: 20),
+                SignUpPhoneTextFeild(phoneController: phoneController),
               ],
             ),
           ),
@@ -35,3 +39,4 @@ class SignupViewBody extends StatelessWidget {
     );
   }
 }
+
