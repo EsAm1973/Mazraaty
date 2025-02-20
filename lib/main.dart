@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Mazraaty',
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: kPrimaryColor,
-        textTheme: GoogleFonts.inderTextTheme(),
+        textTheme: GoogleFonts.inderTextTheme(ThemeData.light().textTheme),
       ),
     );
   }
