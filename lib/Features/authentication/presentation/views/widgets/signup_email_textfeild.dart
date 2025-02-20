@@ -3,14 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/widgets/custom_textfeild.dart';
 import 'package:mazraaty/constants.dart';
 
-class LoginEmailTextFeild extends StatelessWidget {
-  const LoginEmailTextFeild({super.key, required this.emailController});
+class SignUpEmailTextFeild extends StatelessWidget {
+  const SignUpEmailTextFeild({super.key, required this.emailController});
   final TextEditingController emailController;
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: emailController,
-      hintText: 'Email',
+      hintText: 'user@email.com',
       keyboardType: TextInputType.emailAddress,
       preffixIcon: const Icon(
         FontAwesomeIcons.solidEnvelope,
