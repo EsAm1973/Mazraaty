@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/login_view.dart';
-import 'package:mazraaty/Features/authentication/presentation/views/reset_pass_view.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/recover_pass_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/signup_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
@@ -11,7 +11,7 @@ abstract class AppRouter {
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
   static const String kHomeView = '/home_view';
-  static const String kResetPassView = '/';
+  static const String kRecoverPassView = '/';
 
   static final router = GoRouter(routes: [
     // GoRoute(
@@ -31,8 +31,8 @@ abstract class AppRouter {
       builder: (context, state) => const SignupView(),
     ),
     GoRoute(
-      path: kResetPassView,
-      builder: (context, state) => const ResetPassView(),
+      path: kRecoverPassView,
+      builder: (context, state) => const RecoverPassView(),
     ),
   ]);
 }

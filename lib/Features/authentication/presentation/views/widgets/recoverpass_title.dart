@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
-class ResetPassTitle extends StatelessWidget {
-  const ResetPassTitle({super.key});
+class RecoverPassTitle extends StatelessWidget {
+  const RecoverPassTitle({super.key});
 
   @override
   Widget build(BuildContext context) {

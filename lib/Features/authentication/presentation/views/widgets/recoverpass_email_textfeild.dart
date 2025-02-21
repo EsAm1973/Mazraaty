@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/widgets/custom_textfeild.dart';
 import 'package:mazraaty/constants.dart';
 
-class ResetPassEmailTextFeild extends StatelessWidget {
-  const ResetPassEmailTextFeild({super.key, required this.emailController});
+class RecoverPassEmailTextFeild extends StatelessWidget {
+  const RecoverPassEmailTextFeild({super.key, required this.emailController});
   final TextEditingController emailController;
   @override
   Widget build(BuildContext context) {
