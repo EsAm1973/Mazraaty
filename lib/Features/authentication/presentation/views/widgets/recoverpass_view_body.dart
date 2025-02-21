@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_email_textfeild.dart';
@@ -40,11 +41,12 @@ class RecoverPassViewBody extends StatelessWidget {
               RecoverPassButton(onPressed: () {
                 if (formKey.currentState!.validate()) {
                   //Navigate and make logic
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Email Send, Check Your Mail'),
-                    ),
-                  );
+                  // ScaffoldMessenger.of(context).showSnackBar(
+                  //   const SnackBar(
+                  //     content: Text('Email Send, Check Your Mail'),
+                  //   ),
+                  // );
+                  GoRouter.of(context).push(AppRouter.kVerifyCodeView);
                 }
               }),
             ]),

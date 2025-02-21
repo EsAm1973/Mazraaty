@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_otpbox.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_resend.dart';
@@ -66,60 +65,62 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          VerifyCodeBackButton(onPressed: () {
-            GoRouter.of(context).pop();
-          }),
-          const SizedBox(
-            height: 110,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              children: [
-                const VerifyCodeTitle(),
-                const SizedBox(
-                  height: 33,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    VerifyCodeOtpBox(
-                      controller: _digit1Controller,
-                      focusNode: _digit1Focus,
-                      nextFocusNode: _digit2Focus,
-                      onChanged: _onFieldChanged,
-                    ),
-                    VerifyCodeOtpBox(
-                      controller: _digit2Controller,
-                      focusNode: _digit2Focus,
-                      nextFocusNode: _digit3Focus,
-                      onChanged: _onFieldChanged,
-                    ),
-                    VerifyCodeOtpBox(
-                      controller: _digit3Controller,
-                      focusNode: _digit3Focus,
-                      nextFocusNode: _digit4Focus,
-                      onChanged: _onFieldChanged,
-                    ),
-                    VerifyCodeOtpBox(
-                      controller: _digit4Controller,
-                      focusNode: _digit4Focus,
-                      isLast: true,
-                      onChanged: _onFieldChanged,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                const VerifyCodeResendCode(),
-              ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          children: [
+            VerifyCodeBackButton(onPressed: () {
+              GoRouter.of(context).pop();
+            }),
+            const SizedBox(
+              height: 110,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                children: [
+                  const VerifyCodeTitle(),
+                  const SizedBox(
+                    height: 33,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      VerifyCodeOtpBox(
+                        controller: _digit1Controller,
+                        focusNode: _digit1Focus,
+                        nextFocusNode: _digit2Focus,
+                        onChanged: _onFieldChanged,
+                      ),
+                      VerifyCodeOtpBox(
+                        controller: _digit2Controller,
+                        focusNode: _digit2Focus,
+                        nextFocusNode: _digit3Focus,
+                        onChanged: _onFieldChanged,
+                      ),
+                      VerifyCodeOtpBox(
+                        controller: _digit3Controller,
+                        focusNode: _digit3Focus,
+                        nextFocusNode: _digit4Focus,
+                        onChanged: _onFieldChanged,
+                      ),
+                      VerifyCodeOtpBox(
+                        controller: _digit4Controller,
+                        focusNode: _digit4Focus,
+                        isLast: true,
+                        onChanged: _onFieldChanged,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const VerifyCodeResendCode(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

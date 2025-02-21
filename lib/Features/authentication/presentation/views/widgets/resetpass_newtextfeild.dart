@@ -3,15 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/widgets/custom_textfeild.dart';
 import 'package:mazraaty/constants.dart';
 
-class SignUpPasswordTextFeild extends StatefulWidget {
-  const SignUpPasswordTextFeild({super.key, required this.passwordController});
+class ResetPassNewPasswordTextFeild extends StatefulWidget {
+  const ResetPassNewPasswordTextFeild(
+      {super.key, required this.passwordController});
   final TextEditingController passwordController;
   @override
-  State<SignUpPasswordTextFeild> createState() =>
-      _SignUpPasswordTextFeildState();
+  State<ResetPassNewPasswordTextFeild> createState() =>
+      _ResetPassNewPasswordTextFeildState();
 }
 
-class _SignUpPasswordTextFeildState extends State<SignUpPasswordTextFeild> {
+class _ResetPassNewPasswordTextFeildState
+    extends State<ResetPassNewPasswordTextFeild> {
   bool _obscurePassword = true;
 
   @override
