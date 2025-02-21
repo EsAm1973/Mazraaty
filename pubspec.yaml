@@ -43,6 +43,7 @@ dependencies:
   font_awesome_flutter: ^10.8.0
   dio: ^5.8.0+1
   dartz: ^0.10.1
+  flutter_bloc: ^9.0.0
 
 dev_dependencies:
   flutter_test:
