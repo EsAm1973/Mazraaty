@@ -18,14 +18,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }
 
   Future<void> register({
-    required String name,
+    required String username,
     required String phone,
     required String email,
     required String password,
   }) async {
     emit(RegisterAuthLoading());
     final result = await authenticationRepo.register(
-      username: name,
+      username: username,
       phone: phone,
       email: email,
       password: password,

@@ -1,4 +1,9 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/api_service.dart';
+import 'package:mazraaty/Features/authentication/data/repos/authentication_repo_impl.dart';
+import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/login_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/recover_pass_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/resetpass_view.dart';
@@ -32,7 +37,11 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kSignupView,
-      builder: (context, state) => const SignupView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => AuthenticationCubit(
+            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        child: const SignupView(),
+      ),
     ),
     GoRoute(
       path: kRecoverPassView,

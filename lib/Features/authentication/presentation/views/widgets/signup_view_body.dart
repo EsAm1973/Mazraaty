@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
+import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_top_image.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_confirmpass.dart';
@@ -20,50 +24,68 @@ class SignupViewBody extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const LoginTopImage(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  const SignUpWelcomeMessage(),
-                  const SizedBox(height: 20),
-                  SignUpUserNameTextFeild(nameController: userNameController),
-                  const SizedBox(height: 20),
-                  SignUpEmailTextFeild(emailController: emailController),
-                  const SizedBox(height: 20),
-                  SignUpPhoneTextFeild(phoneController: phoneController),
-                  const SizedBox(height: 20),
-                  SignUpPasswordTextFeild(
-                      passwordController: passwordController),
-                  const SizedBox(height: 20),
-                  SignUpConfirmPassword(
-                    passwordController: passwordController,
-                    confirmPasswordController: confirmPasswordController,
-                  ),
-                  const SizedBox(height: 20),
-                  SignUpButton(onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      // Navigate to main screen
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Sign Up successful!'),
-                        ),
-                      );
-                    }
-                  }),
-                  const SizedBox(height: 20),
-                  const SignUpMoveToLogin(),
-                  const SizedBox(height: 20),
-                ],
+    return BlocListener<AuthenticationCubit, AuthenticationState>(
+      listener: (context, state) {
+        if (state is RegisterAuthSuccess) {
+          GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
+        } else if (state is RegisterAuthError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
+        }
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const LoginTopImage(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    const SignUpWelcomeMessage(),
+                    const SizedBox(height: 20),
+                    SignUpUserNameTextFeild(nameController: userNameController),
+                    const SizedBox(height: 20),
+                    SignUpEmailTextFeild(emailController: emailController),
+                    const SizedBox(height: 20),
+                    SignUpPhoneTextFeild(phoneController: phoneController),
+                    const SizedBox(height: 20),
+                    SignUpPasswordTextFeild(
+                        passwordController: passwordController),
+                    const SizedBox(height: 20),
+                    SignUpConfirmPassword(
+                      passwordController: passwordController,
+                      confirmPasswordController: confirmPasswordController,
+                    ),
+                    const SizedBox(height: 20),
+                    BlocBuilder<AuthenticationCubit, AuthenticationState>(
+                      builder: (context, state) {
+                        if (state is RegisterAuthLoading) {
+                          return const CircularProgressIndicator();
+                        }
+                        return SignUpButton(onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            context.read<AuthenticationCubit>().register(
+                                  username: userNameController.text,
+                                  phone: phoneController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                          }
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    const SignUpMoveToLogin(),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
