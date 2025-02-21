@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_otpbox.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_resend.dart';
@@ -46,6 +47,7 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
 
     // Replace this with your actual verification logic (API call, etc.)
     debugPrint("Entered OTP: $otp");
+    GoRouter.of(context).push(AppRouter.kResetPassView);
   }
 
   /// Helper method to check if all 4 text fields are filled
