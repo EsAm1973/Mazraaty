@@ -7,86 +7,77 @@ abstract class Failure {
 
 class ServerFailure extends Failure {
   ServerFailure({required super.errorMessage});
-
   factory ServerFailure.fromDioException(DioException dioException) {
     switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
-        return ServerFailure(errorMessage: 'Connection timeout with server');
+        return ServerFailure(errorMessage: 'Connection Time Out with Server');
       case DioExceptionType.sendTimeout:
-        return ServerFailure(errorMessage: 'Send timeout with server');
+        return ServerFailure(errorMessage: 'Send Time Out with Server');
+
       case DioExceptionType.receiveTimeout:
-        return ServerFailure(errorMessage: 'Receive timeout with server');
+        return ServerFailure(errorMessage: 'Recieve Time Out with Server');
       case DioExceptionType.badCertificate:
-        return ServerFailure(errorMessage: 'Invalid security certificate');
       case DioExceptionType.badResponse:
-        return _handleBadResponse(dioException.response);
+        return ServerFailure.fromResponse(
+            dioException.response!.statusCode, dioException.response!.data);
       case DioExceptionType.cancel:
-        return ServerFailure(errorMessage: 'Request canceled');
+        return ServerFailure(errorMessage: 'Request Canceled');
       case DioExceptionType.connectionError:
-        return ServerFailure(errorMessage: 'Connection error - check network');
       case DioExceptionType.unknown:
-        return _handleUnknownError(dioException);
+        if (dioException.message!.contains('SocketException')) {
+          return ServerFailure(errorMessage: 'No Internet Connection');
+        } else {
+          return ServerFailure(errorMessage: 'Unexpected Error, Try Again');
+        }
       default:
-        return ServerFailure(errorMessage: 'Unexpected error occurred');
-    }
-  }
-
-  static ServerFailure _handleUnknownError(DioException dioException) {
-    final message = dioException.message ?? '';
-    if (message.contains('SocketException')) {
-      return ServerFailure(errorMessage: 'No internet connection');
-    }
-    return ServerFailure(
-      errorMessage: message.isNotEmpty
-          ? message
-          : 'Unknown error occurred', // Fixed typo here
-    );
-  }
-
-  static ServerFailure _handleBadResponse(Response? response) {
-    if (response == null) {
-      return ServerFailure(errorMessage: 'Invalid server response');
-    }
-
-    try {
-      return ServerFailure.fromResponse(
-        response.statusCode,
-        response.data,
-      );
-    } catch (e) {
-      return ServerFailure(errorMessage: 'Error processing server response');
+        return ServerFailure(errorMessage: 'Unexpected Error, Try Again');
     }
   }
 
   factory ServerFailure.fromResponse(int? statusCode, dynamic response) {
-    final defaultMessage = 'Something went wrong. Please try again.';
+    if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
+      return ServerFailure(errorMessage: response['message']);
+    } else if (statusCode == 404) {
+      return ServerFailure(
+          errorMessage: 'Your Requested Content Not Found Try Again Later');
+    } else if (statusCode == 422) {
+      // Handle 422 Unprocessable Entity with error details
+      if (response is Map<String, dynamic>) {
+        final errorMessage = _parseValidationErrors(response);
+        return ServerFailure(errorMessage: errorMessage);
+      }
+      return ServerFailure(errorMessage: 'Validation error occurred');
+    } else if (statusCode == 500) {
+      return ServerFailure(
+          errorMessage: 'Internal Server Error Try Again Later');
+    } else {
+      return ServerFailure(
+          errorMessage: response['message'] ?? 'Unexpected error occurred');
+    }
+  }
 
-    // Handle null or unexpected response format
-    if (response is! Map<String, dynamic>) {
-      return ServerFailure(errorMessage: defaultMessage);
+  static String _parseValidationErrors(Map<String, dynamic> response) {
+    final buffer = StringBuffer();
+
+    if (response.containsKey('errors') &&
+        response['errors'] is Map<String, dynamic>) {
+      final errors = response['errors'] as Map<String, dynamic>;
+
+      errors.forEach((field, messages) {
+        if (messages is List && messages.isNotEmpty) {
+          // Add all messages for each field
+          for (final message in messages) {
+            buffer.writeln(message.toString());
+          }
+        }
+      });
     }
 
-    final message = response['message']?.toString() ?? defaultMessage;
-
-    switch (statusCode) {
-      case 400:
-        return ServerFailure(errorMessage: message);
-      case 401:
-        return ServerFailure(errorMessage: 'Authentication required');
-      case 403:
-        return ServerFailure(errorMessage: 'Access forbidden');
-      case 404:
-        return ServerFailure(
-          errorMessage: 'Requested content not found',
-        );
-      case 500:
-        return ServerFailure(
-          errorMessage: 'Internal server error. Try again later.',
-        );
-      default:
-        return ServerFailure(
-          errorMessage: 'Unexpected error (code: $statusCode)',
-        );
+    // If no errors found, return default message
+    if (buffer.isEmpty) {
+      buffer.write('Invalid data format received from server');
     }
+
+    return buffer.toString().trim();
   }
 }

@@ -11,6 +11,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/signup_view.
 import 'package:mazraaty/Features/authentication/presentation/views/verify_code_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
+import 'package:mazraaty/home.dart';
 
 abstract class AppRouter {
   static const String kSplashView = '/';
@@ -33,7 +34,11 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kLoginView,
-      builder: (context, state) => const LoginView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => AuthenticationCubit(
+            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        child: const LoginView(),
+      ),
     ),
     GoRoute(
       path: kSignupView,
@@ -54,6 +59,11 @@ abstract class AppRouter {
     GoRoute(
       path: kResetPassView,
       builder: (context, state) => const ResetPassView(),
+    ),
+    // مؤقتا
+    GoRoute(
+      path: kHomeView,
+      builder: (context, state) => HomeScreen(),
     ),
   ]);
 }
