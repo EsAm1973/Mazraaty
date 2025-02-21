@@ -4,14 +4,14 @@ import 'package:mazraaty/Features/authentication/presentation/views/widgets/sign
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_confirmpass.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_email_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_move_to_login.dart';
-import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_name_textfeild.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_username_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_password_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_phone_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/signup_welcome_message.dart';
 
 class SignupViewBody extends StatelessWidget {
   SignupViewBody({super.key});
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -32,7 +32,7 @@ class SignupViewBody extends StatelessWidget {
                 children: [
                   const SignUpWelcomeMessage(),
                   const SizedBox(height: 20),
-                  SignUpNameTextFeild(nameController: nameController),
+                  SignUpUserNameTextFeild(nameController: userNameController),
                   const SizedBox(height: 20),
                   SignUpEmailTextFeild(emailController: emailController),
                   const SizedBox(height: 20),
