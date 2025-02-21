@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_email_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_forgetpass.dart';
@@ -35,7 +37,11 @@ class LoginViewBody extends StatelessWidget {
                   LoginPasswordTextFeild(
                     passwordController: passwordController,
                   ),
-                  const LoginForgetPassword(),
+                  LoginForgetPassword(
+                    onPressed: () {
+                      GoRouter.of(context).push(AppRouter.kRecoverPassView);
+                    },
+                  ),
                   const SizedBox(height: 30),
                   LoginButton(
                     onPressed: () {
