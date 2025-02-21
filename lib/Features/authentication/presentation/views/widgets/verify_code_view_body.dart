@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_otpbox.dart';
+import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_resend.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_title.dart';
 
 class VerifyCodeViewBody extends StatefulWidget {
@@ -109,21 +111,16 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
                       onChanged: _onFieldChanged,
                     ),
                   ],
-                )
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                const VerifyCodeResendCode(),
               ],
             ),
           ),
         ],
       ),
     );
-  }
-}
-
-class VerifyCodeResendCode extends StatelessWidget {
-  const VerifyCodeResendCode({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
