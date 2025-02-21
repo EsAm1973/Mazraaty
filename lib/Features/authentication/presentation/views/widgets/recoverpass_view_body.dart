@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/widgets/custom_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_email_textfeild.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_title.dart';
@@ -7,6 +6,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/widgets/reco
 class RecoverPassViewBody extends StatelessWidget {
   RecoverPassViewBody({super.key});
   final TextEditingController emailController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -19,11 +19,24 @@ class RecoverPassViewBody extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            RecoverPassEmailTextFeild(emailController: emailController),
+            Form(
+              key: formKey,
+              child:
+                  RecoverPassEmailTextFeild(emailController: emailController),
+            ),
             const SizedBox(
               height: 30,
             ),
-            RecoverPassButton(onPressed: () {}),
+            RecoverPassButton(onPressed: () {
+              if (formKey.currentState!.validate()) {
+                //Navigate and make logic
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Email Send, Check Your Mail'),
+                  ),
+                );
+              }
+            }),
           ],
         ),
       ),
