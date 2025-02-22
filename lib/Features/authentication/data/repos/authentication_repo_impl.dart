@@ -77,4 +77,86 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       }
     }
   }
+
+  /// ======================= ///
+  /// Forget Password Methods
+  /// ======================= ///
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> sendOtp(String email) async {
+    final body = {'email': email};
+    final headers = {
+      'Accept-Language': 'en',
+      'Accept': 'application/json',
+    };
+    try {
+      final response =
+          await apiService.post('forgot-password', body, headers: headers);
+      if (response['status'] == 'error') {
+        return left(ServerFailure(errorMessage: response['message']));
+      } else {
+        return right(response);
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      } else {
+        return left(ServerFailure(errorMessage: e.toString()));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> verifyOtp(
+      String email, String otp) async {
+    final body = {'email': email, 'otp': otp};
+    final headers = {
+      'Accept-Language': 'en',
+      'Accept': 'application/json',
+    };
+    try {
+      final response =
+          await apiService.post('verify-otp', body, headers: headers);
+      if (response['status'] == 'error') {
+        return left(ServerFailure(errorMessage: response['message']));
+      } else {
+        return right(response);
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      } else {
+        return left(ServerFailure(errorMessage: e.toString()));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> resetPassword(
+      String email, String otp, String newPassword) async {
+    final body = {
+      'email': email,
+      'otp': otp,
+      'password': newPassword,
+      'password_confirmation': newPassword,
+    };
+    final headers = {
+      'Accept-Language': 'en',
+      'Accept': 'application/json',
+    };
+    try {
+      final response =
+          await apiService.post('reset-password', body, headers: headers);
+      if (response['status'] == 'error') {
+        return left(ServerFailure(errorMessage: response['message']));
+      } else {
+        return right(response);
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      } else {
+        return left(ServerFailure(errorMessage: e.toString()));
+      }
+    }
+  }
 }
