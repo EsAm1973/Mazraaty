@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
+import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/resetpass_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/resetpass_button.dart';
@@ -21,11 +22,22 @@ class ResetPassViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is ResetPasswordSuccess) {
-          GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
+        if (state is ResetPasswordLoading) {
+          DialogHelper.showLoading(context);
+        } else if (state is ResetPasswordSuccess) {
+          DialogHelper.hideLoading();
+          DialogHelper.showSuccess(
+            context,
+            'Password Reset!',
+            'Your password has been updated successfully',
+            () => GoRouter.of(context).pushReplacement(AppRouter.kLoginView),
+          );
         } else if (state is ResetPasswordError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage)),
+          DialogHelper.hideLoading();
+          DialogHelper.showError(
+            context,
+            'Reset Failed',
+            state.errorMessage,
           );
         }
       },
@@ -72,8 +84,6 @@ class ResetPassViewBody extends StatelessWidget {
                               );
                         }
                       }),
-                      if (state is ResetPasswordLoading)
-                        const CircularProgressIndicator(),
                     ]),
                   ),
                 ),

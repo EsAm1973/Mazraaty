@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
+import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/recoverpass_button.dart';
@@ -16,13 +17,23 @@ class RecoverPassViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is ForgotPasswordSuccess) {
-          // Navigate to OTP screen with email
-          GoRouter.of(context)
-              .push(AppRouter.kVerifyCodeView, extra: emailController.text);
+        if (state is ForgotPasswordLoading) {
+          DialogHelper.showLoading(context);
+        } else if (state is ForgotPasswordSuccess) {
+          DialogHelper.hideLoading();
+          DialogHelper.showSuccess(
+            context,
+            'Verification Sent!',
+            'We\'ve sent a verification code to your email',
+            () => GoRouter.of(context)
+                .push(AppRouter.kVerifyCodeView, extra: emailController.text),
+          );
         } else if (state is ForgotPasswordError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage)),
+          DialogHelper.hideLoading();
+          DialogHelper.showError(
+            context,
+            'Sending Failed',
+            state.errorMessage,
           );
         }
       },
@@ -61,8 +72,6 @@ class RecoverPassViewBody extends StatelessWidget {
                           .sendOtp(emailController.text);
                     }
                   }),
-                  if (state is ForgotPasswordLoading)
-                    const CircularProgressIndicator(),
                 ]),
               ),
             ],
