@@ -32,3 +32,41 @@ final class RegisterAuthError extends AuthenticationState {
 
   RegisterAuthError({required this.errorMessage});
 }
+
+/// ====================== ///
+/// Forgot Password States ///
+/// ====================== ///
+final class ForgotPasswordLoading extends AuthenticationState {}
+
+final class ForgotPasswordSuccess extends AuthenticationState {
+  final String email;
+  ForgotPasswordSuccess({required this.email});
+}
+
+final class ForgotPasswordError extends AuthenticationState {
+  final String errorMessage;
+  ForgotPasswordError({required this.errorMessage});
+}
+
+// Verify OTP States
+final class VerifyOtpLoading extends AuthenticationState {}
+
+final class VerifyOtpSuccess extends AuthenticationState {
+  final String token;
+  VerifyOtpSuccess({required this.token});
+}
+
+final class VerifyOtpError extends AuthenticationState {
+  final String errorMessage;
+  VerifyOtpError({required this.errorMessage});
+}
+
+// Reset Password States
+final class ResetPasswordLoading extends AuthenticationState {}
+
+final class ResetPasswordSuccess extends AuthenticationState {}
+
+final class ResetPasswordError extends AuthenticationState {
+  final String errorMessage;
+  ResetPasswordError({required this.errorMessage});
+}
