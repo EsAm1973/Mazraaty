@@ -37,4 +37,41 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       emit(RegisterAuthSuccess(user: User.fromJson(user)));
     });
   }
+
+  /// =============== ///
+  /// Forget Password ///
+  /// =============== ///
+  Future<void> sendOtp(String email) async {
+    emit(ForgotPasswordLoading());
+    final result = await authenticationRepo.sendOtp(email);
+    result.fold(
+      (failure) =>
+          emit(ForgotPasswordError(errorMessage: failure.errorMessage)),
+      (response) => emit(ForgotPasswordSuccess(email: email)),
+    );
+  }
+
+  Future<void> verifyOtp(String email, String otp) async {
+    emit(VerifyOtpLoading());
+    final result = await authenticationRepo.verifyOtp(email, otp);
+    result.fold(
+      (failure) => emit(VerifyOtpError(errorMessage: failure.errorMessage)),
+      (response) {
+        final token =
+            response['data']['token']; // Adjust based on your API response
+        emit(VerifyOtpSuccess(token: token));
+      },
+    );
+  }
+
+  Future<void> resetPassword(
+      String email, String otp, String newPassword) async {
+    emit(ResetPasswordLoading());
+    final result =
+        await authenticationRepo.resetPassword(email, otp, newPassword);
+    result.fold(
+      (failure) => emit(ResetPasswordError(errorMessage: failure.errorMessage)),
+      (response) => emit(ResetPasswordSuccess()),
+    );
+  }
 }
