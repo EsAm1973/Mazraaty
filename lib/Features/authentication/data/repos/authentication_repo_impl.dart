@@ -90,7 +90,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     };
     try {
       final response =
-          await apiService.post('forgot-password', body, headers: headers);
+          await apiService.post('password-recovery', body, headers: headers);
       if (response['status'] == 'error') {
         return left(ServerFailure(errorMessage: response['message']));
       } else {
@@ -115,7 +115,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
     };
     try {
       final response =
-          await apiService.post('verify-otp', body, headers: headers);
+          await apiService.post('verify', body, headers: headers);
       if (response['status'] == 'error') {
         return left(ServerFailure(errorMessage: response['message']));
       } else {

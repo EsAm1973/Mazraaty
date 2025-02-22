@@ -50,15 +50,32 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kRecoverPassView,
-      builder: (context, state) => const RecoverPassView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => AuthenticationCubit(
+            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        child: const RecoverPassView(),
+      ),
     ),
     GoRoute(
       path: kVerifyCodeView,
-      builder: (context, state) => const VerifyCodeView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => AuthenticationCubit(
+            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        child: VerifyCodeView(
+          email: state.extra as String,
+        ),
+      ),
     ),
     GoRoute(
       path: kResetPassView,
-      builder: (context, state) => const ResetPassView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => AuthenticationCubit(
+            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        child: ResetPassView(
+          email: (state.extra as Map)['email'],
+          token: (state.extra as Map)['token'],
+        ),
+      ),
     ),
     // مؤقتا
     GoRoute(
