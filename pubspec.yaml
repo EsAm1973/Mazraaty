@@ -44,6 +44,7 @@ dependencies:
   dio: ^5.8.0+1
   dartz: ^0.10.1
   flutter_bloc: ^9.0.0
+  awesome_dialog: ^3.2.1
 
 dev_dependencies:
   flutter_test:
