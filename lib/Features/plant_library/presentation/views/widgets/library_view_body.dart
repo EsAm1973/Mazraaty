@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/plant_library/presentation/views/widgets/library_search_textfeild.dart';
+
+class LibraryViewBody extends StatelessWidget {
+  const LibraryViewBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 29, vertical: 23),
+        child: Column(
+          children: [
+            LibrarySearchTextFeild(),
+          ],
+        ),
+      ),
+    );
+  }
+}
