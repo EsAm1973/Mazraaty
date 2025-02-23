@@ -12,14 +12,14 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
-import 'package:mazraaty/home.dart';
+import 'package:mazraaty/scan.dart';
 
 abstract class AppRouter {
  // static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
-  static const String kHomeView = '/home_view';
+  static const String kScanView = '/scan_view';
   static const String kRecoverPassView = '/recoverpass_view';
   static const String kVerifyCodeView = '/verifycode_view';
   static const String kResetPassView = '/resetpass_view';
@@ -81,8 +81,8 @@ abstract class AppRouter {
     ),
     // مؤقتا
     GoRoute(
-      path: kHomeView,
-      builder: (context, state) => HomeScreen(),
+      path: kScanView,
+      builder: (context, state) => ScanScreen(),
     ),
     GoRoute(
       path: kLibraryView,

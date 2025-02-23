@@ -6,12 +6,12 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 
-class HomeScreen extends StatefulWidget {
+class ScanScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ScanScreenState createState() => _ScanScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ScanScreenState extends State<ScanScreen> {
   Uint8List? imageBytes;
   String? prediction;
   bool isLoading = false;

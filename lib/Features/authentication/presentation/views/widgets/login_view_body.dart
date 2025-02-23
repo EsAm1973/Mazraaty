@@ -24,7 +24,7 @@ class LoginViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is LoginAuthSuccess) {
           // context.read<UserCubit>().saveUser(state.user);
-          GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
+          GoRouter.of(context).pushReplacement(AppRouter.kScanView);
         } else if (state is LoginAuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.errorMessage)),
