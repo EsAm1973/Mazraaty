@@ -5,6 +5,7 @@ const String baseUrl='https://780f-197-121-196-199.ngrok-free.app/api/';
 const Color kPrimaryColor = Colors.white;
 const Color kMainColor = Color(0xff3E7B27);
 const Color kScaffoldColor = Color(0xffF1F1F1);
+const String testImage='assets/images/testImage.png';
 const String kfontFamily = 'MagicTropic';
 
 const List<Map<String, String>> onboardingData = [
@@ -33,3 +34,55 @@ const List<Map<String, String>> onboardingData = [
     "image": "assets/images/onboard4.png",
   },
 ];
+
+final List<Map<String, dynamic>> libraryPlantsTest = [
+    {
+      'title': 'Orange',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    {
+      'title': 'Tomato',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': true,
+    },
+    {
+      'title': 'Cucumber',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles, A refreshing vegetable high in water content, commonly used in salads and pickles',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    {
+      'title': 'Potato',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    {
+      'title': 'Potato',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    {
+      'title': 'Potato',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    {
+      'title': 'Potato',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    {
+      'title': 'Potato',
+      'description': 'A refreshing vegetable high in water content, commonly used in salads and pickles.',
+      'image': 'assets/images/testImage.png',
+      'isFavorite': false,
+    },
+    // Add more items...
+  ];
