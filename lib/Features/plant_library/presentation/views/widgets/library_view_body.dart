@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/plant_library/presentation/views/widgets/library_category_list.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/library_search_textfeild.dart';
 
 class LibraryViewBody extends StatelessWidget {
@@ -13,6 +14,10 @@ class LibraryViewBody extends StatelessWidget {
         child: Column(
           children: [
             LibrarySearchTextFeild(),
+            SizedBox(
+              height: 22,
+            ),
+            LibraryCategoriesList(),
           ],
         ),
       ),
