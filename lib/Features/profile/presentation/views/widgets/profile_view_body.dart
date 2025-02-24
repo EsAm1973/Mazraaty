@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/Core/widgets/custom_listtile.dart';
 import 'package:mazraaty/Core/widgets/profile_listtile.dart';
+import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_payment_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_usercard.dart';
 import 'package:mazraaty/constants.dart';
 
@@ -33,6 +33,7 @@ class ProfileViewBody extends StatelessWidget {
             height: 35,
           ),
           const ProfileListTile(),
+          const ProfilePaymentListTile(),
         ],
       ),
     );
