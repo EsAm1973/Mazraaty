@@ -12,6 +12,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
+import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/scan.dart';
 
 abstract class AppRouter {
@@ -24,7 +25,8 @@ abstract class AppRouter {
   static const String kVerifyCodeView = '/verifycode_view';
   static const String kResetPassView = '/resetpass_view';
   static const String kHomeView = '/home_view';
-  static const String kLibraryView = '/';
+  static const String kLibraryView = '/library_view';
+  static const String kProfileView = '/';
 
   static final router = GoRouter(routes: [
     // GoRoute(
@@ -92,6 +94,10 @@ abstract class AppRouter {
     GoRoute(
       path: kLibraryView,
       builder: (context, state) => const LibraryView(),
+    ),
+    GoRoute(
+      path: kProfileView,
+      builder: (context, state) => const ProfileView(),
     ),
   ]);
 }
