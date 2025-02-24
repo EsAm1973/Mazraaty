@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
-import 'package:mazraaty/Core/widgets/custom_listtile.dart';
 import 'package:mazraaty/Core/widgets/profile_listtile.dart';
+import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_changepass_listtile.dart';
+import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_language_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_payment_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_usercard.dart';
 import 'package:mazraaty/constants.dart';
@@ -34,6 +35,12 @@ class ProfileViewBody extends StatelessWidget {
           ),
           const ProfileListTile(),
           const ProfilePaymentListTile(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(),
+          ),
+          const ProfileChangePassword(),
+          const ProfileLanguageListTile(),
         ],
       ),
     );
