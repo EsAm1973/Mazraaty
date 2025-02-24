@@ -10,7 +10,7 @@ class LibraryViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 29, vertical: 23),
+        padding: EdgeInsets.symmetric(horizontal: 29, vertical: 15),
         child: Column(
           children: [
             LibrarySearchTextFeild(),

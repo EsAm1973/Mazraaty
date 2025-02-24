@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
+import 'package:mazraaty/Core/widgets/custom_nav_bar.dart';
 import 'package:mazraaty/Features/authentication/data/repos/authentication_repo_impl.dart';
 import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/login_view.dart';
@@ -26,7 +27,8 @@ abstract class AppRouter {
   static const String kResetPassView = '/resetpass_view';
   static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
-  static const String kProfileView = '/';
+  static const String kProfileView = '/profile_view';
+  static const String kNavigationView = '/';
 
   static final router = GoRouter(routes: [
     // GoRoute(
@@ -81,6 +83,10 @@ abstract class AppRouter {
           token: (state.extra as Map)['token'],
         ),
       ),
+    ),
+    GoRoute(
+      path: kNavigationView,
+      builder: (context, state) => const CustomNavBar(),
     ),
     GoRoute(
       path: kHomeView,
