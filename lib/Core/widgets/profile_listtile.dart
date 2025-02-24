@@ -7,13 +7,14 @@ class ProfileListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomListTile(
+    return CustomListTile(
       leadingIcon: FontAwesomeIcons.user,
       title: 'Profile',
-      trailingIcon: Icon(
+      trailingIcon: const Icon(
         Icons.arrow_forward_ios,
         size: 20,
       ),
+      onTap: () {},
     );
   }
 }
