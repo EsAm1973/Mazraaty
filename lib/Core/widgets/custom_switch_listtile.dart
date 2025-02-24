@@ -31,7 +31,11 @@ class _CustomSwitchTileState extends State<CustomSwitchTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(widget.leadingIcon, color: Colors.black),
+      leading: Icon(
+        widget.leadingIcon,
+        color: Colors.black,
+        size: 26,
+      ),
       title: Text(widget.title,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       trailing: Switch(

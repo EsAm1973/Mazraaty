@@ -18,7 +18,7 @@ class CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(leadingIcon, color: Colors.black),
+      leading: Icon(leadingIcon, color: Colors.black,size: 26,),
       title: Text(
         title,
         style: Styles.textStyle16,
