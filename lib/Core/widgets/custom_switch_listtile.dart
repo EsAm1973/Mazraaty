@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mazraaty/constants.dart';
 
 class CustomSwitchTile extends StatefulWidget {
   final IconData leadingIcon;
@@ -7,12 +8,12 @@ class CustomSwitchTile extends StatefulWidget {
   final ValueChanged<bool>? onChanged;
 
   const CustomSwitchTile({
-    Key? key,
+    super.key,
     required this.leadingIcon,
     required this.title,
     this.initialValue = false,
     this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   _CustomSwitchTileState createState() => _CustomSwitchTileState();
@@ -31,8 +32,10 @@ class _CustomSwitchTileState extends State<CustomSwitchTile> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(widget.leadingIcon, color: Colors.black),
-      title: Text(widget.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+      title: Text(widget.title,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       trailing: Switch(
+        activeColor: kMainColor,
         value: _switchValue,
         onChanged: (value) {
           setState(() {
