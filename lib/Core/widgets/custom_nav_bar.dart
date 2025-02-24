@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/constants.dart';
-import 'package:mazraaty/scan.dart';
 
 class CustomNavBar extends StatefulWidget {
   const CustomNavBar({super.key});
@@ -19,7 +19,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
   final List<Widget> pages = [
     const HomeView(),
     const LibraryView(),
-    ScanScreen(),
+    const ScanView(),
     const Center(child: Text("History", style: TextStyle(fontSize: 24))),
     const ProfileView(),
   ];

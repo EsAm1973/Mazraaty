@@ -14,7 +14,10 @@ import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
-import 'package:mazraaty/scan.dart';
+import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
+import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 
 abstract class AppRouter {
   // static const String kSplashView = '/';
@@ -86,7 +89,11 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kNavigationView,
-      builder: (context, state) => const CustomNavBar(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => ScanCubit(
+            repository: ScanRepositoryImpl(apiScanService: ApiScanService())),
+        child: const CustomNavBar(),
+      ),
     ),
     GoRoute(
       path: kHomeView,
@@ -95,7 +102,7 @@ abstract class AppRouter {
     // مؤقتا
     GoRoute(
       path: kScanView,
-      builder: (context, state) => ScanScreen(),
+      builder: (context, state) => const ScanView(),
     ),
     GoRoute(
       path: kLibraryView,
