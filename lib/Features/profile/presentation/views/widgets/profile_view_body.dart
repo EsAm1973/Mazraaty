@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/Core/widgets/custom_listtile.dart';
-import 'package:mazraaty/Core/widgets/custom_switch_listtile.dart';
+import 'package:mazraaty/Core/widgets/custom_listtile_delete_and_logout.dart';
 import 'package:mazraaty/Core/widgets/profile_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_changepass_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_darkmode_listtile.dart';
+import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_delete_account_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_language_listtile.dart';
+import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_logout_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_payment_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_policy_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_usercard.dart';
@@ -51,6 +54,12 @@ class ProfileViewBody extends StatelessWidget {
           ),
           const ProfileDarkModeListTile(),
           const ProfilePolicesListTile(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Divider(),
+          ),
+          const ProfileDeleteAccountListTile(),
+          const ProfileLogoutListTile(),
         ],
       ),
     );
