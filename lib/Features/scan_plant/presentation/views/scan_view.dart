@@ -6,9 +6,15 @@ class ScanView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
         child: Scaffold(
-      body: ScanViewBody(),
+    //  backgroundColor: kScaffoldColor,
+      appBar: AppBar(
+      //  backgroundColor: kScaffoldColor,
+        centerTitle: true,
+        title: const Text('Scan Plant'),
+      ),
+      body: const ScanViewBody(),
     ));
   }
 }

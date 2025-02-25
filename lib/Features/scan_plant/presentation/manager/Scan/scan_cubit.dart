@@ -22,22 +22,38 @@ class ScanCubit extends Cubit<ScanState> {
       emit(state.copyWith(imageBytes: bytes, error: ''));
 
       // Make prediction
-      await makePrediction(pickedFile);
+      await processImage(pickedFile);
     } catch (e) {
       emit(state.copyWith(error: 'Error picking image: ${e.toString()}'));
     }
+  }
+
+  /// تعالج الصورة من الكاميرا أو المعرض
+  Future<void> processImage(XFile file) async {
+    await makePrediction(file);
+  }
+
+  /// تعيد حالة التطبيق إلى الوضع الافتراضي
+  void reset() {
+    emit(const ScanState());
   }
 
   Future<void> makePrediction(XFile file) async {
     try {
       emit(state.copyWith(isLoading: true));
       final predictionModel = await repository.predictDisease(file);
-      final predString =
-          '${predictionModel.disease} (${(predictionModel.confidence * 100).toStringAsFixed(1)}%)';
-      emit(state.copyWith(prediction: predString, isLoading: false, error: ''));
+
+      emit(state.copyWith(
+        diseaseName: predictionModel.diseaseName, // اسم المرض فقط
+        confidence: predictionModel.confidence, // النسبة فقط
+        isLoading: false,
+        error: '',
+      ));
     } catch (e) {
       emit(state.copyWith(
-          error: 'Prediction error: ${e.toString()}', isLoading: false));
+        error: 'Prediction error: ${e.toString()}',
+        isLoading: false,
+      ));
     }
   }
 }

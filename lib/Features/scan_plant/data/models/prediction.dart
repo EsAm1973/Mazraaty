@@ -13,4 +13,6 @@ class PredictionModel {
       confidence: (json['confidence'] ?? 0.0).toDouble(),
     );
   }
+
+  String get diseaseName => disease;
 }
