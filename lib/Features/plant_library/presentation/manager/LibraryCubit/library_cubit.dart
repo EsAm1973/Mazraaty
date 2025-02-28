@@ -18,4 +18,9 @@ class LibraryCubit extends Cubit<LibraryState> {
           LibrarySuccess(categories, categories.firstOrNull?.plants ?? [])),
     );
   }
+
+  void selectCategory(int categoryIndex, List<PlantCategory> categories) {
+    emit(LibrarySuccess(categories, categories[categoryIndex].plants,
+        selectedIndex: categoryIndex));
+  }
 }

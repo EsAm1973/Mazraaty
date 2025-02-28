@@ -24,7 +24,7 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: Image.asset(
+            child: Image.network(
               imagePath,
               height: 80,
               fit: BoxFit.contain,

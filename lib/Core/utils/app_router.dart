@@ -12,6 +12,8 @@ import 'package:mazraaty/Features/authentication/presentation/views/signup_view.
 import 'package:mazraaty/Features/authentication/presentation/views/verify_code_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
+import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
+import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
@@ -21,7 +23,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
- // static const String kSplashView = '/';
+  // static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -90,9 +92,18 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kNavigationView,
-      builder: (context, state) => BlocProvider(
-        create: (context) => ScanCubit(
-            repository: ScanRepositoryImpl(apiScanService: ApiScanService())),
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ScanCubit(
+                repository:
+                    ScanRepositoryImpl(apiScanService: ApiScanService())),
+          ),
+          BlocProvider(
+            create: (context) =>
+                LibraryCubit(PlantRepositoryImpl(ApiService())),
+          ),
+        ],
         child: const CustomNavBar(),
       ),
     ),
