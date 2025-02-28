@@ -18,9 +18,10 @@ import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.d
 import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
+import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  // static const String kSplashView = '/';
+ // static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';

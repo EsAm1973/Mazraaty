@@ -5,6 +5,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubi
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_state.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/controllers/scan_controller.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/buttom_sheet.dart';
+import 'package:mazraaty/constants.dart';
 
 class ScanViewBody extends StatefulWidget {
   const ScanViewBody({super.key});
@@ -53,48 +54,43 @@ class _ScanViewBodyState extends State<ScanViewBody> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(title: const Text("Scan")),
-          body: Column(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: _scanController.cameraController != null &&
-                            _scanController
-                                .cameraController!.value.isInitialized
-                        ? CameraPreview(_scanController.cameraController!)
-                        : const Center(child: CircularProgressIndicator()),
+        return Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: _scanController.cameraController != null &&
+                          _scanController.cameraController!.value.isInitialized
+                      ? CameraPreview(_scanController.cameraController!)
+                      : const Center(child: CircularProgressIndicator()),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              decoration: const BoxDecoration(
+                color: kScaffoldColor,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.image, color: Colors.grey, size: 32),
+                    onPressed: () => _scanController.pickImage(context),
                   ),
-                ),
+                  FloatingActionButton(
+                    backgroundColor: Colors.green,
+                    child: const Icon(Icons.camera, color: Colors.white),
+                    onPressed: () => _scanController.captureImage(context),
+                  ),
+                ],
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-                  boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon:
-                          const Icon(Icons.image, color: Colors.grey, size: 32),
-                      onPressed: () => _scanController.pickImage(context),
-                    ),
-                    FloatingActionButton(
-                      backgroundColor: Colors.green,
-                      child: const Icon(Icons.camera, color: Colors.white),
-                      onPressed: () => _scanController.captureImage(context),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
