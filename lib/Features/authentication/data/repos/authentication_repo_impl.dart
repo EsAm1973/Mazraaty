@@ -114,8 +114,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       'Accept': 'application/json',
     };
     try {
-      final response =
-          await apiService.post('verify', body, headers: headers);
+      final response = await apiService.post('verify', body, headers: headers);
       if (response['status'] == 'error') {
         return left(ServerFailure(errorMessage: response['message']));
       } else {

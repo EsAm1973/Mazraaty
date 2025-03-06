@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 
 class LibrarySearchTextFeild extends StatelessWidget {
   const LibrarySearchTextFeild({super.key});
@@ -20,6 +22,9 @@ class LibrarySearchTextFeild extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onChanged: (value) {
+          context.read<LibraryCubit>().searchPlants(value);
+        },
         decoration: InputDecoration(
           border: InputBorder.none,
           filled: true,

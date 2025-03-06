@@ -101,7 +101,7 @@ abstract class AppRouter {
           ),
           BlocProvider(
             create: (context) =>
-                LibraryCubit(PlantRepositoryImpl(ApiService())),
+                LibraryCubit(PlantRepositoryImpl(ApiService(dio: Dio())))..fetchCategories(),
           ),
         ],
         child: const CustomNavBar(),

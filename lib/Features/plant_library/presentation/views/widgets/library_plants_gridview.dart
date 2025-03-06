@@ -11,6 +11,9 @@ class LibraryPlantGrid extends StatelessWidget {
     return BlocBuilder<LibraryCubit, LibraryState>(
       builder: (context, state) {
         if (state is LibrarySuccess) {
+          if (state.selectedPlants.isEmpty) {
+            return const Center(child: Text('No Plants in this category'));
+          }
           return GridView.builder(
             physics: const BouncingScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

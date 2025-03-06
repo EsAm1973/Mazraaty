@@ -11,7 +11,13 @@ class LibrarySuccess extends LibraryState {
   final List<PlantCategory> categories;
   final List<Plant> selectedPlants;
   final int selectedIndex;
-  LibrarySuccess(this.categories, this.selectedPlants,{this.selectedIndex=0});
+  final String searchQuery;
+  LibrarySuccess(
+    this.categories,
+    this.selectedPlants, {
+    this.selectedIndex = 0,
+    this.searchQuery = '',
+  });
 }
 
 class LibraryError extends LibraryState {
