@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/Core/widgets/profile_listtile.dart';
+import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_changepass_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_darkmode_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_delete_account_listtile.dart';
@@ -34,7 +36,21 @@ class ProfileViewBody extends StatelessWidget {
             const SizedBox(
               height: 37,
             ),
-            const ProfileUserCard(),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileError) {
+                  return Center(child: Text(state.message));
+                } else if (state is ProfileLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ProfileLoaded) {
+                  return ProfileUserCard(
+                    profile: state.profile,
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
             const SizedBox(
               height: 35,
             ),

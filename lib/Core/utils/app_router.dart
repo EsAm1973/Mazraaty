@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
 import 'package:mazraaty/Core/widgets/custom_nav_bar.dart';
 import 'package:mazraaty/Features/authentication/data/repos/authentication_repo_impl.dart';
@@ -15,6 +16,8 @@ import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.da
 import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
+import 'package:mazraaty/Features/profile/data/repos/profile_repo_impl.dart';
+import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
@@ -101,8 +104,14 @@ abstract class AppRouter {
           ),
           BlocProvider(
             create: (context) =>
-                LibraryCubit(PlantRepositoryImpl(ApiService(dio: Dio())))..fetchCategories(),
+                LibraryCubit(PlantRepositoryImpl(ApiService(dio: Dio())))
+                  ..fetchCategories(),
           ),
+          BlocProvider(
+              create: (context) => ProfileCubit(
+                  ProfileRepositoryImpl(apiService: ApiService(dio: Dio())))
+                ..fetchProfile(
+                    token: context.read<UserCubit>().currentUser!.token))
         ],
         child: const CustomNavBar(),
       ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/profile/data/models/profile.dart';
 import 'package:mazraaty/constants.dart';
 
 class ProfileUserCard extends StatelessWidget {
-  const ProfileUserCard({super.key});
-
+  const ProfileUserCard({super.key, required this.profile});
+  final Profile profile;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +39,9 @@ class ProfileUserCard extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: ClipOval(
-              child: Image.asset(
-                'assets/images/avatar.png',
+              child: Image.network(
+               // 'assets/images/avatar.png',
+                profile.image,
                 width: 90,
                 height: 90,
                 fit: BoxFit.cover,
@@ -54,9 +56,9 @@ class ProfileUserCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Mohamed Alaa", style: Styles.textStyle18),
+                Text(profile.userName, style: Styles.textStyle18),
                 Text(
-                  "user@email.com",
+                  profile.email,
                   style: Styles.textStyle13.copyWith(color: kMainColor),
                 ),
               ],
