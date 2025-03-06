@@ -23,7 +23,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  // static const String kSplashView = '/';
+  static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -34,13 +34,13 @@ abstract class AppRouter {
   static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
-  static const String kNavigationView = '/';
+  static const String kNavigationView = '/navigation_view';
 
   static final router = GoRouter(routes: [
-    // GoRoute(
-    //   path: kSplashView,
-    //   builder: (context, state) => const SplashView(),
-    // ),
+    GoRoute(
+      path: kSplashView,
+      builder: (context, state) => const SplashView(),
+    ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),

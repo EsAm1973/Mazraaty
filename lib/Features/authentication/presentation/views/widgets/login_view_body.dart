@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/login_button.dart';
@@ -23,7 +24,7 @@ class LoginViewBody extends StatelessWidget {
     return BlocListener<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is LoginAuthSuccess) {
-          // context.read<UserCubit>().saveUser(state.user);
+          context.read<UserCubit>().saveUser(state.user);
           GoRouter.of(context).pushReplacement(AppRouter.kNavigationView);
         } else if (state is LoginAuthError) {
           ScaffoldMessenger.of(context).showSnackBar(

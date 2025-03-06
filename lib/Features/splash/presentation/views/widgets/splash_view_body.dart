@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
@@ -46,8 +48,15 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       setState(() {
         _opacirty = 1.0;
       });
-      Future.delayed(const Duration(seconds: 2), () {
-        GoRouter.of(context).pushReplacement(AppRouter.kOnboardingView);
+      Future.delayed(const Duration(seconds: 2), () async {
+        await context.read<UserCubit>().loadUser();
+        final state = context.read<UserCubit>().state;
+
+        if (state is UserLoaded) {
+          GoRouter.of(context).pushReplacement(AppRouter.kNavigationView);
+        } else {
+          GoRouter.of(context).pushReplacement(AppRouter.kOnboardingView);
+        }
       });
     });
   }
