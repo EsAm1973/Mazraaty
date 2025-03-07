@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +20,7 @@ import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubi
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/profile/data/repos/profile_repo_impl.dart';
 import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
+import 'package:mazraaty/Features/profile/presentation/views/crop_image_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
@@ -38,6 +41,7 @@ abstract class AppRouter {
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
   static const String kNavigationView = '/navigation_view';
+  static const String kCropImageView = '/cropimage_view';
 
   static final router = GoRouter(routes: [
     GoRoute(
@@ -132,6 +136,12 @@ abstract class AppRouter {
     GoRoute(
       path: kProfileView,
       builder: (context, state) => const ProfileView(),
+    ),
+    GoRoute(
+      path: kCropImageView,
+      builder: (context, state) => CropImageView(
+        imageFile: state.extra as File,
+      ),
     ),
   ]);
 }
