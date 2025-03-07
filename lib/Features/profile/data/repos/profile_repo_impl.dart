@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:mazraaty/Core/errors/failure.dart';
@@ -14,22 +16,48 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, Profile>> getProfile({
     required String token,
   }) async {
-    // تحضير الهيدر المطلوب
     final headers = {
       'Accept': 'application/json',
       'Accept-Language': 'en',
       'Authorization': 'Bearer $token',
     };
     try {
-      // استدعاء ال ApiService مع endpoint المناسب (مثلاً: '/profile')
       final response = await apiService.get('profile', headers: headers);
 
       if (response['status'] == 'success') {
-        // تحليل البيانات وإنشاء الـ Profile Model
         final profile = Profile.fromJson(response);
         return Right(profile);
       } else {
-        // إذا كانت الحالة ليست success يتم إعادة Failure
+        return Left(ServerFailure(errorMessage: response['message']));
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      } else {
+        return Left(ServerFailure(errorMessage: e.toString()));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, Profile>> updateProfileImage(
+      {required String token, required File image}) async {
+    final headers = {
+      'Accept': 'application/json',
+      'Accept-Language': 'en',
+      'Authorization': 'Bearer $token',
+    };
+    try {
+      FormData formData = FormData.fromMap({
+        'image': await MultipartFile.fromFile(image.path),
+      });
+
+      final response =
+          await apiService.post('update', formData, headers: headers);
+      if (response['status'] == 'success') {
+        final profile = Profile.fromJson(response);
+        return Right(profile);
+      } else {
         return Left(ServerFailure(errorMessage: response['message']));
       }
     } on Exception catch (e) {

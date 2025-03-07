@@ -8,6 +8,7 @@ class ProfileUserCard extends StatelessWidget {
   final Profile profile;
   @override
   Widget build(BuildContext context) {
+    String baseImageUrl = 'https://82be-154-239-123-4.ngrok-free.app/';
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -40,10 +41,10 @@ class ProfileUserCard extends StatelessWidget {
             ),
             child: ClipOval(
               child: Image.network(
-               // 'assets/images/avatar.png',
-                profile.image,
-                width: 90,
-                height: 90,
+                // 'assets/images/avatar.png',
+                '$baseImageUrl${profile.image}',
+                width: 80,
+                height: 80,
                 fit: BoxFit.cover,
               ),
             ),
@@ -57,6 +58,9 @@ class ProfileUserCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(profile.userName, style: Styles.textStyle18),
+                const SizedBox(
+                  height: 10,
+                ),
                 Text(
                   profile.email,
                   style: Styles.textStyle13.copyWith(color: kMainColor),

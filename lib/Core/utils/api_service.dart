@@ -16,7 +16,7 @@ class ApiService {
     return response.data;
   }
 
-  Future<dynamic> post(String endPoint, Map<String, dynamic>? data,
+  Future<dynamic> post(String endPoint, dynamic data,
       {Map<String, dynamic>? headers}) async {
     final fullUrl = '$baseUrl$endPoint';
     final response =
