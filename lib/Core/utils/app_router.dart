@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -139,8 +138,12 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kCropImageView,
-      builder: (context, state) => CropImageView(
-        imageFile: state.extra as File,
+      builder: (context, state) => BlocProvider(
+        create: (context) => ProfileCubit(
+            ProfileRepositoryImpl(apiService: ApiService(dio: Dio()))),
+        child: CropImageView(
+          imageFile: state.extra as File,
+        ),
       ),
     ),
   ]);

@@ -53,10 +53,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
       });
 
       final response =
-          await apiService.post('update', formData, headers: headers);
+          await apiService.post('profile/update', formData, headers: headers);
       if (response['status'] == 'success') {
-        final profile = Profile.fromJson(response);
-        return Right(profile);
+        if (response['data'] == null ||
+            (response['data'] is List && response['data'].isEmpty)) {
+          // إعادة جلب بيانات البروفايل
+          final profileResult = await getProfile(token: token);
+          return profileResult.fold(
+            (failure) => Left(failure),
+            (profile) => Right(profile),
+          );
+        } else {
+          final profile = Profile.fromJson(response);
+          return Right(profile);
+        }
       } else {
         return Left(ServerFailure(errorMessage: response['message']));
       }
