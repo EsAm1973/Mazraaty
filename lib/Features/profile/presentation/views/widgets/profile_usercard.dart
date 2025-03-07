@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -106,11 +107,18 @@ class ProfileUserCard extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: ClipOval(
-              child: Image.network(
-                // 'assets/images/avatar.png',
-                '$baseImageUrl${profile.image}',
+              child: CachedNetworkImage(
                 width: 80,
                 height: 80,
+                imageUrl: baseImageUrl + profile.image,
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.error,
+                ),
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                  ),
+                ),
                 fit: BoxFit.cover,
               ),
             ),

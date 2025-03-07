@@ -34,4 +34,10 @@ class UserRepositoryImpl implements IUserRepository {
     }
     return null;
   }
+
+  @override
+  Future<void> deleteUser() async {
+    final db = await userDatabase.database;
+    await db.delete('user');
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
@@ -24,9 +25,17 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: Image.network(
-              imagePath,
+            child: CachedNetworkImage(
               height: 80,
+              imageUrl: imagePath,
+              errorWidget: (context, url, error) => const Icon(
+                Icons.error,
+              ),
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                ),
+              ),
               fit: BoxFit.contain,
             ),
           ),

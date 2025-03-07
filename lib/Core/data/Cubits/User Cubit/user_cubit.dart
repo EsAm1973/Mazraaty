@@ -39,4 +39,14 @@ class UserCubit extends Cubit<UserState> {
       emit(UserError(e.toString()));
     }
   }
+
+  Future<void> logout() async {
+    try {
+      emit(UserLoading());
+      await userRepository.deleteUser();
+      emit(UserInitial());
+    } catch (e) {
+      emit(UserError(e.toString()));
+    }
+  }
 }
