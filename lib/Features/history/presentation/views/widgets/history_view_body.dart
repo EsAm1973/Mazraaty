@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
-import 'package:mazraaty/Features/history/presentation/views/widgets/history_list_item.dart';
+import 'package:mazraaty/Features/history/presentation/views/widgets/history_listview.dart';
 import 'package:mazraaty/constants.dart';
 
 class HistoryViewBody extends StatelessWidget {
@@ -25,7 +25,7 @@ class HistoryViewBody extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const HistoryListItem(),
+          const HistoryListView(),
         ],
       ),
     );
