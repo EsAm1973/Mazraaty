@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
@@ -20,7 +21,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
     const HomeView(),
     const LibraryView(),
     const ScanView(),
-    const Center(child: Text("History", style: TextStyle(fontSize: 24))),
+    const HistoryView(),
     const ProfileView(),
   ];
   void _onItemTapped(int index) {

@@ -12,6 +12,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/recover_pass
 import 'package:mazraaty/Features/authentication/presentation/views/resetpass_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/signup_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/verify_code_view.dart';
+import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
@@ -41,6 +42,7 @@ abstract class AppRouter {
   static const String kProfileView = '/profile_view';
   static const String kNavigationView = '/navigation_view';
   static const String kCropImageView = '/cropimage_view';
+  static const String kHistoryView = '/history_view';
 
   static final router = GoRouter(routes: [
     GoRoute(
@@ -131,6 +133,10 @@ abstract class AppRouter {
     GoRoute(
       path: kLibraryView,
       builder: (context, state) => const LibraryView(),
+    ),
+    GoRoute(
+      path: kHistoryView,
+      builder: (context, state) => const HistoryView(),
     ),
     GoRoute(
       path: kProfileView,
