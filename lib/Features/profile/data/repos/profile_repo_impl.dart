@@ -78,4 +78,38 @@ class ProfileRepositoryImpl implements ProfileRepository {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteAccount({
+    required String token,
+    required String password,
+  }) async {
+    final headers = {
+      'Accept': 'application/json',
+      'Accept-Language': 'en',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      // نفترض أن الـ endpoint لحذف الحساب هو 'profile/delete'
+      final response = await apiService.post(
+        'delete-account',
+        {'password': password},
+        headers: headers,
+      );
+
+      if (response['status'] == 'success') {
+        // نسترجع الرسالة من الـ API
+        return Right(response['message']);
+      } else {
+        return Left(ServerFailure(errorMessage: response['message']));
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      } else {
+        return Left(ServerFailure(errorMessage: e.toString()));
+      }
+    }
+  }
 }

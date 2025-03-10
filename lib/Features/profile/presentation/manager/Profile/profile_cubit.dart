@@ -38,4 +38,19 @@ class ProfileCubit extends Cubit<ProfileState> {
       (profile) => emit(ProfileLoaded(profile: profile)),
     );
   }
+
+  Future<void> deleteAccount({
+    required String token,
+    required String password,
+  }) async {
+    emit(ProfileLoading());
+    final result = await profileRepository.deleteAccount(
+      token: token,
+      password: password,
+    );
+    result.fold(
+      (failure) => emit(ProfileError(message: failure.errorMessage)),
+      (message) => emit(ProfileDeleted(message: message)),
+    );
+  }
 }

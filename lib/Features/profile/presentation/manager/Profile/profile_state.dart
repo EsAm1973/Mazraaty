@@ -20,3 +20,12 @@ class ProfileError extends ProfileState {
   final String message;
   const ProfileError({required this.message});
 }
+
+class ProfileDeleted extends ProfileState {
+  final String message;
+  const ProfileDeleted({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+

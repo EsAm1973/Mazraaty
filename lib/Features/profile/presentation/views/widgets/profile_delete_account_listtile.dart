@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/widgets/custom_listtile_delete_and_logout.dart';
 
 class ProfileDeleteAccountListTile extends StatelessWidget {
@@ -11,7 +13,9 @@ class ProfileDeleteAccountListTile extends StatelessWidget {
       leadingIcon: FontAwesomeIcons.trashCan,
       title: 'Delete Account',
       trailingIcon: const Icon(Icons.arrow_forward_ios, size: 20),
-      onTap: () {},
+      onTap: () {
+        GoRouter.of(context).push(AppRouter.kDeleteAccountView);
+      },
     );
   }
 }

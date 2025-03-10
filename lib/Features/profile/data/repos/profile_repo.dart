@@ -13,4 +13,9 @@ abstract class ProfileRepository {
     required String token,
     required File image,
   });
+
+  Future<Either<Failure, String>> deleteAccount({
+    required String token,
+    required String password,
+  });
 }

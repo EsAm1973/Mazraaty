@@ -23,6 +23,7 @@ import 'package:mazraaty/Features/plant_library/presentation/views/library_view.
 import 'package:mazraaty/Features/profile/data/repos/profile_repo_impl.dart';
 import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
 import 'package:mazraaty/Features/profile/presentation/views/crop_image_view.dart';
+import 'package:mazraaty/Features/profile/presentation/views/delete_acc_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
@@ -46,6 +47,7 @@ abstract class AppRouter {
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kDetailsView = '/details_view';
+  static const String kDeleteAccountView = '/deleteaccount_view';
 
   static final router = GoRouter(routes: [
     GoRoute(
@@ -139,7 +141,7 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kDetailsView,
-      builder: (context, state) =>  PlantDetailsView(
+      builder: (context, state) => PlantDetailsView(
         plant: state.extra as Plant,
       ),
     ),
@@ -150,6 +152,14 @@ abstract class AppRouter {
     GoRoute(
       path: kProfileView,
       builder: (context, state) => const ProfileView(),
+    ),
+    GoRoute(
+      path: kDeleteAccountView,
+      builder: (context, state) => BlocProvider(
+        create: (context) => ProfileCubit(
+            ProfileRepositoryImpl(apiService: ApiService(dio: Dio()))),
+        child: const DeleteAccountView(),
+      ),
     ),
     GoRoute(
       path: kCropImageView,
