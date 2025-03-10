@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/data/Cubits/Change%20Pass%20Cubit/change_password_cubit.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
-import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_otpbox.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_resend.dart';
@@ -47,7 +47,7 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
         _digit3Controller.text +
         _digit4Controller.text;
 
-    context.read<AuthenticationCubit>().verifyOtp(widget.email, otp);
+    context.read<PasswordCubit>().verifyOtp(widget.email, otp);
   }
 
   /// Helper method to check if all 4 text fields are filled
@@ -67,7 +67,7 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+    return BlocConsumer<PasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is VerifyOtpSuccess) {
           GoRouter.of(context).push(

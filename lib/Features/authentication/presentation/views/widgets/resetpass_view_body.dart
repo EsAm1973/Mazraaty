@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/data/Cubits/Change%20Pass%20Cubit/change_password_cubit.dart';
+import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/widgets/dialog_helper.dart';
-import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
+
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/resetpass_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/resetpass_button.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/resetpass_confirmpass.dart';
@@ -20,18 +22,31 @@ class ResetPassViewBody extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
+    return BlocConsumer<PasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordLoading) {
           DialogHelper.showLoading(context);
         } else if (state is ResetPasswordSuccess) {
           DialogHelper.hideLoading();
-          DialogHelper.showSuccess(
-            context,
-            'Password Reset!',
-            'Your password has been updated successfully',
-            () => GoRouter.of(context).pushReplacement(AppRouter.kLoginView),
-          );
+          final userCubit = context.read<UserCubit>();
+          if (userCubit.currentUser != null) {
+            userCubit.logout().then((_) {
+              DialogHelper.showSuccess(
+                context,
+                'Password Reset!',
+                'Your password has been updated successfully',
+                () =>
+                    GoRouter.of(context).pushReplacement(AppRouter.kLoginView),
+              );
+            });
+          } else {
+            DialogHelper.showSuccess(
+              context,
+              'Password Reset!',
+              'Your password has been updated successfully',
+              () => GoRouter.of(context).pushReplacement(AppRouter.kLoginView),
+            );
+          }
         } else if (state is ResetPasswordError) {
           DialogHelper.hideLoading();
           DialogHelper.showError(
@@ -77,7 +92,7 @@ class ResetPassViewBody extends StatelessWidget {
                       ),
                       ResetPassButton(onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          context.read<AuthenticationCubit>().resetPassword(
+                          context.read<PasswordCubit>().resetPassword(
                                 email,
                                 token,
                                 passwordController.text,

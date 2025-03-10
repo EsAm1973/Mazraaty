@@ -12,7 +12,7 @@ abstract class AuthenticationRepo {
     required String password,
   });
 
-  //Forget Password Methods
+  // Forget Password Methods
   Future<Either<Failure, Map<String, dynamic>>> sendOtp(String email);
   Future<Either<Failure, Map<String, dynamic>>> verifyOtp(
       String email, String otp);

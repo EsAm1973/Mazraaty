@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/data/Cubits/Change%20Pass%20Cubit/change_password_cubit.dart';
 import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
 import 'package:mazraaty/Core/widgets/custom_nav_bar.dart';
@@ -77,16 +78,18 @@ abstract class AppRouter {
     GoRoute(
       path: kRecoverPassView,
       builder: (context, state) => BlocProvider(
-        create: (context) => AuthenticationCubit(
-            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) => PasswordCubit(
+            authenticationRepo:
+                AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
         child: const RecoverPassView(),
       ),
     ),
     GoRoute(
       path: kVerifyCodeView,
       builder: (context, state) => BlocProvider(
-        create: (context) => AuthenticationCubit(
-            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) => PasswordCubit(
+            authenticationRepo:
+                AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
         child: VerifyCodeView(
           email: state.extra as String,
         ),
@@ -95,8 +98,9 @@ abstract class AppRouter {
     GoRoute(
       path: kResetPassView,
       builder: (context, state) => BlocProvider(
-        create: (context) => AuthenticationCubit(
-            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) => PasswordCubit(
+            authenticationRepo:
+                AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
         child: ResetPassView(
           email: (state.extra as Map)['email'],
           token: (state.extra as Map)['token'],
