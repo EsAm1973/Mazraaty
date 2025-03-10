@@ -8,11 +8,13 @@ import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/constants.dart';
 
 void main() {
-  runApp(BlocProvider(
-    create: (context) => UserCubit(
-        userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
-    child: const MyApp(),
-  ));
+  runApp(
+    BlocProvider(
+      create: (context) => UserCubit(
+          userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
