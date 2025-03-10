@@ -15,6 +15,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
+import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/details_view.dart';
@@ -30,7 +31,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
- // static const String kSplashView = '/';
+  static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -44,13 +45,13 @@ abstract class AppRouter {
   static const String kNavigationView = '/navigation_view';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
-  static const String kDetailsView = '/';
+  static const String kDetailsView = '/details_view';
 
   static final router = GoRouter(routes: [
-    // GoRoute(
-    //   path: kSplashView,
-    //   builder: (context, state) => const SplashView(),
-    // ),
+    GoRoute(
+      path: kSplashView,
+      builder: (context, state) => const SplashView(),
+    ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
@@ -138,7 +139,9 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kDetailsView,
-      builder: (context, state) => const PlantDetailsView(),
+      builder: (context, state) =>  PlantDetailsView(
+        plant: state.extra as Plant,
+      ),
     ),
     GoRoute(
       path: kHistoryView,

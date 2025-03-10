@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/library_plants_griditem.dart';
 
@@ -25,10 +27,16 @@ class LibraryPlantGrid extends StatelessWidget {
             itemCount: state.selectedPlants.length,
             itemBuilder: (context, index) {
               final plant = state.selectedPlants[index];
-              return PlantCard(
-                title: plant.name,
-                description: plant.description,
-                imagePath: plant.image,
+              return GestureDetector(
+                onTap: () {
+                  GoRouter.of(context)
+                      .push(AppRouter.kDetailsView, extra: plant);
+                },
+                child: PlantCard(
+                  title: plant.name,
+                  description: plant.description,
+                  imagePath: plant.image,
+                ),
               );
             },
           );
