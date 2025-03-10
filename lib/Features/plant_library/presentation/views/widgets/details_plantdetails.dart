@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/constants.dart';
 
 class DetailsOfPlant extends StatelessWidget {
-  const DetailsOfPlant({super.key});
-
+  const DetailsOfPlant({super.key, required this.plant});
+  final Plant plant;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +20,7 @@ class DetailsOfPlant extends StatelessWidget {
             ),
           ),
           Text(
-            'Full Sun',
+            plant.sunlightAmount,
             style: Styles.textStyle20.copyWith(
               color: kMainColor,
             ),
@@ -34,7 +35,7 @@ class DetailsOfPlant extends StatelessWidget {
             ),
           ),
           Text(
-            'Well-drained Loamy Soil',
+            plant.soil,
             style: Styles.textStyle20.copyWith(
               color: kMainColor,
             ),
@@ -49,7 +50,7 @@ class DetailsOfPlant extends StatelessWidget {
             ),
           ),
           Text(
-            'Regular, keep moist',
+            plant.wateringAmount,
             style: Styles.textStyle20.copyWith(
               color: kMainColor,
             ),
@@ -79,7 +80,7 @@ class DetailsOfPlant extends StatelessWidget {
             ),
           ),
           Text(
-            '70-85°F',
+            plant.temperatureRange,
             style: Styles.textStyle20.copyWith(
               color: kMainColor,
             ),
@@ -97,7 +98,7 @@ class DetailsOfPlant extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 2 / 3,
             child: Text(
               softWrap: true,
-              'High in nitrogen and potassium',
+              plant.nutrients,
               style: Styles.textStyle20.copyWith(
                 color: kMainColor,
               ),

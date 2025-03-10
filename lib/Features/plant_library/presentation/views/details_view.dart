@@ -8,10 +8,12 @@ class PlantDetailsView extends StatelessWidget {
   final Plant plant;
   @override
   Widget build(BuildContext context) {
-    return  const SafeArea(
+    return SafeArea(
         child: Scaffold(
       backgroundColor: kScaffoldColor,
-      body: DetailsViewBody(),
+      body: DetailsViewBody(
+        plant: plant,
+      ),
     ));
   }
 }

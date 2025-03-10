@@ -3,8 +3,10 @@ import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
 class DetailsCustomAppBar extends StatelessWidget {
-  const DetailsCustomAppBar({super.key});
-
+  const DetailsCustomAppBar(
+      {super.key, required this.onPressed, required this.name});
+  final VoidCallback onPressed;
+  final String name;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,13 +14,16 @@ class DetailsCustomAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(
-            Icons.arrow_back_ios,
-            color: kMainColor,
-            size: 30,
+          InkWell(
+            onTap: onPressed,
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: kMainColor,
+              size: 30,
+            ),
           ),
           Text(
-            'Tomato',
+            name,
             style: Styles.textStyle34.copyWith(
               fontFamily: kfontFamily,
               color: kMainColor,

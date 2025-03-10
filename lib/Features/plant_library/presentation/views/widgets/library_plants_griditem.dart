@@ -16,6 +16,7 @@ class PlantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const fullUrlImage = 'https://6ca1-197-121-146-72.ngrok-free.app/storage/';
     return Container(
       width: 160,
       decoration: BoxDecoration(
@@ -31,7 +32,7 @@ class PlantCard extends StatelessWidget {
       child: Column(
         children: [
           LibraryPlantsGridItemTopSection(
-            imagePath: imagePath,
+            imagePath: fullUrlImage + imagePath,
             title: title,
           ),
           LibraryPlantsGridItemButtomSection(

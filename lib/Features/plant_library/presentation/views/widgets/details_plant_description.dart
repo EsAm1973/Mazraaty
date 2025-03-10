@@ -3,8 +3,10 @@ import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
 class DetailsDescriptionPlant extends StatelessWidget {
-  const DetailsDescriptionPlant({super.key});
-
+  const DetailsDescriptionPlant(
+      {super.key, required this.description, required this.name});
+  final String name;
+  final String description;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,14 +23,11 @@ class DetailsDescriptionPlant extends StatelessWidget {
             const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 30),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
-            'Tomato',
+            name,
             style: Styles.textStyle30.copyWith(fontFamily: kfontFamily),
           ),
           Expanded(
-            child: Text(
-              'The tomato is a popular fruit, scientifically known as Solanum lycopersicum, often classified as a vegetable in culinary terms. It is native to western South America but is now grown globally. Tomatoes are rich in nutrients, including vitamin C, potassium, and antioxidants like lycopene, which is known for its cancer-fighting properties. Tomatoes are versatile and are used in a wide variety of dishes, such as salads, sauces, soups, and juices, contributing both flavor and nutritional value.',
-              style: Styles.textStyle16.copyWith(color: kMainColor),
-            ),
+            child: Text(description),
           ),
         ]),
       ),
