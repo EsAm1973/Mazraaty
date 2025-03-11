@@ -21,6 +21,7 @@ import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dar
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/details_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
+import 'package:mazraaty/Features/plant_library/presentation/views/updated_details_view.dart';
 import 'package:mazraaty/Features/profile/data/repos/profile_repo_impl.dart';
 import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
 import 'package:mazraaty/Features/profile/presentation/views/crop_image_view.dart';
@@ -33,7 +34,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  static const String kSplashView = '/';
+  //static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -48,13 +49,14 @@ abstract class AppRouter {
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kDetailsView = '/details_view';
+  static const String kUpdatedDetailsView = '/';
   static const String kDeleteAccountView = '/deleteaccount_view';
 
   static final router = GoRouter(routes: [
-    GoRoute(
-      path: kSplashView,
-      builder: (context, state) => const SplashView(),
-    ),
+    // GoRoute(
+    //   path: kSplashView,
+    //   builder: (context, state) => const SplashView(),
+    // ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
@@ -148,6 +150,10 @@ abstract class AppRouter {
       builder: (context, state) => PlantDetailsView(
         plant: state.extra as Plant,
       ),
+    ),
+    GoRoute(
+      path: kUpdatedDetailsView,
+      builder: (context, state) => const UpdatedDetailsView(),
     ),
     GoRoute(
       path: kHistoryView,

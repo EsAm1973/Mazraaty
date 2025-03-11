@@ -27,7 +27,7 @@ class DetailsDescriptionPlant extends StatelessWidget {
             style: Styles.textStyle30.copyWith(fontFamily: kfontFamily),
           ),
           Expanded(
-            child: Text(description),
+            child: Text(description,style: Styles.textStyle16,),
           ),
         ]),
       ),

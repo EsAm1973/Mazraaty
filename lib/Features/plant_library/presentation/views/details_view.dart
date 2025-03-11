@@ -10,7 +10,7 @@ class PlantDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: kScaffoldColor,
+      backgroundColor: kScaffoldColor.withOpacity(0.9),
       body: DetailsViewBody(
         plant: plant,
       ),
