@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
+import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_state.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/controllers/scan_controller.dart';
@@ -30,7 +31,9 @@ class _ScanViewBodyState extends State<ScanViewBody> {
   }
 
   void _showBottomSheet(BuildContext context, ScanState state) {
-    if (_isBottomSheetOpen) return;
+    if (_isBottomSheetOpen) {
+      Navigator.of(context).pop(); // إغلاق أي شيت مفتوح
+    }
     _isBottomSheetOpen = true;
 
     showModalBottomSheet(
@@ -40,16 +43,28 @@ class _ScanViewBodyState extends State<ScanViewBody> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) => BottomSheetWidget(state: state),
-    ).whenComplete(() {
-      _isBottomSheetOpen = false;
-    });
+    ).then((_) => _isBottomSheetOpen = false);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ScanCubit, ScanState>(
       listener: (context, state) {
-        if (state.diseaseName.isNotEmpty) {
+        // إدارة نافذة التحميل
+        if (state.isLoading) {
+          DialogHelper.showLoading(context);
+        } else {
+          DialogHelper.hideLoading();
+        }
+
+        // إدارة النتائج والأخطاء
+        if (state.error.isNotEmpty) {
+          DialogHelper.showError(
+            context,
+            'Error Occurred',
+            state.error,
+          );
+        } else if (state.diseaseName.isNotEmpty) {
           _showBottomSheet(context, state);
         }
       },

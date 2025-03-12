@@ -34,7 +34,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  //static const String kSplashView = '/';
+  // static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -45,11 +45,11 @@ abstract class AppRouter {
   static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
-  static const String kNavigationView = '/navigation_view';
+  static const String kNavigationView = '/';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kDetailsView = '/details_view';
-  static const String kUpdatedDetailsView = '/';
+  static const String kUpdatedDetailsView = '/updatedetails_view';
   static const String kDeleteAccountView = '/deleteaccount_view';
 
   static final router = GoRouter(routes: [

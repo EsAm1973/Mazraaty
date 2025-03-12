@@ -10,48 +10,61 @@ class ScanCubit extends Cubit<ScanState> {
 
   Future<void> pickImage() async {
     try {
+      // إعادة تعيين الحالة قبل البدء
+      emit(const ScanState(isLoading: true));
+
       final pickedFile =
           await ImagePicker().pickImage(source: ImageSource.gallery);
       if (pickedFile == null) {
-        emit(state.copyWith(error: 'No image selected'));
+        emit(state.copyWith(error: 'No image selected', isLoading: false));
         return;
       }
 
-      // Read file bytes for preview
       final bytes = await pickedFile.readAsBytes();
-      emit(state.copyWith(imageBytes: bytes, error: ''));
+      emit(state.copyWith(
+        imageBytes: bytes,
+        diseaseName: '',
+        confidence: 0.0,
+        isLoading: true,
+        error: '',
+      ));
 
-      // Make prediction
       await processImage(pickedFile);
     } catch (e) {
-      emit(state.copyWith(error: 'Error picking image: ${e.toString()}'));
+      emit(state.copyWith(
+          error: 'Error picking image: ${e.toString()}', isLoading: false));
     }
   }
 
-  /// تعالج الصورة من الكاميرا أو المعرض
   Future<void> processImage(XFile file) async {
+    emit(state.copyWith(isLoading: true));
     await makePrediction(file);
   }
 
   /// تعيد حالة التطبيق إلى الوضع الافتراضي
   void reset() {
-    emit(const ScanState());
+    emit(const ScanState(
+      diseaseName: '',
+      confidence: 0.0,
+      isLoading: false,
+      error: '',
+    ));
   }
 
   Future<void> makePrediction(XFile file) async {
     try {
-      emit(state.copyWith(isLoading: true));
-      final predictionModel = await repository.predictDisease(file);
+      emit(state.copyWith(isLoading: true, error: '')); // بدء التحميل
+
+      final prediction = await repository.predictDisease(file);
 
       emit(state.copyWith(
-        diseaseName: predictionModel.diseaseName, // اسم المرض فقط
-        confidence: predictionModel.confidence, // النسبة فقط
+        diseaseName: prediction.diseaseName,
+        confidence: prediction.confidence,
         isLoading: false,
-        error: '',
       ));
     } catch (e) {
       emit(state.copyWith(
-        error: 'Prediction error: ${e.toString()}',
+        error: 'Prediction failed: ${e.toString()}',
         isLoading: false,
       ));
     }

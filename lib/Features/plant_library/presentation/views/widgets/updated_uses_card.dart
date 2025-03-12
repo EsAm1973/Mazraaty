@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:mazraaty/Core/utils/styles.dart';
+
+class UpdatedDetailsUsesCard extends StatelessWidget {
+  final String title;
+  final String description;
+  final String iconPath;
+
+  const UpdatedDetailsUsesCard({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.iconPath,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Uses",
+          style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    iconPath,
+                    width: 24,
+                    height: 24,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    title,
+                    style: Styles.textStyle18.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                description,
+                style: Styles.textStyle16,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
