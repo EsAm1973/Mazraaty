@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:camera/camera.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_state.dart';
@@ -16,8 +17,10 @@ class ScanViewBody extends StatefulWidget {
 }
 
 class _ScanViewBodyState extends State<ScanViewBody> {
+  //المسؤول عن التعامل مع تشغيل الكاميرا والتقاط صورة وجلبها من المعرض
   final ScanController _scanController = ScanController();
   bool _isBottomSheetOpen = false;
+
 
   @override
   void initState() {
@@ -27,12 +30,13 @@ class _ScanViewBodyState extends State<ScanViewBody> {
         setState(() {});
       }
     };
+    //تهيئة الكاميرا
     _scanController.initializeCamera();
   }
 
   void _showBottomSheet(BuildContext context, ScanState state) {
     if (_isBottomSheetOpen) {
-      Navigator.of(context).pop(); // إغلاق أي شيت مفتوح
+      GoRouter.of(context).pop(); // إغلاق أي BottomSheet مفتوح
     }
     _isBottomSheetOpen = true;
 

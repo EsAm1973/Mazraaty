@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 
 class CameraService {
+  // Singleton to avoid make intiazing the camera multiple times
   static final CameraService _instance = CameraService._internal();
   factory CameraService() => _instance;
 

@@ -60,6 +60,7 @@ class ScanController {
 
   void _handleError(BuildContext context, String message) {
     final cubit = context.read<ScanCubit>();
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     cubit.emit(cubit.state.copyWith(
       error: message,
       isLoading: false,

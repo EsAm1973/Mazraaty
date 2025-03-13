@@ -15,6 +15,7 @@ class ScanState {
     this.error = '',
   });
 
+  //دالة تُستخدم لإنشاء نسخة جديدة من الحالة مع إمكانية تعديل بعض المتغيرات دون الحاجة لإعادة إنشاء الكائن بالكامل.
   ScanState copyWith({
     Uint8List? imageBytes,
     String? diseaseName,
