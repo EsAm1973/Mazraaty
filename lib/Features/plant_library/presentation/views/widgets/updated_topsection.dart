@@ -1,16 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class UpdatedDetailsTopSection extends StatelessWidget {
-  const UpdatedDetailsTopSection({super.key});
-
+  const UpdatedDetailsTopSection({super.key, required this.imageUrl});
+  final String imageUrl;
   @override
   Widget build(BuildContext context) {
+    const String fullImageUrl =
+        'https://5abe-197-121-228-253.ngrok-free.app/storage/';
     return Stack(
       children: [
-        Image.asset(
-          'assets/images/details_test.png',
-          width: double.infinity,
+        CachedNetworkImage(
           height: 350,
+          imageUrl: fullImageUrl + imageUrl,
+          width: double.infinity,
+          errorWidget: (context, url, error) => const Icon(
+            Icons.error,
+          ),
+          placeholder: (context, url) => const Center(
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          ),
           fit: BoxFit.cover,
         ),
         Positioned(

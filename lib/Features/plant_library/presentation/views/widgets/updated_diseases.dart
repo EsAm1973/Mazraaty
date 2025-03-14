@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsDiseases extends StatelessWidget {
   const UpdatedDetailsDiseases(
@@ -29,7 +29,8 @@ class UpdatedDetailsDiseases extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 "Pests & Diseases",
-                style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                    fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -55,15 +56,14 @@ class UpdatedDetailsDiseases extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: Styles.textStyle16.copyWith(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Text(title,
+              style: GoogleFonts.montserrat(
+                  fontSize: 16,
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
-          ...items.map((item) => Text("- $item", style: Styles.textStyle16)),
+          ...items.map((item) =>
+              Text("- $item", style: GoogleFonts.montserrat(fontSize: 16))),
         ],
       ),
     );

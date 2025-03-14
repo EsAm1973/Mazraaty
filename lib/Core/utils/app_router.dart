@@ -19,7 +19,6 @@ import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.da
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
-import 'package:mazraaty/Features/plant_library/presentation/views/details_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/updated_details_view.dart';
 import 'package:mazraaty/Features/profile/data/repos/profile_repo_impl.dart';
@@ -34,7 +33,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  // static const String kSplashView = '/';
+  static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -45,7 +44,7 @@ abstract class AppRouter {
   static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
-  static const String kNavigationView = '/';
+  static const String kNavigationView = '/navigation_view';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kDetailsView = '/details_view';
@@ -53,10 +52,10 @@ abstract class AppRouter {
   static const String kDeleteAccountView = '/deleteaccount_view';
 
   static final router = GoRouter(routes: [
-    // GoRoute(
-    //   path: kSplashView,
-    //   builder: (context, state) => const SplashView(),
-    // ),
+    GoRoute(
+      path: kSplashView,
+      builder: (context, state) => const SplashView(),
+    ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
@@ -146,14 +145,10 @@ abstract class AppRouter {
       builder: (context, state) => const LibraryView(),
     ),
     GoRoute(
-      path: kDetailsView,
-      builder: (context, state) => PlantDetailsView(
+      path: kUpdatedDetailsView,
+      builder: (context, state) => UpdatedDetailsView(
         plant: state.extra as Plant,
       ),
-    ),
-    GoRoute(
-      path: kUpdatedDetailsView,
-      builder: (context, state) => const UpdatedDetailsView(),
     ),
     GoRoute(
       path: kHistoryView,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsPlantDescription extends StatefulWidget {
-  const UpdatedDetailsPlantDescription({super.key});
-
+  const UpdatedDetailsPlantDescription({super.key, required this.description});
+  final String description;
   @override
   State<UpdatedDetailsPlantDescription> createState() =>
       _UpdatedDetailsPlantDescriptionState();
@@ -19,20 +20,20 @@ class _UpdatedDetailsPlantDescriptionState
       children: [
         Text(
           "Description",
-          style: Styles.textStyle23.copyWith(
-              color: Colors.black87, fontWeight: FontWeight.bold),
+          style: Styles.textStyle23
+              .copyWith(color: Colors.black87, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         AnimatedCrossFade(
-          firstChild: const Text(
-            "Mint is an aromatic plant that is almost entirely perennial, They have widely spread underground branching stems.",
+          firstChild: Text(
+            widget.description,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Styles.textStyle15,
           ),
-          secondChild: const Text(
-            "Mint is an aromatic plant that is almost entirely perennial, They have widely spread underground branching stems.\n\nMint is also used in various culinary and medicinal applications due to its refreshing aroma and health benefits.",
-            style: Styles.textStyle15,
+          secondChild: Text(
+            widget.description,
+            style: GoogleFonts.montserrat(fontSize: 16),
           ),
           crossFadeState:
               isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,

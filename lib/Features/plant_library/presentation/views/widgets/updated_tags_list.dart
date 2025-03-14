@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_details_viewbody.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_tag_item.dart';
-import 'package:mazraaty/constants.dart';
 
 class UpdatedDetailsTagsList extends StatelessWidget {
-  const UpdatedDetailsTagsList({super.key});
+  const UpdatedDetailsTagsList({super.key, required this.tags});
+  final List<String> tags;
   @override
   Widget build(BuildContext context) {
     return Wrap(

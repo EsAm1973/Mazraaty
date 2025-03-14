@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsSoilInfoCard extends StatelessWidget {
@@ -36,7 +37,10 @@ class UpdatedDetailsSoilInfoCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 "Soil",
-                style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -50,17 +54,17 @@ class UpdatedDetailsSoilInfoCard extends StatelessWidget {
                 height: 1.7, // التحكم في المسافة بين الأسطر
               ),
               children: [
-                const TextSpan(
+                TextSpan(
                   text: "Type: ",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
                 ),
                 TextSpan(text: soilType),
                 const TextSpan(
                   text: "\n",
                 ),
-                const TextSpan(
+                TextSpan(
                   text: "Drainage: ",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
                 ),
                 TextSpan(text: drainage),
               ],
@@ -120,14 +124,12 @@ class UpdatedDetailsSoilInfoCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6), // حواف مستديرة
               ),
               child: Center(
-                child: Text(
-                  "${index + 1}",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: isInRange ? Colors.white : Colors.black54,
-                  ),
-                ),
+                child: Text("${index + 1}",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: isInRange ? Colors.white : Colors.black,
+                    )),
               ),
             ),
             if (index < 13) const SizedBox(width: 4), // مسافة بين العناصر
@@ -188,13 +190,11 @@ class UpdatedDetailsSoilInfoCard extends StatelessWidget {
               color: indicatorColor, // تغيير لون الصندوق إلى اللون المطابق
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Text(
-              "$minPH pH - $maxPH pH",
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text("${minPH.toDouble()} pH - ${maxPH.toDouble()} pH",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                )),
           ),
         ],
       ),

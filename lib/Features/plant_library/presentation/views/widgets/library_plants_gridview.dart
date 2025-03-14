@@ -30,7 +30,7 @@ class LibraryPlantGrid extends StatelessWidget {
               return GestureDetector(
                 onTap: () {
                   GoRouter.of(context)
-                      .push(AppRouter.kDetailsView, extra: plant);
+                      .push(AppRouter.kUpdatedDetailsView, extra: plant);
                 },
                 child: PlantCard(
                   title: plant.name,

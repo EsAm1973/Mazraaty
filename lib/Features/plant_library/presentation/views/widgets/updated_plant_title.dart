@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsPlantTitle extends StatelessWidget {
-  const UpdatedDetailsPlantTitle({super.key});
+  const UpdatedDetailsPlantTitle({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -10,16 +11,12 @@ class UpdatedDetailsPlantTitle extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-              text: 'Mentha-Mint ',
-              style: Styles.textStyle30
-                  .copyWith(color: Colors.black, fontWeight: FontWeight.bold)),
-          TextSpan(
-              text: 'a species of ',
-              style: Styles.textStyle20.copyWith(color: Colors.black)),
-          TextSpan(
-              text: 'Mentha',
-              style: Styles.textStyle30
-                  .copyWith(color: Colors.black, fontWeight: FontWeight.bold)),
+              text: title,
+              style: GoogleFonts.montserrat(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              )),
         ],
       ),
       maxLines: 2,

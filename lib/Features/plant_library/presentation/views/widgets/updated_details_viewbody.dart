@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
+import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_care_section.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_condition_section.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_cultural_card.dart';
@@ -15,11 +16,10 @@ import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updat
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_tempreature_card.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_topsection.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_uses_card.dart';
-import 'package:mazraaty/constants.dart';
 
 class UpdatedDetailsViewbody extends StatelessWidget {
-  const UpdatedDetailsViewbody({super.key});
-
+  const UpdatedDetailsViewbody({super.key, required this.plant});
+  final Plant plant;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,9 @@ class UpdatedDetailsViewbody extends StatelessWidget {
             pinned: true, // هيدر ثابت
             floating: false,
             delegate: StickyHeaderDelegate(
-              child: const UpdatedDetailsTopSection(),
+              child: UpdatedDetailsTopSection(
+                imageUrl: plant.headerImage,
+              ),
               maxExtent: 300,
               minExtent: 300,
             ),
@@ -46,57 +48,82 @@ class UpdatedDetailsViewbody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 15),
-                    const UpdatedDetailsPlantTitle(),
+                    UpdatedDetailsPlantTitle(
+                      title: plant.name,
+                    ),
                     const SizedBox(height: 20),
-                    const UpdatedDetailsTagsList(),
+                    UpdatedDetailsTagsList(
+                      tags: plant.tags,
+                    ),
                     const SizedBox(height: 20),
-                    const UpdatedDetailsPlantDetails(),
+                    UpdatedDetailsPlantDetails(
+                      botanicalName: plant.botanicalName,
+                      scientificName: plant.scientificName,
+                      alsoKnownAs: plant.alsoKnownAs,
+                    ),
                     const SizedBox(height: 20),
-                    const UpdatedDetailsSimilarPlantList(),
+                    UpdatedDetailsSimilarPlantList(
+                      plantName: plant.name,
+                    ),
                     const SizedBox(height: 20),
-                    const UpdatedDetailsPlantDescription(),
+                    UpdatedDetailsPlantDescription(
+                        description: plant.description),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsScientificClassification(),
+                    UpdatedDetailsScientificClassification(
+                      genus: plant.genus,
+                      family: plant.family,
+                      order: plant.order,
+                      grouping: plant.group,
+                      phylum: plant.phylum,
+                    ),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsCareSection(),
+                    UpdatedDetailsCareSection(
+                      toughness: plant.toughness,
+                      maintance: plant.maintenance,
+                    ),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsConditionsSection(),
+                    UpdatedDetailsConditionsSection(
+                      sunLight: plant.sunlight,
+                      hardnessZone: plant.hardnessZone,
+                    ),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsSoilInfoCard(
-                      soilType: 'Sandy',
-                      drainage: 'Well Drained',
-                      minPH: 5.0,
-                      maxPH: 7.0,
+                    UpdatedDetailsSoilInfoCard(
+                      soilType: plant.type,
+                      drainage: plant.drainage,
+                      minPH: plant.minPh,
+                      maxPH: plant.maxPh,
                     ),
                     const SizedBox(height: 60),
-                    const UpdatedDetailsTemperature(
-                      minTemp: 10.0,
-                      idealMin: 35.0,
-                      idealMax: 45.0,
-                      maxTemp: 50.0,
+                    UpdatedDetailsTemperature(
+                      minTemp: plant.minTp,
+                      idealMin: plant.idealMinTp,
+                      idealMax: plant.idealMaxTp,
+                      maxTemp: plant.maxTp,
                     ),
                     const SizedBox(height: 24),
                     UpdatedDetailsRequirementsSection(
-                      requirements: requirementsData,
+                      water: plant.water,
+                      repotting: plant.repotting,
+                      fertilizer: plant.fertilizer,
+                      misting: plant.misting,
+                      pruning: plant.pruning,
                     ),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsDiseases(
-                      pests: ["Scale insects", "Mealybugs", "Spider mites"],
-                      diseases: ["Stem rot", "Root rot", "Leaf spot disease"],
+                    UpdatedDetailsDiseases(
+                      pests: plant.pests,
+                      diseases: plant.diseases,
                     ),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsUsesCard(
+                    UpdatedDetailsUsesCard(
                       iconPath: 'assets/images/leaf.png',
                       title: 'Symbolism',
-                      description:
-                          'Mint (Mentha) is a versatile herb widely used for its refreshing flavor and medicinal properties. It is commonly used in cooking to add flavor to dishes, teas, and beverages. In herbal medicine, mint helps with digestion, relieves headaches, and soothes cold symptoms.',
+                      description: plant.uses,
                     ),
                     const SizedBox(height: 24),
-                    const UpdatedDetailsCulturalCard(
+                    UpdatedDetailsCulturalCard(
                       iconPath: 'assets/images/leaf.png',
                       title: 'Symbolism',
-                      description:
-                          'Mint is widely associated with freshness, both in terms of its flavor and aroma. It symbolizes rejuvenation, renewal, and a fresh start. Its cooling properties also make it a symbol of vitality and invigoration.',
+                      description: plant.culture,
                     ),
                   ],
                 ),

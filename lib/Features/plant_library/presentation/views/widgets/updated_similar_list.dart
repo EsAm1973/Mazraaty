@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
-import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_details_viewbody.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_similarlist_item.dart';
 import 'package:mazraaty/constants.dart';
 
 class UpdatedDetailsSimilarPlantList extends StatelessWidget {
-  const UpdatedDetailsSimilarPlantList({super.key});
-
+  const UpdatedDetailsSimilarPlantList({super.key, required this.plantName});
+  final String plantName;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Similar Plant of Mentha",
+          "Similar Plant of $plantName",
           style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),

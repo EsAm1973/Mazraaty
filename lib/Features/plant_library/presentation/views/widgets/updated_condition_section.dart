@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsConditionsSection extends StatelessWidget {
-  const UpdatedDetailsConditionsSection({super.key});
-
+  const UpdatedDetailsConditionsSection(
+      {super.key, required this.sunLight, required this.hardnessZone});
+  final String sunLight;
+  final String hardnessZone;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,13 +22,13 @@ class UpdatedDetailsConditionsSection extends StatelessWidget {
             _buildConditionCard(
               image: 'assets/images/sun.png',
               title: "Sunlight",
-              value: "Full Sun",
+              value: sunLight,
             ),
             const SizedBox(width: 12),
             _buildConditionCard(
               image: 'assets/images/location.png',
-              title: "Hardness zone",
-              value: "3–9",
+              title: "Hardness",
+              value: hardnessZone,
             ),
           ],
         ),
@@ -58,12 +61,15 @@ class UpdatedDetailsConditionsSection extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   title,
-                  style: Styles.textStyle15.copyWith(color: Colors.black54),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 15, color: Colors.black54),
                 ),
                 Text(
                   value,
-                  style:
-                      Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),

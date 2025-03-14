@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsScientificClassification extends StatelessWidget {
-  const UpdatedDetailsScientificClassification({super.key});
-
+  const UpdatedDetailsScientificClassification(
+      {super.key,
+      required this.genus,
+      required this.family,
+      required this.order,
+      required this.grouping,
+      required this.phylum});
+  final String genus;
+  final String family;
+  final String order;
+  final String grouping;
+  final String phylum;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,13 +27,13 @@ class UpdatedDetailsScientificClassification extends StatelessWidget {
         const SizedBox(height: 12),
         Column(
           children: [
-            _buildClassificationRow("Genus", "Mentha"),
-            _buildClassificationRow("Family", "Lamiaceae"),
-            _buildClassificationRow("Order", "Lamiales"),
-            _buildClassificationRow("Class", "Magnoliopsida, Dicotyledons"),
+            _buildClassificationRow("Genus", genus),
+            _buildClassificationRow("Family", family),
+            _buildClassificationRow("Order", order),
+            _buildClassificationRow("Class", grouping),
             _buildClassificationRow(
               "Phylum",
-              "Tracheophyta – Vascular plants",
+              phylum,
             ),
           ],
         ),
@@ -46,12 +57,11 @@ class UpdatedDetailsScientificClassification extends StatelessWidget {
         children: [
           Text(
             label,
-            style: Styles.textStyle16,
+            style: GoogleFonts.montserrat(fontSize: 16),
           ),
           Text(value,
-              style: Styles.textStyle16.copyWith(
-                fontWeight: FontWeight.bold,
-              )),
+              style: GoogleFonts.montserrat(
+                  fontSize: 16, fontWeight: FontWeight.bold)),
         ],
       ),
     );

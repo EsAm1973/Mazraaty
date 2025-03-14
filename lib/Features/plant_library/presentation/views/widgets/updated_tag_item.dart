@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsTagItem extends StatelessWidget {
   const UpdatedDetailsTagItem({super.key, required this.tag});
@@ -14,8 +14,11 @@ class UpdatedDetailsTagItem extends StatelessWidget {
       ),
       child: Text(
         tag,
-        style: Styles.textStyle16
-            .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+        style: GoogleFonts.montserrat(
+          fontSize: 16,
+          color: Colors.black,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

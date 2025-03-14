@@ -18,11 +18,11 @@ class PlantRepositoryImpl implements PlantRepository {
     };
     try {
       final response = await apiService.get('search', headers: headers);
-      if (response['status'] == 'error') {
+      if (response['status'] != 'success') {
         return Left(ServerFailure(errorMessage: response['message']));
       } else {
         final List<PlantCategory> categories = (response['data'] as List)
-            .map((e) => PlantCategory.fromJson(e))
+            .map((categoryJson) => PlantCategory.fromJson(categoryJson))
             .toList();
         return Right(categories);
       }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsCareSection extends StatelessWidget {
-  const UpdatedDetailsCareSection({super.key});
-
+  const UpdatedDetailsCareSection(
+      {super.key, required this.toughness, required this.maintance});
+  final String toughness;
+  final String maintance;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -11,7 +13,8 @@ class UpdatedDetailsCareSection extends StatelessWidget {
       children: [
         Text(
           "Care",
-          style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
+          style:
+              GoogleFonts.montserrat(fontSize: 23, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Container(
@@ -24,9 +27,9 @@ class UpdatedDetailsCareSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildCareItem(
-                  'assets/images/toughness.png', "Toughness", "High"),
+                  'assets/images/toughness.png', "Toughness", toughness),
               _buildCareItem(
-                  'assets/images/maintance.png', "Maintenance", "Medium"),
+                  'assets/images/maintance.png', "Maintenance", maintance),
             ],
           ),
         ),
@@ -44,11 +47,15 @@ class UpdatedDetailsCareSection extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Styles.textStyle15.copyWith(color: Colors.black54),
+              style:
+                  GoogleFonts.montserrat(fontSize: 15, color: Colors.black54),
             ),
             Text(
               value,
-              style: Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
+              style: GoogleFonts.montserrat(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),

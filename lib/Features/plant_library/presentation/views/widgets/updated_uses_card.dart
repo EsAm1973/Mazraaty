@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsUsesCard extends StatelessWidget {
   final String title;
@@ -20,7 +20,8 @@ class UpdatedDetailsUsesCard extends StatelessWidget {
       children: [
         Text(
           "Uses",
-          style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
+          style:
+              GoogleFonts.montserrat(fontSize: 23, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Container(
@@ -42,7 +43,8 @@ class UpdatedDetailsUsesCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     title,
-                    style: Styles.textStyle18.copyWith(
+                    style: GoogleFonts.montserrat(
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -51,7 +53,7 @@ class UpdatedDetailsUsesCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 description,
-                style: Styles.textStyle16,
+                style: GoogleFonts.montserrat(fontSize: 16),
               ),
             ],
           ),

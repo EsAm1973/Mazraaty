@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsTemperature extends StatelessWidget {
   final double minTemp;
@@ -36,7 +36,10 @@ class UpdatedDetailsTemperature extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 "Temperature needs",
-                style: Styles.textStyle18.copyWith(fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -50,10 +53,12 @@ class UpdatedDetailsTemperature extends StatelessWidget {
             children: [
               Image.asset('assets/images/idea.png', width: 30, height: 30),
               const SizedBox(width: 8),
-              const Expanded(
+              Expanded(
                 child: Text(
                   "Just like people, each plant has its own preferences. Learn about your plants’ Temperature needs and create a comforting environment for them to flourish.",
-                  style: Styles.textStyle16,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ],
@@ -170,7 +175,7 @@ class UpdatedDetailsTemperature extends StatelessWidget {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 4),
-        Text(label, style: const TextStyle(fontSize: 14)),
+        Text(label, style: GoogleFonts.montserrat(fontSize: 14)),
       ],
     );
   }

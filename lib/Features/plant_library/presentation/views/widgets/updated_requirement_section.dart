@@ -1,14 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
 class UpdatedDetailsRequirementsSection extends StatelessWidget {
-  final List<RequirementItem> requirements;
+  final String water;
+  final String repotting;
+  final String fertilizer;
+  final String misting;
+  final String pruning;
 
-  const UpdatedDetailsRequirementsSection({super.key, required this.requirements});
+  const UpdatedDetailsRequirementsSection(
+      {super.key,
+      required this.water,
+      required this.repotting,
+      required this.fertilizer,
+      required this.misting,
+      required this.pruning});
 
   @override
   Widget build(BuildContext context) {
+    final List<RequirementItem> requirements = [
+      RequirementItem(
+        title: "Water",
+        description: water, // الوصف من ال API
+        iconPath: "assets/images/droplet.png",
+      ),
+      RequirementItem(
+        title: "Repotting",
+        description: repotting,
+        iconPath: "assets/images/plant-02.png",
+      ),
+      RequirementItem(
+        title: "Fertilizer",
+        description: fertilizer,
+        iconPath: "assets/images/soil-moisture-field.png",
+      ),
+      RequirementItem(
+        title: "Misting",
+        description: misting,
+        iconPath: "assets/images/water-energy.png",
+      ),
+      RequirementItem(
+        title: "Pruning",
+        description: pruning,
+        iconPath: "assets/images/scissor.png",
+      ),
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -56,12 +94,12 @@ class UpdatedDetailsRequirementsSection extends StatelessWidget {
                 children: [
                   Text(
                     item.title,
-                    style: Styles.textStyle15,
+                    style: GoogleFonts.montserrat(fontSize: 15),
                   ),
                   Text(
                     item.description,
-                    style: Styles.textStyle15
-                        .copyWith(fontWeight: FontWeight.bold),
+                    style: GoogleFonts.montserrat(
+                        fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
