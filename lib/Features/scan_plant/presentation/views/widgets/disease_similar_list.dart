@@ -4,15 +4,14 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_
 import 'package:mazraaty/constants.dart';
 
 class DiseaseSimilarList extends StatelessWidget {
-  const DiseaseSimilarList({super.key, required this.diseaseName});
-  final String diseaseName;
+  const DiseaseSimilarList({super.key});
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Similar Plant of $diseaseName",
+          "Disease Images",
           style:
               GoogleFonts.montserrat(fontSize: 23, fontWeight: FontWeight.bold),
         ),

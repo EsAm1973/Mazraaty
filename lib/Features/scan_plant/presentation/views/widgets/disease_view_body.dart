@@ -4,6 +4,7 @@ import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_description.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_scientific_names.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_similar_list.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_symptoms.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_top_image.dart';
 
 class DiseaseViewBody extends StatelessWidget {
@@ -60,7 +61,11 @@ class DiseaseViewBody extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    const DiseaseSimilarList(diseaseName: 'Mint Rust'),
+                    const DiseaseSimilarList(),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    SymptomsScreen(),
                   ],
                 ),
               ),
