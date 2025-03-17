@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 
 class DiseaseScientificNames extends StatelessWidget {
   const DiseaseScientificNames(
@@ -37,8 +36,7 @@ class DiseaseScientificNames extends StatelessWidget {
         children: [
           TextSpan(
             text: label,
-            style: Styles.textStyle18
-                .copyWith(color: Colors.black87, fontWeight: FontWeight.w500),
+            style: GoogleFonts.montserrat(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           TextSpan(
               text: value,

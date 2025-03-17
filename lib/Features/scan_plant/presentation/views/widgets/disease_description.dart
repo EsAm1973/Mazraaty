@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 
 class DiseaseDescription extends StatefulWidget {
   const DiseaseDescription({super.key, required this.description});
@@ -18,8 +17,8 @@ class _DiseaseDescriptionState extends State<DiseaseDescription> {
       children: [
         Text(
           "Description",
-          style: Styles.textStyle23
-              .copyWith(color: Colors.black87, fontWeight: FontWeight.bold),
+          style:
+              GoogleFonts.montserrat(fontSize: 23, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         AnimatedCrossFade(
@@ -27,7 +26,7 @@ class _DiseaseDescriptionState extends State<DiseaseDescription> {
             widget.description,
             maxLines: 4,
             overflow: TextOverflow.ellipsis,
-            style: Styles.textStyle15,
+            style: GoogleFonts.montserrat(fontSize: 15),
           ),
           secondChild: Text(
             widget.description,

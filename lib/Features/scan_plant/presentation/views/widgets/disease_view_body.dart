@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_description.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_scientific_names.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_similar_list.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_top_image.dart';
 
 class DiseaseViewBody extends StatelessWidget {
@@ -56,6 +57,10 @@ class DiseaseViewBody extends StatelessWidget {
                       description:
                           'Mint Rust is a fungal disease that primarily affects plants in the Mint family (Lamiaceae), such as peppermint (Mentha piperita) and spearmint (Mentha spicata). The disease manifests as small, orange, yellow, or reddish pustules on the undersides of the leaves, which can eventually lead to leaf drop, reduced vigor, and plant death if left untreated.',
                     ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const DiseaseSimilarList(diseaseName: 'Mint Rust'),
                   ],
                 ),
               ),
