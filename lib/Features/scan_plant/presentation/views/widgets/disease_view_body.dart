@@ -4,6 +4,7 @@ import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_description.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_scientific_names.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_similar_list.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_solutions.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_symptoms.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_top_image.dart';
 
@@ -66,6 +67,10 @@ class DiseaseViewBody extends StatelessWidget {
                       height: 24,
                     ),
                     SymptomsScreen(),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    DiseaseSoluations(),
                   ],
                 ),
               ),
