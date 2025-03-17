@@ -1,29 +1,32 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class UpdatedDetailsTopSection extends StatelessWidget {
-  const UpdatedDetailsTopSection({super.key, required this.imageUrl});
-  final String imageUrl;
+class DiseaseTopImage extends StatelessWidget {
+  const DiseaseTopImage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    const String fullImageUrl =
-        'https://b7e8-196-129-106-200.ngrok-free.app/storage/';
     return Stack(
       children: [
-        CachedNetworkImage(
-          height: 350,
-          imageUrl: fullImageUrl + imageUrl,
+        Image.asset(
+          'assets/images/disease_test.png',
           width: double.infinity,
-          errorWidget: (context, url, error) => const Icon(
-            Icons.error,
-          ),
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(
-              color: Colors.black,
-            ),
-          ),
+          height: 350,
           fit: BoxFit.cover,
         ),
+        // CachedNetworkImage(
+        //   height: 350,
+        //   imageUrl: fullImageUrl + imageUrl,
+        //   width: double.infinity,
+        //   errorWidget: (context, url, error) => const Icon(
+        //     Icons.error,
+        //   ),
+        //   placeholder: (context, url) => const Center(
+        //     child: CircularProgressIndicator(
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        //   fit: BoxFit.cover,
+        // ),
         Positioned(
           top: 20,
           left: 20,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String baseUrl = 'https://5abe-197-121-228-253.ngrok-free.app/api/';
+const String baseUrl = 'https://b7e8-196-129-106-200.ngrok-free.app/api/';
 const Color kPrimaryColor = Colors.white;
 const Color kMainColor = Color(0xff3E7B27);
 const Color kScaffoldColor = Color(0xffF1F1F1);

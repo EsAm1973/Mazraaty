@@ -29,11 +29,12 @@ import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  static const String kSplashView = '/';
+ // static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -50,12 +51,13 @@ abstract class AppRouter {
   static const String kDetailsView = '/details_view';
   static const String kUpdatedDetailsView = '/updatedetails_view';
   static const String kDeleteAccountView = '/deleteaccount_view';
+  static const String kDiseaseView = '/';
 
   static final router = GoRouter(routes: [
-    GoRoute(
-      path: kSplashView,
-      builder: (context, state) => const SplashView(),
-    ),
+    // GoRoute(
+    //   path: kSplashView,
+    //   builder: (context, state) => const SplashView(),
+    // ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
@@ -157,6 +159,10 @@ abstract class AppRouter {
     GoRoute(
       path: kProfileView,
       builder: (context, state) => const ProfileView(),
+    ),
+    GoRoute(
+      path: kDiseaseView,
+      builder: (context, state) => const DiseaseView(),
     ),
     GoRoute(
       path: kDeleteAccountView,

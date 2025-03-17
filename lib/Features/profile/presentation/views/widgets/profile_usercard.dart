@@ -75,7 +75,7 @@ class ProfileUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String baseImageUrl = 'https://6ca1-197-121-146-72.ngrok-free.app/';
+    String baseImageUrl = 'https://b7e8-196-129-106-200.ngrok-free.app/storage';
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
