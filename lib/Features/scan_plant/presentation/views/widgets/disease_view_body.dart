@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_description.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_home_remedies.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_scientific_names.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_similar_list.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_solutions.dart';
@@ -71,6 +72,10 @@ class DiseaseViewBody extends StatelessWidget {
                       height: 24,
                     ),
                     DiseaseSoluations(),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    DiseaseHomeRemedies(),
                   ],
                 ),
               ),
