@@ -27,7 +27,7 @@ import 'package:mazraaty/Features/profile/presentation/views/crop_image_view.dar
 import 'package:mazraaty/Features/profile/presentation/views/delete_acc_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
-import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo_impl.dart';
+import 'package:mazraaty/Features/scan_plant/data/repos/Scan%20Repo/scan_repo_impl.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';

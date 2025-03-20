@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mazraaty/Features/scan_plant/data/repos/scan_repo.dart';
+import 'package:mazraaty/Features/scan_plant/data/repos/Scan%20Repo/scan_repo.dart';
 import 'scan_state.dart';
 
 class ScanCubit extends Cubit<ScanState> {
