@@ -27,14 +27,16 @@ import 'package:mazraaty/Features/profile/presentation/views/crop_image_view.dar
 import 'package:mazraaty/Features/profile/presentation/views/delete_acc_view.dart';
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
+import 'package:mazraaty/Features/scan_plant/data/repos/Disease%20Details%20Repo/disease_details_repo_impl.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/Scan%20Repo/scan_repo_impl.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/manager/Disease%20Details/disease_details_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-//  static const String kSplashView = '/';
+  static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -45,7 +47,7 @@ abstract class AppRouter {
   static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
-  static const String kNavigationView = '/';
+  static const String kNavigationView = '/navigation_view';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kDetailsView = '/details_view';
@@ -54,10 +56,10 @@ abstract class AppRouter {
   static const String kDiseaseView = '/disease_view';
 
   static final router = GoRouter(routes: [
-    // GoRoute(
-    //   path: kSplashView,
-    //   builder: (context, state) => const SplashView(),
-    // ),
+    GoRoute(
+      path: kSplashView,
+      builder: (context, state) => const SplashView(),
+    ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
@@ -115,6 +117,9 @@ abstract class AppRouter {
       builder: (context, state) => MultiBlocProvider(
         providers: [
           BlocProvider(
+              create: (context) => DiseaseDetailsCubit(
+                  DiseaseRepositoryImpl(apiService: ApiService(dio: Dio())))),
+          BlocProvider(
             create: (context) => ScanCubit(
                 repository:
                     ScanRepositoryImpl(apiScanService: ApiScanService())),
@@ -162,7 +167,10 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kDiseaseView,
-      builder: (context, state) => const DiseaseView(),
+      builder: (context, state) => DiseaseView(
+        details: (state.extra as Map)['details'],
+        imageBytes: (state.extra as Map)['imageBytes'],
+      ),
     ),
     GoRoute(
       path: kDeleteAccountView,

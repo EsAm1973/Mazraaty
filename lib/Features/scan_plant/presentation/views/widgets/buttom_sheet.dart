@@ -1,15 +1,26 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
-import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_state.dart';
+import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
 import 'package:mazraaty/constants.dart';
 
-class BottomSheetWidget extends StatelessWidget {
-  final ScanState state;
+class DiseaseBottomSheetWidget extends StatelessWidget {
+  final DiseaseDetailsModel details;
+  final double confidance;
+  final Uint8List imageBytes;
 
-  const BottomSheetWidget({super.key, required this.state});
+  const DiseaseBottomSheetWidget(
+      {super.key,
+      required this.details,
+      required this.imageBytes,
+      required this.confidance});
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.4,
       child: Container(
@@ -22,13 +33,13 @@ class BottomSheetWidget extends StatelessWidget {
             Text(
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
-              state.diseaseName,
+              details.originName,
               style: Styles.textStyle30
                   .copyWith(fontWeight: FontWeight.bold, color: kMainColor),
             ),
             const SizedBox(height: 8),
             Text(
-              'Confidence: ${(state.confidence * 100).toStringAsFixed(1)}%',
+              'Confidence: ${(confidance * 100).toStringAsFixed(1)}%',
               style: Styles.textStyle18.copyWith(color: Colors.black54),
             ),
             const SizedBox(height: 15),
@@ -38,8 +49,9 @@ class BottomSheetWidget extends StatelessWidget {
                 radius: const Radius.circular(2),
                 thumbVisibility: true,
                 interactive: true,
-                controller: ScrollController(),
+                controller: _scrollController,
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
@@ -65,7 +77,12 @@ class BottomSheetWidget extends StatelessWidget {
                   ),
                   foregroundColor: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context).push(
+                    AppRouter.kDiseaseView,
+                    extra: {'details': details, 'imageBytes': imageBytes},
+                  );
+                },
                 child: const Text(
                   'Read More',
                   style: Styles.textStyle20,

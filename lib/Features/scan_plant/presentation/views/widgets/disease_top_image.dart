@@ -1,32 +1,21 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DiseaseTopImage extends StatelessWidget {
-  const DiseaseTopImage({super.key});
-
+  const DiseaseTopImage({super.key, required this.image});
+  final Uint8List image;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          'assets/images/disease_test.png',
+        Image.memory(
+          image,
           width: double.infinity,
           height: 350,
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
-        // CachedNetworkImage(
-        //   height: 350,
-        //   imageUrl: fullImageUrl + imageUrl,
-        //   width: double.infinity,
-        //   errorWidget: (context, url, error) => const Icon(
-        //     Icons.error,
-        //   ),
-        //   placeholder: (context, url) => const Center(
-        //     child: CircularProgressIndicator(
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        //   fit: BoxFit.cover,
-        // ),
         Positioned(
           top: 20,
           left: 20,
@@ -43,7 +32,24 @@ class DiseaseTopImage extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
             ),
           ),
-        )
+        ),
+        Positioned(
+          top: 20,
+          right: 20,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: IconButton(
+              icon: const Icon(
+                FontAwesomeIcons.download,
+                color: Colors.black,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ),
       ],
     );
   }

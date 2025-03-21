@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/camera_service.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/manager/Disease%20Details/disease_details_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 
 class ScanController {
   final CameraService _cameraService = CameraService();
+  final DiseaseDetailsCubit _diseaseDetailsCubit;
   bool _isProcessing = false;
   VoidCallback? onCameraInitialized;
+
+  ScanController({required DiseaseDetailsCubit diseaseDetailsCubit})
+      : _diseaseDetailsCubit = diseaseDetailsCubit;
 
   CameraController? get cameraController => _cameraService.cameraController;
 
@@ -28,7 +33,13 @@ class ScanController {
     try {
       cubit.reset();
       final XFile file = await cameraController!.takePicture();
+      // Step 1: عمل التنبؤ
       await cubit.makePrediction(file);
+
+      // Step 2: إذا كان التنبؤ ناجح، جلب التفاصيل
+      if (cubit.state.diseaseName.isNotEmpty) {
+        await _fetchDiseaseDetails(context, cubit.state.diseaseName);
+      }
     } catch (e) {
       _handleError(context, 'Failed to capture image: ${e.toString()}');
     } finally {
@@ -49,7 +60,13 @@ class ScanController {
       );
 
       if (file != null) {
+        // Step 1: عمل التنبؤ
         await cubit.makePrediction(file);
+
+        // Step 2: إذا كان التنبؤ ناجح، جلب التفاصيل
+        if (cubit.state.diseaseName.isNotEmpty) {
+          await _fetchDiseaseDetails(context, cubit.state.diseaseName);
+        }
       }
     } catch (e) {
       _handleError(context, 'Failed to pick image: ${e.toString()}');
@@ -58,9 +75,17 @@ class ScanController {
     }
   }
 
+  Future<void> _fetchDiseaseDetails(
+      BuildContext context, String diseaseName) async {
+    try {
+      await _diseaseDetailsCubit.getDiseaseDetails(diseaseName);
+    } catch (e) {
+      print('Error fetching details: ${e.toString()}');
+    }
+  }
+
   void _handleError(BuildContext context, String message) {
     final cubit = context.read<ScanCubit>();
-    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
     cubit.emit(cubit.state.copyWith(
       error: message,
       isLoading: false,

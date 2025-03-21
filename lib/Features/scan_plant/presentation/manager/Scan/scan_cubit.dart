@@ -43,17 +43,23 @@ class ScanCubit extends Cubit<ScanState> {
 
   /// تعيد حالة التطبيق إلى الوضع الافتراضي
   void reset() {
-    emit(const ScanState(
+    emit(state.copyWith(
       diseaseName: '',
       confidence: 0.0,
       isLoading: false,
       error: '',
+      // imageBytes تبقى كما هي
     ));
   }
 
   Future<void> makePrediction(XFile file) async {
     try {
-      emit(state.copyWith(isLoading: true, error: '')); // بدء التحميل
+      final bytes = await file.readAsBytes();
+      emit(state.copyWith(
+        imageBytes: bytes, // تحديث الصورة هنا
+        isLoading: true,
+        error: '',
+      ));
 
       final prediction = await repository.predictDisease(file);
 

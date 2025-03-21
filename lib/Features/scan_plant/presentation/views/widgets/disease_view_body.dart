@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
+import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_description.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_home_remedies.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_prevention.dart';
@@ -11,17 +14,21 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_top_image.dart';
 
 class DiseaseViewBody extends StatelessWidget {
-  const DiseaseViewBody({super.key});
-
+  const DiseaseViewBody(
+      {super.key, required this.details, required this.imageBytes});
+  final DiseaseDetailsModel details;
+  final Uint8List imageBytes;
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
         SliverPersistentHeader(
-          pinned: true,
+          pinned: false,
           floating: false,
           delegate: StickyHeaderDelegate(
-            child: const DiseaseTopImage(),
+            child: DiseaseTopImage(
+              image: imageBytes,
+            ),
             maxExtent: 300,
             minExtent: 300,
           ),
@@ -39,7 +46,7 @@ class DiseaseViewBody extends StatelessWidget {
                       height: 15,
                     ),
                     Text(
-                      'Mint Rust',
+                      details.originName,
                       style: GoogleFonts.montserrat(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -49,17 +56,16 @@ class DiseaseViewBody extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const DiseaseScientificNames(
-                      diseaseName: 'Mint Rust',
-                      scientificName: 'Puccinia menthae',
-                      alsoKnownAs: '“Puccinia Rust” , “Rust Disease”',
+                    DiseaseScientificNames(
+                      diseaseName: details.name,
+                      scientificName: details.scientificName,
+                      alsoKnownAs: details.alsoKnowAs,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const DiseaseDescription(
-                      description:
-                          'Mint Rust is a fungal disease that primarily affects plants in the Mint family (Lamiaceae), such as peppermint (Mentha piperita) and spearmint (Mentha spicata). The disease manifests as small, orange, yellow, or reddish pustules on the undersides of the leaves, which can eventually lead to leaf drop, reduced vigor, and plant death if left untreated.',
+                    DiseaseDescription(
+                      description: details.description,
                     ),
                     const SizedBox(
                       height: 24,
@@ -68,19 +74,25 @@ class DiseaseViewBody extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    SymptomsScreen(),
+                    SymptomsScreen(
+                      symptoms: details.symptoms,
+                    ),
                     const SizedBox(
                       height: 24,
                     ),
-                    DiseaseSoluations(),
+                    DiseaseSoluations(
+                      solutions: details.solutions,
+                    ),
                     const SizedBox(
                       height: 24,
                     ),
-                    DiseaseHomeRemedies(),
+                    DiseaseHomeRemedies(remedies: details.homeRemedys),
                     const SizedBox(
                       height: 24,
                     ),
-                    DiseasePrevention(),
+                    DiseasePrevention(
+                      preventions: details.preventions,
+                    ),
                   ],
                 ),
               ),

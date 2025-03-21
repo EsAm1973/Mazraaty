@@ -7,6 +7,7 @@ import 'package:mazraaty/Features/scan_plant/data/models/symptom.dart';
 class DiseaseDetailsModel {
   final int id;
   final String name;
+  final String originName;
   final String scientificName;
   final String alsoKnowAs;
   final String typeDisease;
@@ -20,6 +21,7 @@ class DiseaseDetailsModel {
   DiseaseDetailsModel({
     required this.id,
     required this.name,
+    required this.originName,
     required this.scientificName,
     required this.alsoKnowAs,
     required this.typeDisease,
@@ -36,6 +38,7 @@ class DiseaseDetailsModel {
     return DiseaseDetailsModel(
       id: data['id'] ?? 0,
       name: data['name'] ?? '',
+      originName: data['origin_name'] ?? '',
       scientificName: data['scientific_name'] ?? '',
       alsoKnowAs: data['also_know_as'] ?? '',
       typeDisease: data['type_disease'] ?? '',

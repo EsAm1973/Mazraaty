@@ -4,6 +4,7 @@ import 'package:mazraaty/Core/errors/failure.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/Disease%20Details%20Repo/disease_details_repo.dart';
+import 'package:mazraaty/constants.dart';
 
 class DiseaseRepositoryImpl implements DiseaseRepository {
   final ApiService apiService;
@@ -19,7 +20,7 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
 
     try {
       final response = await apiService.dio.get(
-        endPoint,
+        '$baseUrl$endPoint',
         queryParameters: params,
         options: Options(headers: headers),
       );
