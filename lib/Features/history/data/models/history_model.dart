@@ -1,6 +1,5 @@
 // history_disease_model.dart
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:mazraaty/Features/scan_plant/data/models/disease_image.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/home_remedy.dart';
@@ -21,7 +20,7 @@ class HistoryDisease {
   final List<Prevention> preventions;
   final List<HomeRemedy> homeRemedys;
   final List<DiseaseImage> diseaseImages;
-  final Uint8List imageBytes;
+  final String imagePath; // بدلاً من imageBytes
   final int userId;
 
   HistoryDisease({
@@ -37,13 +36,13 @@ class HistoryDisease {
     required this.preventions,
     required this.homeRemedys,
     required this.diseaseImages,
-    required this.imageBytes,
+    required this.imagePath,
     required this.userId,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'disease_id': diseaseId, // تم تغيير المفتاح من id إلى disease_id
+      'disease_id': diseaseId,
       'name': name,
       'origin_name': originName,
       'scientific_name': scientificName,
@@ -56,14 +55,14 @@ class HistoryDisease {
       'home_remedys': jsonEncode(homeRemedys.map((e) => e.toJson()).toList()),
       'disease_images':
           jsonEncode(diseaseImages.map((e) => e.toJson()).toList()),
-      'image_bytes': imageBytes,
+      'image_path': imagePath, // تخزين مسار الصورة
       'user_id': userId,
     };
   }
 
   factory HistoryDisease.fromMap(Map<String, dynamic> map) {
     return HistoryDisease(
-      diseaseId: map['disease_id'], // قراءة المفتاح disease_id
+      diseaseId: map['disease_id'],
       name: map['name'],
       originName: map['origin_name'],
       scientificName: map['scientific_name'],
@@ -85,7 +84,7 @@ class HistoryDisease {
       diseaseImages: List<DiseaseImage>.from(
         jsonDecode(map['disease_images']).map((x) => DiseaseImage.fromJson(x)),
       ),
-      imageBytes: map['image_bytes'],
+      imagePath: map['image_path'],
       userId: map['user_id'],
     );
   }

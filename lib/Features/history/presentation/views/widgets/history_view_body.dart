@@ -19,6 +19,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
     super.initState();
     context.read<HistoryCubit>().loadHistory();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HistoryCubit, HistoryState>(
@@ -26,37 +27,54 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
       builder: (context, state) {
         if (state is HistoryLoading) {
           return const Center(child: CircularProgressIndicator());
-        }
-
-        if (state is HistoryError) {
+        } else if (state is HistoryError) {
           return Center(child: Text(state.message));
-        }
-
-        final diseases = state is HistoryLoaded ? state.diseases : [];
-        return Padding(
-          padding:
-              const EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'History',
-                  style: Styles.textStyle38.copyWith(
-                    fontFamily: kfontFamily,
-                    color: kMainColor,
+        } else if (state is HistoryLoaded) {
+          if (state.diseases.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/empty_history.png',
+                    width: 300,
+                    height: 300,
+                  ),
+                  Text(
+                    'No History Diseases Found',
+                    style: Styles.textStyle20
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            );
+          }
+          return Padding(
+            padding:
+                const EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'History',
+                    style: Styles.textStyle38.copyWith(
+                      fontFamily: kfontFamily,
+                      color: kMainColor,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              HistoryListView(
-                diseases: diseases,
-              ),
-            ],
-          ),
-        );
+                const SizedBox(
+                  height: 20,
+                ),
+                HistoryListView(
+                  diseases: state.diseases,
+                ),
+              ],
+            ),
+          );
+        }
+        return Container();
       },
     );
   }

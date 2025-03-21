@@ -26,25 +26,25 @@ class HistoryDatabase {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-        CREATE TABLE diseases(
-          disease_id INTEGER,
-          name TEXT,
-          origin_name TEXT,
-          scientific_name TEXT,
-          also_know_as TEXT,
-          type_disease TEXT,
-          description TEXT,
-          symptoms TEXT,
-          solutions TEXT,
-          preventions TEXT,
-          home_remedys TEXT,
-          disease_images TEXT,
-          image_bytes BLOB,
-          user_id INTEGER,
-          PRIMARY KEY (disease_id, user_id),
-          FOREIGN KEY(user_id) REFERENCES user(id)
-        )
-      ''');
+          CREATE TABLE diseases(
+            disease_id INTEGER,
+            name TEXT,
+            origin_name TEXT,
+            scientific_name TEXT,
+            also_know_as TEXT,
+            type_disease TEXT,
+            description TEXT,
+            symptoms TEXT,
+            solutions TEXT,
+            preventions TEXT,
+            home_remedys TEXT,
+            disease_images TEXT,
+            image_path TEXT,  -- بدل من image_bytes BLOB
+            user_id INTEGER,
+            PRIMARY KEY (disease_id, user_id),
+            FOREIGN KEY(user_id) REFERENCES user(id)
+          )
+        ''');
       },
     );
   }
@@ -54,12 +54,12 @@ class HistoryDatabase {
     return await db.insert('diseases', disease.toMap());
   }
 
-  Future<int> deleteDisease(int id) async {
+  Future<int> deleteDisease(int diseaseId, int userId) async {
     final db = await database;
     return await db.delete(
       'diseases',
-      where: 'id = ?',
-      whereArgs: [id],
+      where: 'disease_id = ? AND user_id = ?',
+      whereArgs: [diseaseId, userId],
     );
   }
 

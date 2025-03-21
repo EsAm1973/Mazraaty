@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
+import 'package:mazraaty/constants.dart';
 
 class DiseaseTopImage extends StatelessWidget {
   const DiseaseTopImage({
@@ -22,7 +23,6 @@ class DiseaseTopImage extends StatelessWidget {
     return BlocConsumer<HistoryCubit, HistoryState>(
       listener: (context, state) {},
       builder: (context, state) {
-        final historyCubit = context.read<HistoryCubit>();
         final userCubit = context.read<UserCubit>();
         final isLoggedIn = userCubit.currentUser != null;
         bool isSaved = false;
@@ -76,7 +76,7 @@ class DiseaseTopImage extends StatelessWidget {
                         isSaved
                             ? Icons.download_done // أيقونة عندما يكون محفوظ
                             : FontAwesomeIcons.download,
-                        color: isSaved ? Colors.green : Colors.black,
+                        color: isSaved ? kMainColor : Colors.black,
                       ),
                       onPressed: () {
                         if (isLoggedIn) {

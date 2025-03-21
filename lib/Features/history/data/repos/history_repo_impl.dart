@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:mazraaty/Core/methods/compress_method.dart';
 import 'package:mazraaty/Features/history/data/database/history_database.dart';
 import 'package:mazraaty/Features/history/data/models/history_model.dart';
 import 'package:mazraaty/Features/history/data/repos/history_repo.dart';
@@ -11,6 +12,12 @@ class HistoryRepository implements IHistoryRepository {
   @override
   Future<void> addDiseaseToHistory(
       DiseaseDetailsModel disease, Uint8List imageBytes, int userId) async {
+    // ضغط الصورة
+    final compressedImageBytes = await compressImage(imageBytes);
+    // حفظ الصورة في النظام والحصول على مسارها
+    final imagePath =
+        await saveImageFile(compressedImageBytes, disease.id, userId);
+
     final historyDisease = HistoryDisease(
       diseaseId: disease.id, // استخدام الحقل diseaseId بدلاً من id
       name: disease.name,
@@ -24,7 +31,7 @@ class HistoryRepository implements IHistoryRepository {
       preventions: disease.preventions,
       homeRemedys: disease.homeRemedys,
       diseaseImages: disease.diseaseImages,
-      imageBytes: imageBytes,
+      imagePath: imagePath, // حفظ مسار الصورة
       userId: userId,
     );
 
@@ -32,8 +39,8 @@ class HistoryRepository implements IHistoryRepository {
   }
 
   @override
-  Future<void> removeDiseaseFromHistory(int diseaseId) async {
-    await _database.deleteDisease(diseaseId);
+  Future<void> removeDiseaseFromHistory(int diseaseId, int userId) async {
+    await _database.deleteDisease(diseaseId, userId);
   }
 
   @override

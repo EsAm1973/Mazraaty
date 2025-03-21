@@ -55,7 +55,7 @@ class DiseaseBottomSheetWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2),
                     child: Text(
-                      'Mint Rust is a fungal disease that primarily affects plants in the Mint family (Lamiaceae), such as peppermint (Mentha piperita) and spearmint (Mentha spicata). The disease manifests as small, orange, yellow, or reddish pustules on the undersides of the leaves, which can eventually lead to leaf drop, reduced vigor, and plant death if left untreated.',
+                      details.description,
                       style: Styles.textStyle15.copyWith(color: Colors.black54),
                     ),
                   ),

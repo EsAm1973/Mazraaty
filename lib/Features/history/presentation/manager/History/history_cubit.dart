@@ -38,7 +38,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     final isSaved = await repository.isDiseaseSaved(disease.id, user.id);
 
     if (isSaved) {
-      await repository.removeDiseaseFromHistory(disease.id);
+      await repository.removeDiseaseFromHistory(disease.id, user.id);
     } else {
       await repository.addDiseaseToHistory(disease, imageBytes, user.id);
     }
