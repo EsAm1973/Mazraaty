@@ -5,13 +5,24 @@ import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/data/database/user_database.dart';
 import 'package:mazraaty/Core/data/repository/User%20Repository/user_repo_impl.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
+import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
+import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/constants.dart';
 
 void main() {
   runApp(
-    BlocProvider(
-      create: (context) => UserCubit(
-          userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => UserCubit(
+              userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
+        ),
+        BlocProvider(
+            create: (context) => HistoryCubit(
+                  HistoryRepository(),
+                  context.read<UserCubit>(),
+                )..loadHistory()),
+      ],
       child: const MyApp(),
     ),
   );

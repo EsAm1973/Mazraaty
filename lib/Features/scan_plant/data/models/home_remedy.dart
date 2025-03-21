@@ -13,4 +13,8 @@ class HomeRemedy {
       description: json['description'] ?? '',
     );
   }
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'description': description,
+      };
 }

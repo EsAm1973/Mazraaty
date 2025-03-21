@@ -8,4 +8,7 @@ class DiseaseImage {
       image: json['image'] ?? '',
     );
   }
+  Map<String, dynamic> toJson() => {
+        'image': image,
+      };
 }

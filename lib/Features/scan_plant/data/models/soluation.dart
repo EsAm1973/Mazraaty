@@ -13,4 +13,8 @@ class Solution {
       description: json['description'] ?? '',
     );
   }
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'description': description,
+      };
 }

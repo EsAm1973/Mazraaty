@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/history/data/models/history_model.dart';
 import 'package:mazraaty/constants.dart';
 
 class HistoryListItem extends StatelessWidget {
-  const HistoryListItem({super.key});
+  const HistoryListItem({super.key, required this.disease});
+  final HistoryDisease disease;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,8 @@ class HistoryListItem extends StatelessWidget {
               topLeft: Radius.circular(16),
               bottomLeft: Radius.circular(16),
             ),
-            child: Image.asset(
-              'assets/images/history_test.JPG',
+            child: Image.memory(
+              disease.imageBytes,
               width: 110,
               height: 110,
               fit: BoxFit.cover,
@@ -35,7 +37,7 @@ class HistoryListItem extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              'Cercospora Leaf Spot / Gray Leaf Spot (GLS) in Corn',
+              disease.originName,
               style: Styles.textStyle15.copyWith(
                 color: kMainColor,
               ),

@@ -28,6 +28,7 @@ class DiseaseViewBody extends StatelessWidget {
           delegate: StickyHeaderDelegate(
             child: DiseaseTopImage(
               image: imageBytes,
+              disease: details,
             ),
             maxExtent: 300,
             minExtent: 300,
