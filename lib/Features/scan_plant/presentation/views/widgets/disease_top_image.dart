@@ -30,8 +30,8 @@ class DiseaseTopImage extends StatelessWidget {
         if (isLoggedIn) {
           isSaved = context.select<HistoryCubit, bool>(
             (cubit) => (cubit.state is HistoryLoaded)
-                ? (cubit.state as HistoryLoaded).diseases.any(
-                    (d) => d.id == disease.id) // استخدمنا الخاصية الجديدة هنا
+                ? (cubit.state as HistoryLoaded).diseases.any((d) =>
+                    d.diseaseId == disease.id) // استخدمنا الخاصية الجديدة هنا
                 : false,
           );
         }

@@ -21,7 +21,8 @@ class UserCubit extends Cubit<UserState> {
     try {
       emit(UserLoading());
       final user = await userRepository.getUser();
-      if (user != null) {
+      if (user != null && user.id != 0) {
+        // التأكد من وجود user id صالح
         emit(UserLoaded(user));
       } else {
         emit(UserInitial());
@@ -43,7 +44,7 @@ class UserCubit extends Cubit<UserState> {
   Future<void> logout() async {
     try {
       emit(UserLoading());
-      await userRepository.deleteUser();
+      await userRepository.logoutUser();
       emit(UserInitial());
     } catch (e) {
       emit(UserError(e.toString()));

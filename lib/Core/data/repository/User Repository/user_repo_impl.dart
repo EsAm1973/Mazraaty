@@ -11,6 +11,7 @@ class UserRepositoryImpl implements IUserRepository {
   @override
   Future<void> saveUser(User user) async {
     final db = await userDatabase.database;
+    // حفظ أو تحديث السجل مع تعيين is_active = 1
     await db.insert(
       'user',
       {
@@ -20,6 +21,7 @@ class UserRepositoryImpl implements IUserRepository {
         'phone_number': user.phone,
         'points': user.points,
         'token': user.token,
+        'is_active': 1,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -28,16 +30,33 @@ class UserRepositoryImpl implements IUserRepository {
   @override
   Future<User?> getUser() async {
     final db = await userDatabase.database;
-    List<Map<String, dynamic>> maps = await db.query('user', limit: 1);
+    List<Map<String, dynamic>> maps = await db.query(
+      'user',
+      where: 'is_active = ?',
+      whereArgs: [1],
+      limit: 1,
+    );
     if (maps.isNotEmpty) {
       return User.fromJson(maps.first);
     }
     return null;
   }
 
+  // عند logout نقوم بتحديث السجل النشط بحيث نُفري بيانات الجلسة ونغير is_active إلى 0
   @override
-  Future<void> deleteUser() async {
+  Future<void> logoutUser() async {
     final db = await userDatabase.database;
-    await db.delete('user');
+    await db.update(
+      'user',
+      {
+        'user_name': '', // أو يمكن تركه كما هو إن أردت الاحتفاظ بالاسم
+        'phone_number': '',
+        'points': 0,
+        'token': '',
+        'is_active': 0,
+      },
+      where: 'is_active = ?',
+      whereArgs: [1],
+    );
   }
 }

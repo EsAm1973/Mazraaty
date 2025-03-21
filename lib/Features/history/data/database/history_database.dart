@@ -26,24 +26,25 @@ class HistoryDatabase {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE diseases(
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            origin_name TEXT,
-            scientific_name TEXT,
-            also_know_as TEXT,
-            type_disease TEXT,
-            description TEXT,
-            symptoms TEXT,
-            solutions TEXT,
-            preventions TEXT,
-            home_remedys TEXT,
-            disease_images TEXT,
-            image_bytes BLOB,
-            user_id INTEGER,
-            FOREIGN KEY(user_id) REFERENCES user(id)
-          )
-        ''');
+        CREATE TABLE diseases(
+          disease_id INTEGER,
+          name TEXT,
+          origin_name TEXT,
+          scientific_name TEXT,
+          also_know_as TEXT,
+          type_disease TEXT,
+          description TEXT,
+          symptoms TEXT,
+          solutions TEXT,
+          preventions TEXT,
+          home_remedys TEXT,
+          disease_images TEXT,
+          image_bytes BLOB,
+          user_id INTEGER,
+          PRIMARY KEY (disease_id, user_id),
+          FOREIGN KEY(user_id) REFERENCES user(id)
+        )
+      ''');
       },
     );
   }

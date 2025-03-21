@@ -9,9 +9,10 @@ class HistoryRepository implements IHistoryRepository {
   final HistoryDatabase _database = HistoryDatabase();
 
   @override
-  Future<void> addDiseaseToHistory(DiseaseDetailsModel disease, Uint8List imageBytes, int userId) async {
+  Future<void> addDiseaseToHistory(
+      DiseaseDetailsModel disease, Uint8List imageBytes, int userId) async {
     final historyDisease = HistoryDisease(
-      id: disease.id,
+      diseaseId: disease.id, // استخدام الحقل diseaseId بدلاً من id
       name: disease.name,
       originName: disease.originName,
       scientificName: disease.scientificName,
@@ -26,7 +27,7 @@ class HistoryRepository implements IHistoryRepository {
       imageBytes: imageBytes,
       userId: userId,
     );
-    
+
     await _database.insertDisease(historyDisease);
   }
 
@@ -43,6 +44,6 @@ class HistoryRepository implements IHistoryRepository {
   @override
   Future<bool> isDiseaseSaved(int diseaseId, int userId) async {
     final diseases = await _database.getDiseasesForUser(userId);
-    return diseases.any((disease) => disease.id == diseaseId);
+    return diseases.any((disease) => disease.diseaseId == diseaseId);
   }
 }

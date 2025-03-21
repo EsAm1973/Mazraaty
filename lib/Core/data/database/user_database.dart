@@ -30,7 +30,8 @@ class UserDatabase {
             email TEXT,
             phone_number TEXT,
             points INTEGER,
-            token TEXT
+            token TEXT,
+            is_active INTEGER DEFAULT 0
           )
         ''');
       },

@@ -9,7 +9,7 @@ import 'package:mazraaty/Features/scan_plant/data/models/soluation.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/symptom.dart';
 
 class HistoryDisease {
-  final int id;
+  final int diseaseId;
   final String name;
   final String originName;
   final String scientificName;
@@ -25,7 +25,7 @@ class HistoryDisease {
   final int userId;
 
   HistoryDisease({
-    required this.id,
+    required this.diseaseId,
     required this.name,
     required this.originName,
     required this.scientificName,
@@ -43,7 +43,7 @@ class HistoryDisease {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'disease_id': diseaseId, // تم تغيير المفتاح من id إلى disease_id
       'name': name,
       'origin_name': originName,
       'scientific_name': scientificName,
@@ -63,7 +63,7 @@ class HistoryDisease {
 
   factory HistoryDisease.fromMap(Map<String, dynamic> map) {
     return HistoryDisease(
-      id: map['id'],
+      diseaseId: map['disease_id'], // قراءة المفتاح disease_id
       name: map['name'],
       originName: map['origin_name'],
       scientificName: map['scientific_name'],

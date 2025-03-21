@@ -5,9 +5,20 @@ import 'package:mazraaty/Features/history/presentation/manager/History/history_c
 import 'package:mazraaty/Features/history/presentation/views/widgets/history_listview.dart';
 import 'package:mazraaty/constants.dart';
 
-class HistoryViewBody extends StatelessWidget {
+class HistoryViewBody extends StatefulWidget {
   const HistoryViewBody({super.key});
 
+  @override
+  State<HistoryViewBody> createState() => _HistoryViewBodyState();
+}
+
+class _HistoryViewBodyState extends State<HistoryViewBody> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<HistoryCubit>().loadHistory();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HistoryCubit, HistoryState>(
