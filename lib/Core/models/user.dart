@@ -25,4 +25,22 @@ class User {
       token: json['token'] ?? '',
     );
   }
+
+  User copyWith({
+    int? id,
+    String? username,
+    String? email,
+    String? phone,
+    int? points,
+    String? token,
+  }) {
+    return User(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      points: points ?? this.points,
+      token: token ?? this.token,
+    );
+  }
 }

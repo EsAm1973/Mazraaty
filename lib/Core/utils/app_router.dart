@@ -50,7 +50,6 @@ abstract class AppRouter {
   static const String kNavigationView = '/navigation_view';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
-  static const String kDetailsView = '/details_view';
   static const String kUpdatedDetailsView = '/updatedetails_view';
   static const String kDeleteAccountView = '/deleteaccount_view';
   static const String kDiseaseView = '/disease_view';

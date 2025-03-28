@@ -1,6 +1,7 @@
 part of 'user_cubit.dart';
 
-sealed class UserState extends Equatable {
+@immutable
+abstract class UserState extends Equatable {
   const UserState();
 
   @override
@@ -14,6 +15,9 @@ class UserLoading extends UserState {}
 class UserLoaded extends UserState {
   final User user;
   const UserLoaded(this.user);
+
+  @override
+  List<Object> get props => [user]; // قارن تغييرات User
 }
 
 class UserError extends UserState {

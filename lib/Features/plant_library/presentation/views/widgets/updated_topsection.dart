@@ -7,7 +7,7 @@ class UpdatedDetailsTopSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const String fullImageUrl =
-        'https://b7e8-196-129-106-200.ngrok-free.app/storage/';
+        'https://b290-196-129-56-101.ngrok-free.app/storage/';
     return Stack(
       children: [
         CachedNetworkImage(

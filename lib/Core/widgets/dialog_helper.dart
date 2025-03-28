@@ -28,14 +28,37 @@ class DialogHelper {
     _loadingDialog?.show();
   }
 
+  static void showSubscriptionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Subscription Required'),
+          content: const Text(
+              'To use this feature, you need to subscribe to a premium plan. Do you want to go to the subscription page?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // توجيه المستخدم إلى صفحة الاشتراكات
+                // GoRouter.of(context).push(AppRouter.kSubscriptionPage);
+              },
+              child: const Text('Go Premium'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   static void hideLoading() {
     _loadingDialog?.dismiss();
     _loadingDialog = null;
   }
 
   static void showSuccess(
-    BuildContext context, 
-    String title, 
+    BuildContext context,
+    String title,
     String description,
     VoidCallback onOkPressed,
   ) {
@@ -51,8 +74,8 @@ class DialogHelper {
   }
 
   static void showError(
-    BuildContext context, 
-    String title, 
+    BuildContext context,
+    String title,
     String description,
   ) {
     AwesomeDialog(

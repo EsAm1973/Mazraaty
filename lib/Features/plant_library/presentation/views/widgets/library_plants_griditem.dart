@@ -16,7 +16,7 @@ class PlantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const fullUrlImage = 'https://b7e8-196-129-106-200.ngrok-free.app/storage/';
+    const fullUrlImage = 'https://b290-196-129-56-101.ngrok-free.app/storage/';
     return Container(
       width: 160,
       decoration: BoxDecoration(

@@ -40,7 +40,7 @@ class _CustomNavBarState extends State<CustomNavBar> {
         index: selectedIndex,
         backgroundColor: kScaffoldColor,
         color: kMainColor,
-        animationDuration: const Duration(milliseconds: 400),
+        animationDuration: const Duration(milliseconds: 250),
         items: const [
           Icon(
             Icons.home,
