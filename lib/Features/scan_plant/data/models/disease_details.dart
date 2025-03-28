@@ -17,6 +17,7 @@ class DiseaseDetailsModel {
   final List<Prevention> preventions;
   final List<HomeRemedy> homeRemedys;
   final List<DiseaseImage> diseaseImages;
+  int? userPoints;
 
   DiseaseDetailsModel({
     required this.id,
@@ -31,6 +32,7 @@ class DiseaseDetailsModel {
     required this.preventions,
     required this.homeRemedys,
     required this.diseaseImages,
+    this.userPoints,
   });
 
   factory DiseaseDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +60,7 @@ class DiseaseDetailsModel {
       diseaseImages: (data['disease_images'] as List<dynamic>? ?? [])
           .map((e) => DiseaseImage.fromJson(e))
           .toList(),
+      userPoints: data['your_points_now'] ?? 0,
     );
   }
 }

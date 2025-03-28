@@ -13,10 +13,13 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
 
   @override
   Future<Either<Failure, DiseaseDetailsModel>> fetchDiseaseDetails(
-      String diseaseName) async {
+      String diseaseName, String token) async {
     const String endPoint = 'diseases';
     final Map<String, dynamic> params = {'name': diseaseName};
-    final Map<String, dynamic> headers = {'Accept': 'application/json'};
+    final Map<String, dynamic> headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
 
     try {
       final response = await apiService.dio.get(

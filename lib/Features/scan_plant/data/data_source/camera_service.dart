@@ -1,29 +1,39 @@
 import 'package:camera/camera.dart';
 
 class CameraService {
-  // Singleton to avoid make intiazing the camera multiple times
-  static final CameraService _instance = CameraService._internal();
-  factory CameraService() => _instance;
-
   CameraController? _cameraController;
-  List<CameraDescription>? _cameras;
-
-  CameraService._internal();
+  bool _isInitialized = false;
+  final ResolutionPreset _resolution = ResolutionPreset.medium;
 
   Future<void> initializeCamera() async {
-    if (_cameraController != null) return; // إذا كانت الكاميرا مهيئة، لا تفعل شيئًا
+    if (_isInitialized) return;
 
-    _cameras = await availableCameras();
-    if (_cameras != null && _cameras!.isNotEmpty) {
-      _cameraController = CameraController(_cameras![0], ResolutionPreset.medium);
+    try {
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) throw Exception('No cameras found');
+
+      _cameraController = CameraController(
+        cameras.first,
+        _resolution,
+        enableAudio: false,
+      );
+
       await _cameraController!.initialize();
+      _isInitialized = true;
+    } catch (e) {
+      _isInitialized = false;
+      throw Exception('Camera initialization failed: $e');
     }
   }
 
-  CameraController? get cameraController => _cameraController;
+  Future<void> disposeCamera() async {
+    if (!_isInitialized) return;
 
-  void disposeCamera() {
-    _cameraController?.dispose();
+    await _cameraController?.dispose();
     _cameraController = null;
+    _isInitialized = false;
   }
+
+  CameraController? get cameraController =>
+      _isInitialized ? _cameraController : null;
 }

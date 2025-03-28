@@ -16,25 +16,61 @@ class ScanViewBody extends StatefulWidget {
   _ScanViewBodyState createState() => _ScanViewBodyState();
 }
 
-class _ScanViewBodyState extends State<ScanViewBody> {
+class _ScanViewBodyState extends State<ScanViewBody>
+    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   late ScanController _scanController;
+  bool _isCameraActive = false;
   bool _isBottomSheetOpen = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
 
-    // تهيئة ScanController مع حقن الـ Cubit المطلوب
+    // إضافة التهيئة هنا ↓
     _scanController = ScanController(
       diseaseDetailsCubit: context.read<DiseaseDetailsCubit>(),
     );
 
-    _scanController.onCameraInitialized = _onCameraInitialized;
-    _scanController.initializeCamera();
+    _initializeCamera();
   }
 
-  void _onCameraInitialized() {
-    if (mounted) setState(() {});
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    if (_scanController.cameraService.cameraController != null) {
+      _scanController.stopCamera();
+    }
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _scanController.stopCamera();
+    } else if (state == AppLifecycleState.resumed) {
+      _initializeCamera();
+    }
+  }
+
+  Future<void> _initializeCamera() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    try {
+      if (!_isCameraActive) {
+        await _scanController.startCamera();
+        if (mounted) {
+          setState(() => _isCameraActive = true);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isCameraActive = false);
+      }
+      print('Camera Initialization Error: $e');
+    }
   }
 
   void _showBottomSheet(
@@ -73,6 +109,7 @@ class _ScanViewBodyState extends State<ScanViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MultiBlocListener(
       listeners: [
         BlocListener<ScanCubit, ScanState>(
@@ -122,13 +159,17 @@ class _ScanViewBodyState extends State<ScanViewBody> {
                 buildWhen: (prev, current) =>
                     prev.imageBytes != current.imageBytes,
                 builder: (context, state) {
+                  if (!_isCameraActive) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   return ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: _scanController.cameraController != null &&
-                            _scanController
-                                .cameraController!.value.isInitialized
-                        ? CameraPreview(_scanController.cameraController!)
-                        : const Center(child: CircularProgressIndicator()),
+                    child: _scanController.cameraService.cameraController?.value
+                                .isInitialized ==
+                            true
+                        ? CameraPreview(
+                            _scanController.cameraService.cameraController!)
+                        : const Center(child: Text('Camera Not Available')),
                   );
                 },
               ),

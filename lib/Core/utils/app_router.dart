@@ -117,7 +117,9 @@ abstract class AppRouter {
         providers: [
           BlocProvider(
               create: (context) => DiseaseDetailsCubit(
-                  DiseaseRepositoryImpl(apiService: ApiService(dio: Dio())))),
+                  userCubit: context.read<UserCubit>(),
+                  diseaseRepository: DiseaseRepositoryImpl(
+                      apiService: ApiService(dio: Dio())))),
           BlocProvider(
             create: (context) => ScanCubit(
                 repository:

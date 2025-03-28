@@ -8,8 +8,16 @@ import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/constants.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // تحقق من أذونات الكاميرا عند بدء التشغيل
+  final cameraStatus = await Permission.camera.status;
+  if (!cameraStatus.isGranted) {
+    await Permission.camera.request();
+  }
   runApp(
     MultiBlocProvider(
       providers: [

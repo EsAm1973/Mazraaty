@@ -16,8 +16,18 @@ class ScanController {
 
   ScanController({required DiseaseDetailsCubit diseaseDetailsCubit})
       : _diseaseDetailsCubit = diseaseDetailsCubit;
-
+  CameraService get cameraService => _cameraService;
   CameraController? get cameraController => _cameraService.cameraController;
+
+  Future<void> startCamera() async {
+    try {
+      await _cameraService.initializeCamera();
+    } catch (e) {
+      print('Camera Error: $e');
+    }
+  }
+
+  Future<void> stopCamera() async => await _cameraService.disposeCamera();
 
   Future<void> initializeCamera() async {
     await _cameraService.initializeCamera();
@@ -43,15 +53,11 @@ class ScanController {
     try {
       scanCubit.reset();
       final XFile file = await cameraController!.takePicture();
-      // تنفيذ التنبؤ
       await scanCubit.makePrediction(file);
 
-      // عند نجاح التنبؤ، جلب تفاصيل المرض
       if (scanCubit.state.diseaseName.isNotEmpty) {
-        print('User points: ${currentUser.points}');
         await _fetchDiseaseDetails(context, scanCubit.state.diseaseName);
-        // خصم 10 نقاط بعد الكشف الناجح
-        _deductPoints(context);
+        // تم إزالة استدعاء _deductPoints هنا
       }
     } catch (e) {
       _handleError(context, 'Failed to capture image: ${e.toString()}');
@@ -86,12 +92,10 @@ class ScanController {
         await scanCubit.makePrediction(file);
 
         // عند نجاح التنبؤ، جلب تفاصيل المرض
-        if (scanCubit.state.diseaseName.isNotEmpty) {
-          print('User points: ${currentUser.points}');
-          await _fetchDiseaseDetails(context, scanCubit.state.diseaseName);
-          // خصم 10 نقاط بعد الكشف الناجح
-          _deductPoints(context);
-        }
+
+        print('User points: ${currentUser.points}');
+        await _fetchDiseaseDetails(context, scanCubit.state.diseaseName);
+        // خصم 10 نقاط بعد الكشف الناجح
       }
     } catch (e) {
       _handleError(context, 'Failed to pick image: ${e.toString()}');
@@ -102,22 +106,12 @@ class ScanController {
 
   Future<void> _fetchDiseaseDetails(
       BuildContext context, String diseaseName) async {
+    final userCubit = context.read<UserCubit>();
     try {
-      await _diseaseDetailsCubit.getDiseaseDetails(diseaseName);
+      await _diseaseDetailsCubit.getDiseaseDetails(
+          diseaseName, userCubit.currentUser!.token);
     } catch (e) {
       print('Error fetching details: ${e.toString()}');
-    }
-  }
-
-  // دالة لخصم 10 نقاط من المستخدم
-  void _deductPoints(BuildContext context) {
-    final userCubit = context.read<UserCubit>();
-    final currentUser = userCubit.currentUser;
-    if (currentUser != null) {
-      final updatedUser = currentUser.copyWith(
-        points: currentUser.points - 10,
-      );
-      userCubit.saveUser(updatedUser); // سيؤدي إلى emit حالة جديدة
     }
   }
 
