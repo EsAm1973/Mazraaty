@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/constants.dart';
 
 class TitlePackageViews extends StatelessWidget {
@@ -11,9 +11,10 @@ class TitlePackageViews extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         'Choose your plan',
-        style: Styles.textStyle26.copyWith(
-          fontFamily: kfontFamily,
+        style: GoogleFonts.poppins(
+          fontSize: 30,
           color: kMainColor,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

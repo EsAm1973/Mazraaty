@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/back_button_packages_view.dart';
+import 'package:mazraaty/Features/payment/presentation/views/widgets/packages_list.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/title_packages_view.dart';
 
 class PackagesViewBody extends StatelessWidget {
@@ -18,6 +19,10 @@ class PackagesViewBody extends StatelessWidget {
             height: 15,
           ),
           const TitlePackageViews(),
+          const SizedBox(
+            height: 15,
+          ),
+          const SubscriptionPackages(),
         ],
       ),
     );
