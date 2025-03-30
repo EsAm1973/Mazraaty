@@ -82,7 +82,6 @@ class _ScanViewBodyState extends State<ScanViewBody>
       Navigator.of(context).pop();
     }
     _isBottomSheetOpen = true;
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

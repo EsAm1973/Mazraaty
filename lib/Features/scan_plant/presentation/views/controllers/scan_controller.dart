@@ -95,7 +95,6 @@ class ScanController {
 
         print('User points: ${currentUser.points}');
         await _fetchDiseaseDetails(context, scanCubit.state.diseaseName);
-        // خصم 10 نقاط بعد الكشف الناجح
       }
     } catch (e) {
       _handleError(context, 'Failed to pick image: ${e.toString()}');
