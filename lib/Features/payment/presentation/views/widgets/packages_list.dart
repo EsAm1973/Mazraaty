@@ -171,7 +171,7 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 40),
             ),
             child: Text(
-              'Continue to Purchase',
+              'Continue to subscribe',
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontSize: 18,

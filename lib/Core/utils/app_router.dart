@@ -16,6 +16,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
+import 'package:mazraaty/Features/payment/presentation/views/methods_view.dart';
 import 'package:mazraaty/Features/payment/presentation/views/packages_view.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
@@ -54,7 +55,8 @@ abstract class AppRouter {
   static const String kUpdatedDetailsView = '/updatedetails_view';
   static const String kDeleteAccountView = '/deleteaccount_view';
   static const String kDiseaseView = '/disease_view';
-  static const String kPaymentPackgesView = '/';
+  static const String kPaymentPackgesView = '/paymentpackages_view';
+  static const String kPaymentMethodsView = '/';
 
   static final router = GoRouter(routes: [
     // GoRoute(
@@ -196,6 +198,10 @@ abstract class AppRouter {
     GoRoute(
       path: kPaymentPackgesView,
       builder: (context, state) => const PackagesView(),
+    ),
+    GoRoute(
+      path: kPaymentMethodsView,
+      builder: (context, state) => const PaymentMethodsView(),
     ),
   ]);
 }
