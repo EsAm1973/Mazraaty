@@ -16,6 +16,10 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
+import 'package:mazraaty/Features/payment/data/repos/Package%20Repo/package_repo_impl.dart';
+import 'package:mazraaty/Features/payment/data/repos/Payment%20Repo/payment_repo_impl.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/Package%20Cubit/cubit/packages_cubit.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/Payment%20Cubit/payment_cubit.dart';
 import 'package:mazraaty/Features/payment/presentation/views/methods_view.dart';
 import 'package:mazraaty/Features/payment/presentation/views/packages_view.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
@@ -30,15 +34,17 @@ import 'package:mazraaty/Features/profile/presentation/views/delete_acc_view.dar
 import 'package:mazraaty/Features/profile/presentation/views/profile_view.dart';
 import 'package:mazraaty/Features/scan_plant/data/data_source/api_scan_service.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/Disease%20Details%20Repo/disease_details_repo_impl.dart';
+import 'package:mazraaty/Features/scan_plant/data/repos/Points%20Repo/points_repo_impl.dart';
 import 'package:mazraaty/Features/scan_plant/data/repos/Scan%20Repo/scan_repo_impl.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Disease%20Details/disease_details_cubit.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/manager/Points%20Cubit/cubit/points_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  //static const String kSplashView = '/';
+  static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -56,13 +62,13 @@ abstract class AppRouter {
   static const String kDeleteAccountView = '/deleteaccount_view';
   static const String kDiseaseView = '/disease_view';
   static const String kPaymentPackgesView = '/paymentpackages_view';
-  static const String kPaymentMethodsView = '/';
+  static const String kPaymentMethodsView = '/paymentmethods_view';
 
   static final router = GoRouter(routes: [
-    // GoRoute(
-    //   path: kSplashView,
-    //   builder: (context, state) => const SplashView(),
-    // ),
+    GoRoute(
+      path: kSplashView,
+      builder: (context, state) => const SplashView(),
+    ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
@@ -120,8 +126,13 @@ abstract class AppRouter {
       builder: (context, state) => MultiBlocProvider(
         providers: [
           BlocProvider(
+            create: (context) => PointsCubit(
+                userCubit: context.read<UserCubit>(),
+                pointsRepository:
+                    PointsRepositoryImpl(apiService: ApiService(dio: Dio()))),
+          ),
+          BlocProvider(
               create: (context) => DiseaseDetailsCubit(
-                  userCubit: context.read<UserCubit>(),
                   diseaseRepository: DiseaseRepositoryImpl(
                       apiService: ApiService(dio: Dio())))),
           BlocProvider(
@@ -197,11 +208,27 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kPaymentPackgesView,
-      builder: (context, state) => const PackagesView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => PackagesCubit(
+            packagesRepository:
+                PackagesRepositoryImpl(apiService: ApiService(dio: Dio()))),
+        child: const PackagesView(),
+      ),
     ),
     GoRoute(
       path: kPaymentMethodsView,
-      builder: (context, state) => const PaymentMethodsView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => PaymentCubit(
+            userCubit: context.read<UserCubit>(),
+            paymentRepository:
+                PaymentRepositoryImpl(apiService: ApiService(dio: Dio()))),
+        child: PaymentMethodsView(
+          packageId: (state.extra as Map)['packageId'],
+          packageName: (state.extra as Map)['packageName'],
+          coins: (state.extra as Map)['coins'],
+          price: (state.extra as Map)['price'],
+        ),
+      ),
     ),
   ]);
 }
