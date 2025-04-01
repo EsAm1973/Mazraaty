@@ -26,6 +26,10 @@ class DiseaseBottomSheetWidget extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(20.0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.max, // Changed to max
           crossAxisAlignment: CrossAxisAlignment.start,

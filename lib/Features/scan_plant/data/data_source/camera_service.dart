@@ -6,6 +6,12 @@ class CameraService {
   final ResolutionPreset _resolution = ResolutionPreset.medium;
 
   Future<void> initializeCamera() async {
+    // If already initialized but disposed, reset the flag
+    if (_isInitialized && _cameraController?.value.isInitialized == false) {
+      _isInitialized = false;
+      _cameraController = null;
+    }
+
     if (_isInitialized) return;
 
     try {
@@ -16,6 +22,7 @@ class CameraService {
         cameras.first,
         _resolution,
         enableAudio: false,
+        imageFormatGroup: ImageFormatGroup.jpeg,
       );
 
       await _cameraController!.initialize();
@@ -27,13 +34,20 @@ class CameraService {
   }
 
   Future<void> disposeCamera() async {
-    if (!_isInitialized) return;
+    if (!_isInitialized || _cameraController == null) return;
 
-    await _cameraController?.dispose();
-    _cameraController = null;
-    _isInitialized = false;
+    try {
+      await _cameraController!.dispose();
+    } catch (e) {
+      print('Error disposing camera: $e');
+    } finally {
+      _cameraController = null;
+      _isInitialized = false;
+    }
   }
 
   CameraController? get cameraController =>
-      _isInitialized ? _cameraController : null;
+      _isInitialized && _cameraController?.value.isInitialized == true
+          ? _cameraController
+          : null;
 }
