@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:mazraaty/Core/errors/failure.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant_category.dart';
-import 'package:mazraaty/Features/plant_library/data/repos/library_repo.dart';
+import 'package:mazraaty/Features/plant_library/data/repos/Library%20Repo/library_repo.dart';
 
 class PlantRepositoryImpl implements PlantRepository {
   final ApiService apiService;

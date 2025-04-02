@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant_category.dart';
-import 'package:mazraaty/Features/plant_library/data/repos/library_repo.dart';
+import 'package:mazraaty/Features/plant_library/data/repos/Library%20Repo/library_repo.dart';
 import 'package:meta/meta.dart';
 
 part 'library_state.dart';

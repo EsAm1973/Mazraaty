@@ -23,8 +23,9 @@ import 'package:mazraaty/Features/payment/presentation/manager/Payment%20Cubit/p
 import 'package:mazraaty/Features/payment/presentation/views/methods_view.dart';
 import 'package:mazraaty/Features/payment/presentation/views/packages_view.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
-import 'package:mazraaty/Features/plant_library/data/repos/library_repo_impl.dart';
+import 'package:mazraaty/Features/plant_library/data/repos/Library%20Repo/library_repo_impl.dart';
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
+import 'package:mazraaty/Features/plant_library/presentation/views/ai_chat_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/library_view.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/updated_details_view.dart';
 import 'package:mazraaty/Features/profile/data/repos/profile_repo_impl.dart';
@@ -63,6 +64,7 @@ abstract class AppRouter {
   static const String kDiseaseView = '/disease_view';
   static const String kPaymentPackgesView = '/paymentpackages_view';
   static const String kPaymentMethodsView = '/paymentmethods_view';
+  static const String kAiChatView = '/aichat_view';
 
   static final router = GoRouter(routes: [
     GoRoute(
@@ -228,6 +230,12 @@ abstract class AppRouter {
           coins: (state.extra as Map)['coins'],
           price: (state.extra as Map)['price'],
         ),
+      ),
+    ),
+    GoRoute(
+      path: kAiChatView,
+      builder: (context, state) => AiChatView(
+        plantName: state.extra as String,
       ),
     ),
   ]);

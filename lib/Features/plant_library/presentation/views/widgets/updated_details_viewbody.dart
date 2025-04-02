@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Core/widgets/sticky_headers_delegate.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_care_section.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_condition_section.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_cultural_card.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_description_text.dart';
+import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_details_chat_ai.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_diseases.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_plant_details.dart';
 import 'package:mazraaty/Features/plant_library/presentation/views/widgets/updated_plant_title.dart';
@@ -60,6 +63,16 @@ class UpdatedDetailsViewbody extends StatelessWidget {
                       botanicalName: plant.botanicalName,
                       scientificName: plant.scientificName,
                       alsoKnownAs: plant.alsoKnownAs,
+                    ),
+                    const SizedBox(height: 20),
+                    PlantHealthCard(
+                      onChatPressed: () {
+                        GoRouter.of(context).push(
+                          AppRouter.kAiChatView,
+                          extra: plant.name,
+                        );
+                      },
+                      plantName: plant.name,
                     ),
                     const SizedBox(height: 20),
                     UpdatedDetailsSimilarPlantList(
