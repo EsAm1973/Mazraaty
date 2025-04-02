@@ -19,7 +19,7 @@ import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.da
 import 'package:mazraaty/Features/payment/data/repos/Package%20Repo/package_repo_impl.dart';
 import 'package:mazraaty/Features/payment/data/repos/Payment%20Repo/payment_repo_impl.dart';
 import 'package:mazraaty/Features/payment/presentation/manager/Package%20Cubit/cubit/packages_cubit.dart';
-import 'package:mazraaty/Features/payment/presentation/manager/Payment%20Cubit/payment_cubit.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/Paypal%20Cubit/payment_cubit.dart';
 import 'package:mazraaty/Features/payment/presentation/views/methods_view.dart';
 import 'package:mazraaty/Features/payment/presentation/views/packages_view.dart';
 import 'package:mazraaty/Features/plant_library/data/models/plant.dart';
@@ -43,6 +43,7 @@ import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubi
 import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/MyFatoorah%20Cubit/myfatoorah_cubit.dart';
 
 abstract class AppRouter {
   static const String kSplashView = '/';
@@ -212,6 +213,7 @@ abstract class AppRouter {
       path: kPaymentPackgesView,
       builder: (context, state) => BlocProvider(
         create: (context) => PackagesCubit(
+            userCubit: context.read<UserCubit>(),
             packagesRepository:
                 PackagesRepositoryImpl(apiService: ApiService(dio: Dio()))),
         child: const PackagesView(),
@@ -219,16 +221,41 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kPaymentMethodsView,
-      builder: (context, state) => BlocProvider(
-        create: (context) => PaymentCubit(
-            userCubit: context.read<UserCubit>(),
-            paymentRepository:
-                PaymentRepositoryImpl(apiService: ApiService(dio: Dio()))),
+      builder: (context, state) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => PaymentCubit(
+                userCubit: context.read<UserCubit>(),
+                packagesCubit: PackagesCubit(
+                    packagesRepository: PackagesRepositoryImpl(
+                        apiService: ApiService(dio: Dio())),
+                    userCubit: context.read<UserCubit>()),
+                paymentRepository:
+                    PaymentRepositoryImpl(apiService: ApiService(dio: Dio()))),
+          ),
+          BlocProvider(
+            create: (context) => PackagesCubit(
+                userCubit: context.read<UserCubit>(),
+                packagesRepository:
+                    PackagesRepositoryImpl(apiService: ApiService(dio: Dio()))),
+          ),
+          BlocProvider(
+            create: (context) => MyFatoorahCubit(
+                userCubit: context.read<UserCubit>(),
+                packagesCubit: PackagesCubit(
+                    packagesRepository: PackagesRepositoryImpl(
+                        apiService: ApiService(dio: Dio())),
+                    userCubit: context.read<UserCubit>()),
+                paymentRepository:
+                    PaymentRepositoryImpl(apiService: ApiService(dio: Dio()))),
+          ),
+        ],
         child: PaymentMethodsView(
           packageId: (state.extra as Map)['packageId'],
           packageName: (state.extra as Map)['packageName'],
           coins: (state.extra as Map)['coins'],
           price: (state.extra as Map)['price'],
+          currency: (state.extra as Map)['currency'],
         ),
       ),
     ),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/widgets/dialog_helper.dart';
-import 'package:mazraaty/Features/payment/presentation/manager/Payment%20Cubit/payment_cubit.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/Package%20Cubit/cubit/packages_cubit.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/Paypal%20Cubit/payment_cubit.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/MyFatoorah%20Cubit/myfatoorah_cubit.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/backbutton_methods.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/custom_dialog.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/methods_listview.dart';
@@ -13,7 +15,8 @@ class PaymentMethodsViewBody extends StatefulWidget {
   final int packageId;
   final String packageName;
   final int coins;
-  final String price;
+  final double price;
+  final String currency;
 
   const PaymentMethodsViewBody({
     super.key,
@@ -21,6 +24,7 @@ class PaymentMethodsViewBody extends StatefulWidget {
     required this.packageName,
     required this.coins,
     required this.price,
+    required this.currency,
   });
 
   @override
@@ -41,9 +45,9 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
       'icon': 'assets/images/paypal.png',
     },
     {
-      'id': 'apple_pay',
-      'name': 'Apple pay',
-      'icon': 'assets/images/apple.png',
+      'id': 'myfatoorah',
+      'name': 'My Fatoorah',
+      'icon': 'assets/images/myfatoorah.png',
     },
     {
       'id': 'google_pay',
@@ -58,39 +62,108 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
     });
   }
 
+  // Helper method to get currency symbol based on selected currency
+  String _getCurrencySymbol(BuildContext context) {
+    final packagesCubit = context.read<PackagesCubit>();
+    final currency = packagesCubit.selectedCurrency;
+
+    switch (currency) {
+      case 'USD':
+        return '\$';
+      case 'EUR':
+        return '€';
+      case 'GBP':
+        return '£';
+      case 'JPY':
+        return '¥';
+      case 'AUD':
+        return 'A\$';
+      case 'CAD':
+        return 'C\$';
+      case 'EGP':
+        return 'E£';
+      case 'CHF':
+        return 'CHF ';
+      case 'CNY':
+        return '¥';
+      case 'INR':
+        return '₹';
+      case 'BRL':
+        return 'R\$';
+      default:
+        return '\$';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PaymentCubit, PaymentState>(
-      listener: (context, state) {
-        if (state is PaymentLoading) {
-          DialogHelper.showLoading(context);
-        } else if (state is PaymentFailure) {
-          // Hide loading dialog if showing
-          DialogHelper.hideLoading();
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PaymentCubit, PaymentState>(
+          listener: (context, state) {
+            if (state is PaymentLoading) {
+              DialogHelper.showLoading(context);
+            } else if (state is PaymentFailure) {
+              // Hide loading dialog if showing
+              DialogHelper.hideLoading();
 
-          // Show error dialog
-          DialogHelper.showError(
-            context,
-            'Payment Error',
-            state.errorMessage,
-          );
-        } else if (state is PaymentSuccess) {
-          // Hide loading dialog if showing
-          DialogHelper.hideLoading();
+              // Show error dialog
+              DialogHelper.showError(
+                context,
+                'Payment Error',
+                state.errorMessage,
+              );
+            } else if (state is PaymentSuccess) {
+              // Hide loading dialog if showing
+              DialogHelper.hideLoading();
 
-          // If payment wasn't successful, show error
-          if (!state.paymentResponse.success) {
-            DialogHelper.showError(
-              context,
-              'Payment Failed',
-              'There was a problem processing your payment. Please try again.',
-            );
-          } else {
-            // Could optionally show a success message before redirection
-            // Note: The URL will be launched automatically by the cubit
-          }
-        }
-      },
+              // If payment wasn't successful, show error
+              if (!state.paymentResponse.success) {
+                DialogHelper.showError(
+                  context,
+                  'Payment Failed',
+                  'There was a problem processing your payment. Please try again.',
+                );
+              } else {
+                // Could optionally show a success message before redirection
+                // Note: The URL will be launched automatically by the cubit
+              }
+            }
+          },
+        ),
+        BlocListener<MyFatoorahCubit, MyFatoorahState>(
+          listener: (context, state) {
+            if (state is MyFatoorahLoading) {
+              DialogHelper.showLoading(context);
+            } else if (state is MyFatoorahFailure) {
+              // Hide loading dialog if showing
+              DialogHelper.hideLoading();
+
+              // Show error dialog
+              DialogHelper.showError(
+                context,
+                'Payment Error',
+                state.errorMessage,
+              );
+            } else if (state is MyFatoorahSuccess) {
+              // Hide loading dialog if showing
+              DialogHelper.hideLoading();
+
+              // If payment wasn't successful, show error
+              if (!state.paymentResponse.success) {
+                DialogHelper.showError(
+                  context,
+                  'Payment Failed',
+                  'There was a problem processing your payment. Please try again.',
+                );
+              } else {
+                // Could optionally show a success message before redirection
+                // Note: The URL will be launched automatically by the cubit
+              }
+            }
+          },
+        ),
+      ],
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 37),
         child: Column(
@@ -107,7 +180,7 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                'Select your payment method for ${widget.packageName} - \$${widget.price}',
+                'Select your payment method for ${widget.packageName} - ${_getCurrencySymbol(context)}${widget.price.toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -126,9 +199,30 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
             const SizedBox(height: 40),
             PayNowButton(
               onPressed: () {
+                // Get the packagesCubit and set the currency
+                final packagesCubit = context.read<PackagesCubit>();
+                packagesCubit.setCurrency(widget.currency);
+                final selectedCurrency = packagesCubit.selectedCurrency;
+                
                 if (_selectedPaymentMethod == 'paypal') {
+                  // Log the selected currency for debugging
+                  debugPrint('Initiating PayPal payment with currency: $selectedCurrency');
+
+                  // Pass the selected currency to the payment process
                   context.read<PaymentCubit>().initiatePaypalPayment(
                         packageId: widget.packageId,
+                        price: widget.price,
+                        currency: selectedCurrency,
+                      );
+                } else if (_selectedPaymentMethod == 'myfatoorah') {
+                  // Log the selected currency for debugging
+                  debugPrint('Initiating My Fatoorah payment with currency: $selectedCurrency');
+
+                  // Pass the selected currency to the My Fatoorah payment process
+                  context.read<MyFatoorahCubit>().initiateMyFatoorahPayment(
+                        packageId: widget.packageId,
+                        price: widget.price,
+                        currency: selectedCurrency,
                       );
                 } else {
                   // Handle other payment methods

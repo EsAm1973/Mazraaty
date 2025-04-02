@@ -8,12 +8,14 @@ class PaymentMethodsView extends StatelessWidget {
     required this.packageName,
     required this.coins,
     required this.price,
+    required this.currency,
   });
 
   final int packageId;
   final String packageName;
   final int coins;
-  final String price;
+  final double price;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class PaymentMethodsView extends StatelessWidget {
           packageName: packageName,
           coins: coins,
           price: price,
+          currency: currency,
         ),
       ),
     );

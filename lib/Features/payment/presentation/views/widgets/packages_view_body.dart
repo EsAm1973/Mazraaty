@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Features/payment/presentation/manager/Package%20Cubit/cubit/packages_cubit.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/back_button_packages_view.dart';
+import 'package:mazraaty/Features/payment/presentation/views/widgets/currancy_selector.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/packages_list.dart';
 import 'package:mazraaty/Features/payment/presentation/views/widgets/title_packages_view.dart';
 
@@ -22,6 +23,8 @@ class PackagesViewBody extends StatelessWidget {
           BackButtonPackageView(onPressed: () => GoRouter.of(context).pop()),
           const SizedBox(height: 15),
           const TitlePackageViews(),
+          const SizedBox(height: 10),
+          const CurrencySelector(),
           const SizedBox(height: 15),
           const Expanded(child: PackagesList()),
         ],

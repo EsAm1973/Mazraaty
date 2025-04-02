@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/payment/data/models/package.dart';
+import 'package:mazraaty/Features/payment/presentation/manager/Package%20Cubit/cubit/packages_cubit.dart';
 import 'package:mazraaty/constants.dart';
 
 class SubscriptionPackages extends StatefulWidget {
@@ -79,23 +81,23 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                child: Text(package.description,
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                child: Text(
+                                  package.description,
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               ),
-                              const SizedBox(
-                                width: 15,
-                              ),
+                              const SizedBox(width: 20,),
                               Column(
                                 children: [
                                   Text(
                                     "\$${package.price}",
                                     style: GoogleFonts.poppins(
                                       color: kMainColor,
-                                      fontSize: 20,
+                                      fontSize: 26,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -126,15 +128,7 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
             onPressed: selectedIndex != null
                 ? () {
                     final selectedPackage = widget.packages[selectedIndex!];
-                    GoRouter.of(context).push(
-                      AppRouter.kPaymentMethodsView,
-                      extra: {
-                        'packageId': selectedPackage.id,
-                        'packageName': selectedPackage.name,
-                        'coins': selectedPackage.coins,
-                        'price': selectedPackage.price,
-                      },
-                    );
+                    _navigateToPaymentMethods(context, selectedPackage);
                   }
                 : null,
             style: ElevatedButton.styleFrom(
@@ -155,6 +149,20 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
           ),
         ),
       ],
+    );
+  }
+
+  void _navigateToPaymentMethods(BuildContext context, Package package) {
+    final packagesCubit = context.read<PackagesCubit>();
+    GoRouter.of(context).push(
+      AppRouter.kPaymentMethodsView,
+      extra: {
+        'packageId': package.id,
+        'packageName': package.name,
+        'coins': package.coins,
+        'price': package.price,
+        'currency': packagesCubit.selectedCurrency,
+      },
     );
   }
 }

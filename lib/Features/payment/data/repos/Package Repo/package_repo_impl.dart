@@ -11,16 +11,35 @@ class PackagesRepositoryImpl implements PackagesRepository {
   PackagesRepositoryImpl({required this.apiService});
 
   @override
-  Future<Either<Failure, List<Package>>> getPackages() async {
+  Future<Either<Failure, List<Package>>> getPackages({
+    String currency = 'USD',
+    String? token,
+  }) async {
     try {
-      final response = await apiService.get('packages');
-      
+      // Prepare headers with Accept, Accept-Language, Currency and Authorization if token is provided
+      Map<String, dynamic> headers = {
+        'Accept': 'application/json',
+        'Accept-Language': 'en',
+        'Currency': currency,
+      };
+
+      // Add Authorization header if token is provided
+      if (token != null) {
+        headers['Authorization'] = 'Bearer $token';
+      }
+
+      // Make API call with headers
+      final response = await apiService.get(
+        'packages',
+        headers: headers,
+      );
+
       if (response['status'] == 'success') {
         final List<dynamic> packagesData = response['data'];
         final List<Package> packages = packagesData
             .map((packageJson) => Package.fromJson(packageJson))
             .toList();
-        
+
         return Right(packages);
       } else {
         return Left(ServerFailure(
@@ -32,4 +51,4 @@ class PackagesRepositoryImpl implements PackagesRepository {
       return Left(ServerFailure(errorMessage: e.toString()));
     }
   }
-} 
+}
