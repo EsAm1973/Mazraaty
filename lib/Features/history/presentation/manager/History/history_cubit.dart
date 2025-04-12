@@ -16,40 +16,51 @@ class HistoryCubit extends Cubit<HistoryState> {
 
   Future<void> loadHistory() async {
     emit(HistoryLoading());
-    try {
-      final user = userCubit.currentUser;
-      if (user == null) {
-        emit(HistoryError('User not logged in'));
-        return;
-      }
 
-      final history = await repository.getHistory(user.id);
-      emit(HistoryLoaded(history));
-    } catch (e) {
-      emit(HistoryError(e.toString()));
+    final user = userCubit.currentUser;
+    if (user == null) {
+      emit(const HistoryError('User not logged in'));
+      return;
     }
+
+    final result = await repository.getHistory(user.token);
+
+    result.fold((failure) => emit(HistoryError(failure.errorMessage)),
+        (diseases) => emit(HistoryLoaded(diseases)));
   }
 
-  Future<void> toggleDisease(
+  Future<void> saveDiseaseToHistory(
       DiseaseDetailsModel disease, Uint8List imageBytes) async {
     final user = userCubit.currentUser;
-    if (user == null) return;
-
-    final isSaved = await repository.isDiseaseSaved(disease.id, user.id);
-
-    if (isSaved) {
-      await repository.removeDiseaseFromHistory(disease.id, user.id);
-    } else {
-      await repository.addDiseaseToHistory(disease, imageBytes, user.id);
+    if (user == null) {
+      emit(const HistoryError('User not logged in'));
+      return;
     }
 
-    loadHistory();
-  }
+    emit(HistorySaving());
 
-  Future<bool> checkSavedStatus(int diseaseId) async {
-    final user = userCubit.currentUser;
-    if (user == null) return false;
+    final result = await repository.addDiseaseToHistory(
+      disease,
+      imageBytes,
+      user.token,
+    );
 
-    return await repository.isDiseaseSaved(diseaseId, user.id);
+    result.fold(
+      (failure) {
+        emit(HistorySaveError(
+          diseases: const [], // or current diseases if you have them
+          errorMessage: failure.errorMessage,
+        ));
+        loadHistory(); // Reload after error
+      }, 
+      (response) {
+        emit(HistorySaveSuccess(
+          diseases: const [], // or current diseases if you have them
+          message: response.message,
+        ));
+        loadHistory(); // Reload after success
+      }
+    );
   }
 }
+

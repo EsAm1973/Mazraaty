@@ -14,10 +14,19 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_
 import 'package:mazraaty/Features/scan_plant/presentation/views/widgets/disease_top_image.dart';
 
 class DiseaseViewBody extends StatelessWidget {
-  const DiseaseViewBody(
-      {super.key, required this.details, required this.imageBytes});
+  const DiseaseViewBody({
+    super.key, 
+    required this.details, 
+    required this.imageBytes, 
+    this.imageUrl,
+    this.source = 'scan', // Default is scan
+  });
+  
   final DiseaseDetailsModel details;
-  final Uint8List imageBytes;
+  final Uint8List? imageBytes;
+  final String? imageUrl;
+  final String source; // 'scan' or 'history'
+  
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -27,8 +36,10 @@ class DiseaseViewBody extends StatelessWidget {
           floating: false,
           delegate: StickyHeaderDelegate(
             child: DiseaseTopImage(
-              image: imageBytes,
+              image: imageBytes ?? Uint8List(0), // Provide empty list if null
               disease: details,
+              imageUrl: imageUrl,
+              source: source,
             ),
             maxExtent: 300,
             minExtent: 300,

@@ -1,12 +1,13 @@
 import 'dart:typed_data';
 
+import 'package:dartz/dartz.dart';
+import 'package:mazraaty/Core/errors/failure.dart';
 import 'package:mazraaty/Features/history/data/models/history_model.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
 
 abstract class IHistoryRepository {
-  Future<void> addDiseaseToHistory(
-      DiseaseDetailsModel disease, Uint8List imageBytes, int userId);
-  Future<void> removeDiseaseFromHistory(int diseaseId, int userId);
-  Future<List<HistoryDisease>> getHistory(int userId);
-  Future<bool> isDiseaseSaved(int diseaseId, int userId);
+  Future<Either<Failure, SaveDiseaseResponse>> addDiseaseToHistory(
+      DiseaseDetailsModel disease, Uint8List imageBytes, String token);
+      
+  Future<Either<Failure, List<HistoryDisease>>> getHistory(String token);
 }

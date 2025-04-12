@@ -11,14 +11,42 @@ final class HistoryInitial extends HistoryState {}
 
 class HistoryLoading extends HistoryState {}
 
+class HistorySaving extends HistoryState {}
+
 class HistoryLoaded extends HistoryState {
   final List<HistoryDisease> diseases;
 
-  HistoryLoaded(this.diseases);
+  const HistoryLoaded(this.diseases);
+  
+  @override
+  List<Object> get props => [diseases];
 }
 
 class HistoryError extends HistoryState {
   final String message;
 
-  HistoryError(this.message);
+  const HistoryError(this.message);
+  
+  @override
+  List<Object> get props => [message];
+}
+
+class HistorySaveSuccess extends HistoryState {
+  final List<HistoryDisease> diseases;
+  final String message;
+
+  const HistorySaveSuccess({required this.diseases, required this.message});
+  
+  @override
+  List<Object> get props => [diseases, message];
+}
+
+class HistorySaveError extends HistoryState {
+  final List<HistoryDisease> diseases;
+  final String errorMessage;
+
+  const HistorySaveError({required this.diseases, required this.errorMessage});
+  
+  @override
+  List<Object> get props => [diseases, errorMessage];
 }

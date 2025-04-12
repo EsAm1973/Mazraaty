@@ -1,5 +1,4 @@
 // history_disease_model.dart
-import 'dart:convert';
 
 import 'package:mazraaty/Features/scan_plant/data/models/disease_image.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/home_remedy.dart';
@@ -20,8 +19,8 @@ class HistoryDisease {
   final List<Prevention> preventions;
   final List<HomeRemedy> homeRemedys;
   final List<DiseaseImage> diseaseImages;
-  final String imagePath; // بدلاً من imageBytes
-  final int userId;
+  final int repetitions;
+  final String? imageHistory; // URL of the saved image from server
 
   HistoryDisease({
     required this.diseaseId,
@@ -36,56 +35,75 @@ class HistoryDisease {
     required this.preventions,
     required this.homeRemedys,
     required this.diseaseImages,
-    required this.imagePath,
-    required this.userId,
+    this.repetitions = 0,
+    this.imageHistory,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'disease_id': diseaseId,
-      'name': name,
-      'origin_name': originName,
-      'scientific_name': scientificName,
-      'also_know_as': alsoKnowAs,
-      'type_disease': typeDisease,
-      'description': description,
-      'symptoms': jsonEncode(symptoms.map((e) => e.toJson()).toList()),
-      'solutions': jsonEncode(solutions.map((e) => e.toJson()).toList()),
-      'preventions': jsonEncode(preventions.map((e) => e.toJson()).toList()),
-      'home_remedys': jsonEncode(homeRemedys.map((e) => e.toJson()).toList()),
-      'disease_images':
-          jsonEncode(diseaseImages.map((e) => e.toJson()).toList()),
-      'image_path': imagePath, // تخزين مسار الصورة
-      'user_id': userId,
-    };
-  }
-
-  factory HistoryDisease.fromMap(Map<String, dynamic> map) {
+  factory HistoryDisease.fromJson(Map<String, dynamic> json) {
     return HistoryDisease(
-      diseaseId: map['disease_id'],
-      name: map['name'],
-      originName: map['origin_name'],
-      scientificName: map['scientific_name'],
-      alsoKnowAs: map['also_know_as'],
-      typeDisease: map['type_disease'],
-      description: map['description'],
-      symptoms: List<Symptom>.from(
-        jsonDecode(map['symptoms']).map((x) => Symptom.fromJson(x)),
-      ),
-      solutions: List<Solution>.from(
-        jsonDecode(map['solutions']).map((x) => Solution.fromJson(x)),
-      ),
-      preventions: List<Prevention>.from(
-        jsonDecode(map['preventions']).map((x) => Prevention.fromJson(x)),
-      ),
-      homeRemedys: List<HomeRemedy>.from(
-        jsonDecode(map['home_remedys']).map((x) => HomeRemedy.fromJson(x)),
-      ),
-      diseaseImages: List<DiseaseImage>.from(
-        jsonDecode(map['disease_images']).map((x) => DiseaseImage.fromJson(x)),
-      ),
-      imagePath: map['image_path'],
-      userId: map['user_id'],
+      diseaseId: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      originName: json['origin_name'] ?? '',
+      scientificName: json['scientific_name'] ?? '',
+      alsoKnowAs: json['also_know_as'] ?? '',
+      typeDisease: json['type_disease'] ?? '',
+      description: json['description'] ?? '',
+      symptoms: (json['symptoms'] as List<dynamic>? ?? [])
+          .map((e) => Symptom.fromJson(e))
+          .toList(),
+      solutions: (json['solutions'] as List<dynamic>? ?? [])
+          .map((e) => Solution.fromJson(e))
+          .toList(),
+      preventions: (json['preventions'] as List<dynamic>? ?? [])
+          .map((e) => Prevention.fromJson(e))
+          .toList(),
+      homeRemedys: (json['homeRemedys'] as List<dynamic>? ?? [])
+          .map((e) => HomeRemedy.fromJson(e))
+          .toList(),
+      diseaseImages: (json['disease_images'] as List<dynamic>? ?? [])
+          .map((e) => DiseaseImage.fromJson(e))
+          .toList(),
+      repetitions: json['repetitions'] ?? 0,
+      imageHistory: json['image_history'] as String?,
+    );
+  }
+}
+
+class HistoryResponse {
+  final String status;
+  final String message;
+  final List<HistoryDisease> data;
+
+  HistoryResponse({
+    required this.status,
+    required this.message,
+    required this.data,
+  });
+
+  factory HistoryResponse.fromJson(Map<String, dynamic> json) {
+    return HistoryResponse(
+      status: json['status'] ?? '',
+      message: json['message'] ?? '',
+      data: (json['data'] as List<dynamic>? ?? [])
+          .map((e) => HistoryDisease.fromJson(e))
+          .toList(),
+    );
+  }
+}
+
+class SaveDiseaseResponse {
+  final String status;
+  final String message;
+
+  SaveDiseaseResponse({
+    required this.status,
+    required this.message,
+  });
+
+  factory SaveDiseaseResponse.fromJson(Map<String, dynamic> json) {
+    return SaveDiseaseResponse(
+      status: json['status'] ?? '',
+      message: json['message'] ?? '',
     );
   }
 }

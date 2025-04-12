@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
@@ -6,17 +7,16 @@ import 'package:mazraaty/Features/history/data/models/history_model.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
 import 'package:mazraaty/constants.dart';
 
-import 'dart:io';
-
 class HistoryListItem extends StatelessWidget {
   const HistoryListItem({super.key, required this.disease});
   final HistoryDisease disease;
 
   @override
   Widget build(BuildContext context) {
+    final String? imageUrl = disease.imageHistory;
     return GestureDetector(
-      onTap: () async {
-        final imageBytes = await File(disease.imagePath).readAsBytes();
+      onTap: () {
+        // Create a DiseaseDetailsModel from the history disease
         GoRouter.of(context).push(
           AppRouter.kDiseaseView,
           extra: {
@@ -34,7 +34,9 @@ class HistoryListItem extends StatelessWidget {
               homeRemedys: disease.homeRemedys,
               diseaseImages: disease.diseaseImages,
             ),
-            'imageBytes': imageBytes
+            'imageBytes': null,
+            'imageUrl': imageUrl,
+            'source': 'history',
           },
         );
       },
@@ -52,12 +54,37 @@ class HistoryListItem extends StatelessWidget {
                 topLeft: Radius.circular(16),
                 bottomLeft: Radius.circular(16),
               ),
-              child: Image.file(
-                File(disease.imagePath),
-                width: 110,
-                height: 110,
-                fit: BoxFit.cover,
-              ),
+              child: imageUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      width: 110,
+                      height: 110,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        width: 110,
+                        height: 110,
+                        color: Colors.grey.shade200,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        width: 110,
+                        height: 110,
+                        color: Colors.grey.shade300,
+                        child: const Center(
+                          child: Icon(Icons.error, color: Colors.red),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      width: 110,
+                      height: 110,
+                      color: Colors.grey.shade300,
+                      child: const Center(
+                        child: Icon(Icons.image_not_supported),
+                      ),
+                    ),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -80,19 +107,20 @@ class HistoryListItem extends StatelessWidget {
                       color: kMainColor,
                     ),
                   ),
+                  if (disease.repetitions > 0)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Text(
+                        'Saved ${disease.repetitions} times',
+                        style: Styles.textStyle13.copyWith(
+                          color: kMainColor.withOpacity(0.7),
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
-            const SizedBox(width: 5),
-            GestureDetector(
-              onTap: () {
-                // هنا يمكن إضافة حدث الحذف أو أي إجراء آخر
-              },
-              child: const Icon(
-                Icons.cancel,
-                color: kMainColor,
-              ),
-            )
           ],
         ),
       ),

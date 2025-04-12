@@ -1,56 +1,81 @@
 import 'dart:typed_data';
 
-import 'package:mazraaty/Core/methods/compress_method.dart';
-import 'package:mazraaty/Features/history/data/database/history_database.dart';
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mazraaty/Core/errors/failure.dart';
+import 'package:mazraaty/Core/utils/api_service.dart';
 import 'package:mazraaty/Features/history/data/models/history_model.dart';
 import 'package:mazraaty/Features/history/data/repos/history_repo.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
 
-class HistoryRepository implements IHistoryRepository {
-  final HistoryDatabase _database = HistoryDatabase();
+class HistoryRepositoryImpl implements IHistoryRepository {
+  final ApiService _apiService;
+
+  HistoryRepositoryImpl({required ApiService apiService})
+      : _apiService = apiService;
 
   @override
-  Future<void> addDiseaseToHistory(
-      DiseaseDetailsModel disease, Uint8List imageBytes, int userId) async {
-    // ضغط الصورة
-    final compressedImageBytes = await compressImage(imageBytes);
-    // حفظ الصورة في النظام والحصول على مسارها
-    final imagePath =
-        await saveImageFile(compressedImageBytes, disease.id, userId);
+  Future<Either<Failure, SaveDiseaseResponse>> addDiseaseToHistory(
+      DiseaseDetailsModel disease, Uint8List imageBytes, String token) async {
+    try {
+      // Prepare the request with FormData for multipart/form-data
+      final formData = FormData();
 
-    final historyDisease = HistoryDisease(
-      diseaseId: disease.id, // استخدام الحقل diseaseId بدلاً من id
-      name: disease.name,
-      originName: disease.originName,
-      scientificName: disease.scientificName,
-      alsoKnowAs: disease.alsoKnowAs,
-      typeDisease: disease.typeDisease,
-      description: disease.description,
-      symptoms: disease.symptoms,
-      solutions: disease.solutions,
-      preventions: disease.preventions,
-      homeRemedys: disease.homeRemedys,
-      diseaseImages: disease.diseaseImages,
-      imagePath: imagePath, // حفظ مسار الصورة
-      userId: userId,
-    );
+      // Add disease_id
+      formData.fields.add(MapEntry('disease_id', disease.id.toString()));
 
-    await _database.insertDisease(historyDisease);
+      // Add image file
+      final multipartFile = MultipartFile.fromBytes(
+        imageBytes,
+        filename: 'disease_image.jpg',
+        contentType: MediaType('image', 'jpeg'),
+      );
+      formData.files.add(MapEntry('image', multipartFile));
+
+      // Set headers with authorization token
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+      };
+
+      // Make the API request
+      final response = await _apiService.post(
+        'save-disease',
+        formData,
+        headers: headers,
+      );
+
+      final saveResponse = SaveDiseaseResponse.fromJson(response);
+      return Right(saveResponse);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
   }
 
   @override
-  Future<void> removeDiseaseFromHistory(int diseaseId, int userId) async {
-    await _database.deleteDisease(diseaseId, userId);
-  }
+  Future<Either<Failure, List<HistoryDisease>>> getHistory(String token) async {
+    try {
+      // Set headers with authorization token
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+      };
 
-  @override
-  Future<List<HistoryDisease>> getHistory(int userId) async {
-    return await _database.getDiseasesForUser(userId);
-  }
+      // Make the API request
+      final response = await _apiService.get(
+        'history',
+        headers: headers,
+      );
 
-  @override
-  Future<bool> isDiseaseSaved(int diseaseId, int userId) async {
-    final diseases = await _database.getDiseasesForUser(userId);
-    return diseases.any((disease) => disease.diseaseId == diseaseId);
+      final historyResponse = HistoryResponse.fromJson(response);
+      return Right(historyResponse.data);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
   }
 }

@@ -13,6 +13,8 @@ import 'package:mazraaty/Features/authentication/presentation/views/recover_pass
 import 'package:mazraaty/Features/authentication/presentation/views/resetpass_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/signup_view.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/verify_code_view.dart';
+import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
+import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
@@ -144,6 +146,12 @@ abstract class AppRouter {
                     ScanRepositoryImpl(apiScanService: ApiScanService())),
           ),
           BlocProvider(
+            create: (context) => HistoryCubit(
+              HistoryRepositoryImpl(apiService: ApiService(dio: Dio())),
+              context.read<UserCubit>(),
+            )..loadHistory(),
+          ),
+          BlocProvider(
             create: (context) =>
                 LibraryCubit(PlantRepositoryImpl(ApiService(dio: Dio())))
                   ..fetchCategories(),
@@ -186,9 +194,16 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kDiseaseView,
-      builder: (context, state) => DiseaseView(
-        details: (state.extra as Map)['details'],
-        imageBytes: (state.extra as Map)['imageBytes'],
+      builder: (context, state) => BlocProvider(
+        create: (context) => HistoryCubit(
+            HistoryRepositoryImpl(apiService: ApiService(dio: Dio())),
+            context.read<UserCubit>()),
+        child: DiseaseView(
+          details: (state.extra as Map)['details'],
+          imageBytes: (state.extra as Map)['imageBytes'],
+          imageUrl: (state.extra as Map)['imageUrl'],
+          source: (state.extra as Map)['source'] ?? 'scan',
+        ),
       ),
     ),
     GoRoute(

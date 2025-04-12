@@ -84,7 +84,11 @@ class DiseaseBottomSheetWidget extends StatelessWidget {
                 onPressed: () {
                   GoRouter.of(context).push(
                     AppRouter.kDiseaseView,
-                    extra: {'details': details, 'imageBytes': imageBytes},
+                    extra: {
+                      'details': details, 
+                      'imageBytes': imageBytes,
+                      'source': 'scan', // Explicitly mark as coming from scan
+                    },
                   );
                 },
                 child: const Text(

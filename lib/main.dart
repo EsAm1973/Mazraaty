@@ -5,8 +5,6 @@ import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/data/database/user_database.dart';
 import 'package:mazraaty/Core/data/repository/User%20Repository/user_repo_impl.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
-import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
-import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/constants.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -25,11 +23,6 @@ void main() async {
           create: (context) => UserCubit(
               userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
         ),
-        BlocProvider(
-            create: (context) => HistoryCubit(
-                  HistoryRepository(),
-                  context.read<UserCubit>(),
-                )..loadHistory()),
       ],
       child: const MyApp(),
     ),
