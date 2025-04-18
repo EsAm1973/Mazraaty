@@ -36,79 +36,103 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
                   });
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.01, // 1% of screen height
+                  ),
                   child: Card(
                     color: selectedIndex == index
                         ? Colors.green[100]
                         : Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                      borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05), // 5% of screen width
                       side: const BorderSide(color: Colors.green),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04), // 4% of screen width
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Text(package.name,
+                              Flexible(
+                                child: Text(
+                                  package.name,
                                   style: GoogleFonts.poppins(
                                     color: kMainColor,
-                                    fontSize: 20,
+                                    fontSize: MediaQuery.of(context).size.width * 0.05, // 5% of screen width
                                     fontWeight: FontWeight.w800,
-                                  )),
-                              const SizedBox(width: 30),
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(width: MediaQuery.of(context).size.width * 0.03), // 3% of screen width
                               if (package.badge.isNotEmpty)
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 4),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: MediaQuery.of(context).size.width * 0.02, // 2% of screen width
+                                    vertical: MediaQuery.of(context).size.height * 0.005, // 0.5% of screen height
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05), // 5% of screen width
                                   ),
-                                  child: Text(package.badge,
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                  child: Text(
+                                    package.badge,
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontSize: MediaQuery.of(context).size.width * 0.025, // 2.5% of screen width
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.015), // 1.5% of screen height
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
+                                flex: 3,
                                 child: Text(
                                   package.description,
                                   style: GoogleFonts.poppins(
                                     color: Colors.grey,
-                                    fontSize: 15,
+                                    fontSize: MediaQuery.of(context).size.width * 0.035, // 3.5% of screen width
                                     fontWeight: FontWeight.w600,
                                   ),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              const SizedBox(width: 20,),
-                              Column(
-                                children: [
-                                  Text(
-                                    "\$${package.price}",
-                                    style: GoogleFonts.poppins(
-                                      color: kMainColor,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w600,
+                              SizedBox(width: MediaQuery.of(context).size.width * 0.03), // 3% of screen width
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        "\$${package.price}",
+                                        style: GoogleFonts.poppins(
+                                          color: kMainColor,
+                                          fontSize: MediaQuery.of(context).size.width * 0.065, // 6.5% of screen width
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    "${package.coins} Coins",
-                                    style: GoogleFonts.poppins(
-                                      color: kMainColor,
-                                      fontSize: 13,
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.005), // 0.5% of screen height
+                                    Text(
+                                      "${package.coins} Coins",
+                                      style: GoogleFonts.poppins(
+                                        color: kMainColor,
+                                        fontSize: MediaQuery.of(context).size.width * 0.03, // 3% of screen width
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               )
                             ],
                           )
@@ -121,9 +145,10 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
             },
           ),
         ),
-        const SizedBox(height: 30),
+        SizedBox(height: MediaQuery.of(context).size.height * 0.04), // 4% of screen height
         SizedBox(
           width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.07, // 7% of screen height
           child: ElevatedButton(
             onPressed: selectedIndex != null
                 ? () {
@@ -134,16 +159,22 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
             style: ElevatedButton.styleFrom(
               backgroundColor: kMainColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.04), // 4% of screen width
               ),
-              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 40),
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * 0.015, // 1.5% of screen height
+                horizontal: MediaQuery.of(context).size.width * 0.08, // 8% of screen width
+              ),
             ),
-            child: Text(
-              'Continue to purchase',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                'Continue to purchase',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: MediaQuery.of(context).size.width * 0.045, // 4.5% of screen width
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

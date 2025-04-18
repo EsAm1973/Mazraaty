@@ -10,9 +10,20 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
   final String imagePath;
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsive sizing
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Calculate responsive padding and image height for 2-column layout
+    final padding = screenWidth * 0.03; // 3% of screen width
+    // Calculate image height based on available width in a 2-column layout
+    // Each column gets roughly (screenWidth / 2) minus spacing
+    final columnWidth = (screenWidth / 2) - (screenWidth * 0.05);
+    final imageHeight = columnWidth * 0.6; // Image height proportional to column width
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: kMainColor.withOpacity(0.32),
         borderRadius: const BorderRadius.only(
@@ -26,7 +37,7 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: CachedNetworkImage(
-              height: 80,
+              height: imageHeight,
               imageUrl: imagePath,
               errorWidget: (context, url, error) => const Icon(
                 Icons.error,
@@ -39,12 +50,16 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: screenHeight * 0.01), // Responsive spacing
           Align(
             alignment: Alignment.topLeft,
             child: Text(
               title,
-              style: Styles.textStyle16.copyWith(color: kMainColor),
+              style: screenWidth < 400
+                ? Styles.textStyle15.copyWith(color: kMainColor)
+                : Styles.textStyle16.copyWith(color: kMainColor),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

@@ -9,7 +9,7 @@ class ApiScanService {
   ApiScanService({Dio? dio}) : dio = dio ?? Dio();
 
   Future<Map<String, dynamic>> predictDisease(XFile file) async {
-    const String url = 'http://10.0.2.2:5000/predict';
+    const String url = 'http://192.168.1.6:5000/predict';
 
     // Determine MIME type
     final mimeType = lookupMimeType(file.path) ?? 'image/jpeg';

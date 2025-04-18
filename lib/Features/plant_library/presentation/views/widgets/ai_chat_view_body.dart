@@ -15,7 +15,7 @@ class AiChatViewBody extends StatefulWidget {
   const AiChatViewBody({super.key, required this.plantName});
   final String plantName;
   static const String deepSeekApiKey =
-      "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";
+      "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";
   @override
   State<AiChatViewBody> createState() => _AiChatViewBodyState();
 }
@@ -638,32 +638,49 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
       },
     ];
 
+    // Get screen width for responsive sizing
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Calculate responsive padding and spacing based on screen width
+    final horizontalPadding = screenWidth * 0.04; // 4% of screen width
+    final verticalPadding = screenWidth * 0.06; // 6% of screen width
+    final crossAxisSpacing = screenWidth * 0.04; // 4% of screen width
+    final mainAxisSpacing = screenWidth * 0.04; // 4% of screen width
+
+    // Calculate responsive aspect ratio based on screen width
+    // Taller cards on smaller screens, wider cards on larger screens
+    final childAspectRatio = screenWidth < 400 ? 0.9 : (screenWidth < 600 ? 1.0 : 1.1);
+
+    // Calculate responsive font sizes
+    final titleFontSize = screenWidth < 400 ? 15.0 : (screenWidth < 600 ? 16.0 : 17.0);
+    final subtitleFontSize = screenWidth < 400 ? 13.0 : 14.0;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: EdgeInsets.symmetric(vertical: screenWidth * 0.02),
       child: Column(
         children: [
           Text(
             'Popular Plant Questions',
             style: GoogleFonts.poppins(
-              fontSize: 16,
+              fontSize: titleFontSize,
               fontWeight: FontWeight.w600,
               color: Colors.green.shade800,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: screenWidth * 0.015),
           Text(
             'These represent common topics users ask about',
             style: GoogleFonts.questrial(
-              fontSize: 14,
+              fontSize: subtitleFontSize,
               color: Colors.grey.shade600,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: screenWidth * 0.05),
           // Container with background color for cards
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+            padding: EdgeInsets.symmetric(vertical: verticalPadding, horizontal: horizontalPadding),
             decoration: BoxDecoration(
               color: Colors.green.shade50.withOpacity(0.5),
               borderRadius: BorderRadius.circular(24),
@@ -675,11 +692,11 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
             child: GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.1, // Slightly taller cards
-                crossAxisSpacing: 16, // More space between cards
-                mainAxisSpacing: 16, // More space between rows
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Keep fixed 2 columns as requested
+                childAspectRatio: childAspectRatio,
+                crossAxisSpacing: crossAxisSpacing,
+                mainAxisSpacing: mainAxisSpacing,
               ),
               itemCount: suggestions.length,
               itemBuilder: (context, index) {
@@ -689,6 +706,7 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
                   title: suggestion['title'] as String,
                   emoji: suggestion['emoji'] as String,
                   color: suggestion['color'] as Color,
+                  screenWidth: screenWidth, // Pass screen width to card builder
                 );
               },
             ),
@@ -703,21 +721,34 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
     required String title,
     required String emoji,
     required Color color,
+    required double screenWidth,
   }) {
+    // Calculate responsive dimensions based on screen width
+    final cardWidth = (screenWidth / 2) - (screenWidth * 0.08); // Account for spacing
+    final horizontalPadding = screenWidth * 0.03; // 3% of screen width
+    final verticalPadding = screenWidth * 0.04; // 4% of screen width
+    final emojiSize = screenWidth < 400 ? 20.0 : (screenWidth < 600 ? 22.0 : 24.0);
+    final emojiPadding = screenWidth * 0.03; // 3% of screen width
+    final titleFontSize = screenWidth < 400 ? 12.0 : (screenWidth < 600 ? 13.0 : 14.0);
+    final borderRadius = screenWidth < 400 ? 14.0 : 16.0;
+
     return Container(
-      width: 140,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 16, // Increased vertical padding
+      width: double.infinity, // Use available width
+      constraints: BoxConstraints(
+        maxWidth: cardWidth, // Constrain width to prevent overflow
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: horizontalPadding,
+        vertical: verticalPadding,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16), // Increased border radius
+        borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
             color: color.withOpacity(0.2),
-            blurRadius: 10,
-            spreadRadius: 1,
+            blurRadius: screenWidth < 400 ? 8 : 10,
+            spreadRadius: screenWidth < 400 ? 0.5 : 1,
             offset: const Offset(0, 3),
           ),
         ],
@@ -728,14 +759,12 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment:
-            MainAxisAlignment.center, // Center content vertically
-        crossAxisAlignment:
-            CrossAxisAlignment.center, // Center content horizontally
+        mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
+        crossAxisAlignment: CrossAxisAlignment.center, // Center content horizontally
         children: [
           // Emoji container with improved styling
           Container(
-            padding: const EdgeInsets.all(12), // Increased padding
+            padding: EdgeInsets.all(emojiPadding),
             decoration: BoxDecoration(
               color: color.withOpacity(0.15),
               shape: BoxShape.circle, // Make it a circle
@@ -754,12 +783,12 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
             ),
             child: Text(
               emoji,
-              style: const TextStyle(
-                fontSize: 22, // Slightly larger emoji
+              style: TextStyle(
+                fontSize: emojiSize,
               ),
             ),
           ),
-          const SizedBox(height: 12), // Increased spacing
+          SizedBox(height: screenWidth * 0.03), // Responsive spacing
           // Title with improved styling
           Text(
             title,
@@ -768,7 +797,7 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
               // Changed to Poppins to match other UI elements
               color: Colors.grey.shade800,
               fontWeight: FontWeight.w500,
-              fontSize: 13,
+              fontSize: titleFontSize,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

@@ -16,15 +16,25 @@ class PlantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const fullUrlImage = 'https://b290-196-129-56-101.ngrok-free.app/storage/';
+    // Get screen width for responsive sizing
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Calculate available width in a 2-column layout
+    final availableWidth = (screenWidth / 2) - (screenWidth * 0.05); // Account for spacing
+
     return Container(
-      width: 160,
+      // Use available width instead of fixed width
+      width: double.infinity,
+      // Constrain height to prevent overflow in GridView
+      constraints: BoxConstraints(
+        maxWidth: availableWidth,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
-            blurRadius: 4,
+            blurRadius: screenWidth < 400 ? 3 : 4, // Smaller blur on small screens
             offset: const Offset(2, 2),
           ),
         ],
@@ -32,7 +42,7 @@ class PlantCard extends StatelessWidget {
       child: Column(
         children: [
           LibraryPlantsGridItemTopSection(
-            imagePath: fullUrlImage + imagePath,
+            imagePath: imagePath,
             title: title,
           ),
           LibraryPlantsGridItemButtomSection(

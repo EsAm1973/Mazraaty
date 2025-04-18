@@ -16,13 +16,27 @@ class LibraryPlantGrid extends StatelessWidget {
           if (state.selectedPlants.isEmpty) {
             return const Center(child: Text('No Plants in this category'));
           }
+          // Get screen width to calculate responsive grid parameters
+          final screenWidth = MediaQuery.of(context).size.width;
+
+          // Keep a fixed 2-column layout as requested
+          const crossAxisCount = 2;
+
+          // Calculate spacing based on screen width
+          final crossAxisSpacing = screenWidth * 0.05; // 5% of screen width
+          final mainAxisSpacing = screenWidth * 0.03; // 3% of screen width
+
+          // Calculate childAspectRatio based on screen size
+          // Adjust aspect ratio to prevent overflow on different screen sizes
+          final childAspectRatio = screenWidth < 400 ? 0.65 : (screenWidth < 600 ? 0.7 : 0.75);
+
           return GridView.builder(
             physics: const BouncingScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 25,
-              mainAxisSpacing: 15,
-              childAspectRatio: 0.72,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              crossAxisSpacing: crossAxisSpacing,
+              mainAxisSpacing: mainAxisSpacing,
+              childAspectRatio: childAspectRatio,
             ),
             itemCount: state.selectedPlants.length,
             itemBuilder: (context, index) {

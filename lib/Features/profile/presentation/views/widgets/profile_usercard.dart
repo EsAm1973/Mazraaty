@@ -75,7 +75,6 @@ class ProfileUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String baseImageUrl = 'https://b7e8-196-129-106-200.ngrok-free.app/storage';
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -110,7 +109,7 @@ class ProfileUserCard extends StatelessWidget {
               child: CachedNetworkImage(
                 width: 80,
                 height: 80,
-                imageUrl: baseImageUrl + profile.image,
+                imageUrl: profile.image,
                 errorWidget: (context, url, error) => const Icon(
                   Icons.error,
                 ),
