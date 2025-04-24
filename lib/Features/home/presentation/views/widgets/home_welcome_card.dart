@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/constants.dart';
 
 class HomeWelcomeCard extends StatelessWidget {
   const HomeWelcomeCard({super.key});
@@ -31,12 +32,12 @@ class HomeWelcomeCard extends StatelessWidget {
               children: [
                 Text(
                   'Welcome Back,',
-                  style:
-                      Styles.textStyle20.copyWith(fontWeight: FontWeight.w600),
+                  style: Styles.textStyle18.copyWith(
+                      fontFamily: kfontFamily, fontWeight: FontWeight.w600),
                 ),
-                const Text(
+                 const Text(
                   'John Doe',
-                  style: Styles.textStyle20,
+                  style: Styles.textStyle18,
                 ),
               ],
             ),
