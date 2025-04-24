@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Features/home/data/models/plant_garden.dart';
+import 'package:mazraaty/Features/home/presentation/views/widgets/home_myplant_list.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_plant_issuelist.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_premium_card.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_user_points.dart';
@@ -38,6 +39,18 @@ class HomeViewBody extends StatelessWidget {
               humidity: '60',
               uvIndex: 'Moderate',
               sunsetTime: '6:30 PM',
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            HomeMyPlantList(
+              plant: PlantGarden(
+                name: 'Rose',
+                imageUrl: 'assets/images/similar1.png',
+                status: 'Need Attention',
+                lastWatered: '1 day',
+              ),
+              onAddNewPlantTap: () {},
             ),
           ],
         ),
