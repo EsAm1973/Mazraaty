@@ -48,7 +48,7 @@ import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 import 'package:mazraaty/Features/payment/presentation/manager/MyFatoorah%20Cubit/myfatoorah_cubit.dart';
 
 abstract class AppRouter {
-  static const String kSplashView = '/';
+  //static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -56,7 +56,7 @@ abstract class AppRouter {
   static const String kRecoverPassView = '/recoverpass_view';
   static const String kVerifyCodeView = '/verifycode_view';
   static const String kResetPassView = '/resetpass_view';
-  static const String kHomeView = '/home_view';
+  static const String kHomeView = '/';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
   static const String kNavigationView = '/navigation_view';
@@ -70,10 +70,10 @@ abstract class AppRouter {
   static const String kAiChatView = '/aichat_view';
 
   static final router = GoRouter(routes: [
-    GoRoute(
-      path: kSplashView,
-      builder: (context, state) => const SplashView(),
-    ),
+    // GoRoute(
+    //   path: kSplashView,
+    //   builder: (context, state) => const SplashView(),
+    // ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),
