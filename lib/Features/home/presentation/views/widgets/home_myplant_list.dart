@@ -49,6 +49,9 @@ class _HomeMyPlantListState extends State<HomeMyPlantList> with TickerProviderSt
       curve: Curves.easeInOut,
     );
 
+    // Start with the animation completed for initial display
+    _filterAnimationController.value = 1.0;
+
     _shimmerController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -127,8 +130,12 @@ class _HomeMyPlantListState extends State<HomeMyPlantList> with TickerProviderSt
   }
 
   void _filterPlants(String category) {
-    // Start the animation
-    _filterAnimationController.forward(from: 0.0);
+    // If selecting the same category, do nothing
+    if (_selectedCategory == category) return;
+
+    // Reset and start the animation
+    _filterAnimationController.reset();
+    _filterAnimationController.forward();
 
     setState(() {
       _selectedCategory = category;
