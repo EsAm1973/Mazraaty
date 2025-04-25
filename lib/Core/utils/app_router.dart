@@ -16,6 +16,9 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
+import 'package:mazraaty/Features/home/data/repos/weather_repo_impl.dart';
+import 'package:mazraaty/Features/home/data/service/weather_location.dart';
+import 'package:mazraaty/Features/home/presentation/manager/Weather%20Cubit/weather_cubit.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/payment/data/repos/Package%20Repo/package_repo_impl.dart';
@@ -167,7 +170,15 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kHomeView,
-      builder: (context, state) => const HomeView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => WeatherCubit(
+          WeatherRepositoryImpl(
+            Dio(),
+            //LocationService(),
+          ),
+        )..getWeather('Alexandria'),
+        child: const HomeView(),
+      ),
     ),
     // مؤقتا
     GoRoute(

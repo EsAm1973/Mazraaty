@@ -1,0 +1,2 @@
+D:/CS.4/Graduation Project/Project/mazraaty/android/app/.cxx/Debug/6re3q1j3/x86/CMakeFiles/edit_cache.dir
+D:/CS.4/Graduation Project/Project/mazraaty/android/app/.cxx/Debug/6re3q1j3/x86/CMakeFiles/rebuild_cache.dir

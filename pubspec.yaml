@@ -62,6 +62,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   timeago: ^3.7.0
   fl_chart: ^0.70.2
+  geolocator: ^10.1.0
   
 
 dev_dependencies:
