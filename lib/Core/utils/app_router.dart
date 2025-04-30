@@ -17,7 +17,6 @@ import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/data/repos/weather_repo_impl.dart';
-import 'package:mazraaty/Features/home/data/service/weather_location.dart';
 import 'package:mazraaty/Features/home/presentation/manager/Weather%20Cubit/weather_cubit.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
@@ -47,7 +46,6 @@ import 'package:mazraaty/Features/scan_plant/presentation/manager/Points%20Cubit
 import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
-import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 import 'package:mazraaty/Features/payment/presentation/manager/MyFatoorah%20Cubit/myfatoorah_cubit.dart';
 
 abstract class AppRouter {
@@ -59,10 +57,10 @@ abstract class AppRouter {
   static const String kRecoverPassView = '/recoverpass_view';
   static const String kVerifyCodeView = '/verifycode_view';
   static const String kResetPassView = '/resetpass_view';
-  static const String kHomeView = '/';
+  static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
-  static const String kNavigationView = '/navigation_view';
+  static const String kNavigationView = '/';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kUpdatedDetailsView = '/updatedetails_view';
@@ -134,6 +132,14 @@ abstract class AppRouter {
       builder: (context, state) => MultiBlocProvider(
         providers: [
           BlocProvider(
+            create: (context) => WeatherCubit(
+              WeatherRepositoryImpl(
+                Dio(),
+                //LocationService(),
+              ),
+            )..getWeather('Mansoura'),
+          ),
+          BlocProvider(
             create: (context) => PointsCubit(
                 userCubit: context.read<UserCubit>(),
                 pointsRepository:
@@ -170,15 +176,7 @@ abstract class AppRouter {
     ),
     GoRoute(
       path: kHomeView,
-      builder: (context, state) => BlocProvider(
-        create: (context) => WeatherCubit(
-          WeatherRepositoryImpl(
-            Dio(),
-            //LocationService(),
-          ),
-        )..getWeather('Alexandria'),
-        child: const HomeView(),
-      ),
+      builder: (context, state) => const HomeView(),
     ),
     // مؤقتا
     GoRoute(

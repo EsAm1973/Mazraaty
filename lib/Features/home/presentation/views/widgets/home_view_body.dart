@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Features/home/data/models/plant_garden.dart';
-import 'package:mazraaty/Features/home/presentation/views/widgets/home_growth_timeline.dart';
-import 'package:mazraaty/Features/home/presentation/views/widgets/home_myplant_list.dart';
+import 'package:mazraaty/Features/home/presentation/views/widgets/home_app_features.dart';
+import 'package:mazraaty/Features/home/presentation/views/widgets/home_community_section.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_plant_issuelist.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_premium_card.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_user_points.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_weather_card.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_welcome_card.dart';
-import 'package:mazraaty/Features/home/presentation/views/widgets/home_quick_actions.dart';
 import 'package:mazraaty/constants.dart';
 
 class HomeViewBody extends StatefulWidget {
@@ -18,7 +15,8 @@ class HomeViewBody extends StatefulWidget {
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
 
-class _HomeViewBodyState extends State<HomeViewBody> with TickerProviderStateMixin {
+class _HomeViewBodyState extends State<HomeViewBody>
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late AnimationController _floatingButtonController;
   late ScrollController _scrollController;
@@ -107,7 +105,8 @@ class _HomeViewBodyState extends State<HomeViewBody> with TickerProviderStateMix
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 20),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 20),
                         child: child,
                       );
                     },
@@ -117,33 +116,37 @@ class _HomeViewBodyState extends State<HomeViewBody> with TickerProviderStateMix
 
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
-                // Points Widget
+                // Scan Credits Widget
                 SliverToBoxAdapter(
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 25),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 25),
                         child: child,
                       );
                     },
-                    child: HomePointWidegt(points: 120, onHowToEarnTap: () {}),
+                    child: HomePointWidegt(
+                        points: 120,
+                        onHowToEarnTap: () {}), // 120 points = 12 scans
                   ),
                 ),
 
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
-                // Quick Actions
+                // Common Diseases
                 SliverToBoxAdapter(
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 30),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 30),
                         child: child,
                       );
                     },
-                    child: const HomeQuickActions(),
+                    child: const HomeRecentPlantIssue(),
                   ),
                 ),
 
@@ -155,7 +158,8 @@ class _HomeViewBodyState extends State<HomeViewBody> with TickerProviderStateMix
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 35),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 35),
                         child: child,
                       );
                     },
@@ -163,43 +167,37 @@ class _HomeViewBodyState extends State<HomeViewBody> with TickerProviderStateMix
                   ),
                 ),
 
-                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                const SliverToBoxAdapter(child: SizedBox(height: 30)),
 
-                // My Plants List
+                // Community Website Section
                 SliverToBoxAdapter(
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 40),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 40),
                         child: child,
                       );
                     },
-                    child: HomeMyPlantList(
-                      plant: PlantGarden(
-                        name: 'Rose',
-                        imageUrl: 'assets/images/similar1.png',
-                        status: 'Need Attention',
-                        lastWatered: '1 day',
-                      ),
-                      onAddNewPlantTap: () {},
-                    ),
+                    child: const HomeCommunitySection(),
                   ),
                 ),
 
-                const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                const SliverToBoxAdapter(child: SizedBox(height: 30)),
 
-                // Plant Growth Timeline
+                // App Features Section
                 SliverToBoxAdapter(
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 45),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 45),
                         child: child,
                       );
                     },
-                    child: const HomeGrowthTimeline(),
+                    child: const HomeAppFeatures(),
                   ),
                 ),
 
@@ -211,27 +209,12 @@ class _HomeViewBodyState extends State<HomeViewBody> with TickerProviderStateMix
                     animation: _animationController,
                     builder: (context, child) {
                       return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 50),
+                        offset:
+                            Offset(0, (1 - _animationController.value) * 50),
                         child: child,
                       );
                     },
                     child: HomePremiumUpgradeCard(onSubscribeTap: () {}),
-                  ),
-                ),
-
-                const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                // Recent Plant Issues
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset: Offset(0, (1 - _animationController.value) * 55),
-                        child: child,
-                      );
-                    },
-                    child: const HomeRecentPlantIssue(),
                   ),
                 ),
 

@@ -6,8 +6,18 @@ import 'package:mazraaty/Features/home/presentation/manager/Weather%20Cubit/weat
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_view_body.dart';
 import 'package:mazraaty/constants.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

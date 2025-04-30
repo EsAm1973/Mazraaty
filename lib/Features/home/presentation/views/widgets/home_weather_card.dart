@@ -212,7 +212,7 @@ class _HomeWeatherCardState extends State<HomeWeatherCard> with SingleTickerProv
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                context.read<WeatherCubit>().getWeather('Alexandria');
+                                context.read<WeatherCubit>().getWeather('Mansoura');
                               },
                             ),
                           ],

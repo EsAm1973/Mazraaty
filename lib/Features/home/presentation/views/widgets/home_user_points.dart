@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/constants.dart';
 
 class HomePointWidegt extends StatefulWidget {
@@ -10,7 +10,7 @@ class HomePointWidegt extends StatefulWidget {
   });
 
   final int points;
-  final VoidCallback? onHowToEarnTap;
+  final VoidCallback? onHowToEarnTap; // Renamed from onHowToEarnTap to reflect buying more scans
 
   @override
   State<HomePointWidegt> createState() => _HomePointWidegtState();
@@ -46,10 +46,8 @@ class _HomePointWidegtState extends State<HomePointWidegt> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    // Calculate progress to next level (for example, every 100 points is a level)
-    final int currentLevel = widget.points ~/ 100;
-    final int pointsToNextLevel = (currentLevel + 1) * 100;
-    final double progress = (widget.points % 100) / 100;
+    // Calculate available scans (1 scan = 10 points)
+    final int availableScans = widget.points ~/ 10;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -58,117 +56,134 @@ class _HomePointWidegtState extends State<HomePointWidegt> with SingleTickerProv
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.amber.shade100,
-            Colors.amber.shade50,
+            Colors.teal.shade50,
+            Colors.white,
           ],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.amber.withAlpha(40),
-            blurRadius: 8,
-            spreadRadius: 1,
-            offset: const Offset(0, 2),
+            color: Colors.black.withAlpha(15),
+            blurRadius: 10,
+            spreadRadius: 0,
+            offset: const Offset(0, 4),
           ),
         ],
+        border: Border.all(
+          color: Colors.teal.withAlpha(50),
+          width: 1,
+        ),
       ),
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  // Animated star icon
-                  AnimatedBuilder(
-                    animation: _rotateAnimation,
-                    builder: (context, child) {
-                      return Transform.rotate(
-                        angle: _rotateAnimation.value,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.amber.withAlpha(50),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.star,
-                            color: Color(0xFFFFD700),
-                            size: 30,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${widget.points} Points',
-                        style: Styles.textStyle23.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.amber.shade800,
-                        ),
+              // Animated camera/scan icon
+              AnimatedBuilder(
+                animation: _rotateAnimation,
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _rotateAnimation.value,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: kMainColor.withAlpha(30),
+                        shape: BoxShape.circle,
                       ),
-                      Text(
-                        'Level $currentLevel',
-                        style: Styles.textStyle15.copyWith(
-                          color: Colors.grey[700],
-                        ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: kMainColor,
+                        size: 24,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  );
+                },
               ),
-              ElevatedButton(
-                onPressed: widget.onHowToEarnTap,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kMainColor,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+              const SizedBox(width: 12),
+
+              // Points and scans information
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '$availableScans',
+                          style: GoogleFonts.poppins(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: kMainColor,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Scans Available',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '${widget.points} Points (10 points per scan)',
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
                 ),
-                child: const Text('How to earn?'),
+              ),
+
+              // Info icon with tooltip
+              Tooltip(
+                message: 'Subscribe to Premium for unlimited scans',
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.info_outline,
+                    color: kMainColor,
+                    size: 22,
+                  ),
+                  onPressed: widget.onHowToEarnTap,
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${widget.points % 100} / 100 points to next level',
-                    style: Styles.textStyle13.copyWith(
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  Text(
-                    '$pointsToNextLevel',
-                    style: Styles.textStyle13.copyWith(
-                      color: Colors.grey[700],
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+          const SizedBox(height: 12),
+
+          // Info section
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.blue.shade100,
+                width: 1,
               ),
-              const SizedBox(height: 8),
-              // Progress bar
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: LinearProgressIndicator(
-                  value: progress,
-                  backgroundColor: Colors.grey[300],
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.amber.shade700),
-                  minHeight: 10,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  color: Colors.blue.shade700,
+                  size: 20,
                 ),
-              ),
-            ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Use your scans to identify plant diseases by taking photos of affected plants. Subscribe to Premium for unlimited scans.',
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: Colors.blue.shade800,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

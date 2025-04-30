@@ -78,7 +78,9 @@ class ScanController {
 
     if (_isProcessing ||
         cameraController == null ||
-        !cameraController!.value.isInitialized) return;
+        !cameraController!.value.isInitialized) {
+      return;
+    }
 
     _isProcessing = true;
     final scanCubit = context.read<ScanCubit>();

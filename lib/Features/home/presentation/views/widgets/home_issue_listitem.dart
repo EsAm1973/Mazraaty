@@ -11,7 +11,8 @@ class HomePlantIssueItem extends StatefulWidget {
   State<HomePlantIssueItem> createState() => _HomePlantIssueItemState();
 }
 
-class _HomePlantIssueItemState extends State<HomePlantIssueItem> with SingleTickerProviderStateMixin {
+class _HomePlantIssueItemState extends State<HomePlantIssueItem>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   bool _isHovering = false;
@@ -65,100 +66,154 @@ class _HomePlantIssueItemState extends State<HomePlantIssueItem> with SingleTick
           );
         },
         child: Container(
-          width: 170,
+          width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
                 color: _isHovering
-                    ? kMainColor.withAlpha(40)
+                    ? (widget.plantIssue.severityColor ?? kMainColor)
+                        .withAlpha(40)
                     : Colors.black.withAlpha(15),
-                blurRadius: _isHovering ? 8 : 4,
+                blurRadius: _isHovering ? 12 : 6,
                 spreadRadius: _isHovering ? 2 : 0,
-                offset: const Offset(0, 2),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Image with gradient overlay
               Stack(
                 children: [
+                  // Image
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
                     ),
                     child: Image.asset(
                       widget.plantIssue.image,
-                      height: 110,
+                      height: 140,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Positioned(
-                    top: 8,
-                    right: 8,
+
+                  // Gradient overlay
+                  Positioned.fill(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Colors.red.withAlpha(200),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withAlpha(178),
+                          ],
+                          stops: const [0.6, 1.0],
+                        ),
                       ),
-                      child: const Text(
-                        'Issue',
-                        style: TextStyle(
+                    ),
+                  ),
+
+                  // Severity badge
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: widget.plantIssue.severityColor ?? Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(51),
+                            blurRadius: 4,
+                            spreadRadius: 0,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        widget.plantIssue.severity,
+                        style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 10,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+
+                  // Disease name on image
+                  Positioned(
+                    bottom: 12,
+                    left: 12,
+                    right: 12,
+                    child: Text(
                       widget.plantIssue.name,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withAlpha(128),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 6),
+                  ),
+                ],
+              ),
+
+              // Content
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Description
                     Text(
                       widget.plantIssue.description,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 13,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
                         color: Colors.grey[700],
+                        height: 1.4,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.info_outline,
-                          size: 14,
-                          color: kMainColor,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          'View Details',
-                          style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            color: kMainColor,
-                            fontWeight: FontWeight.w600,
+                    const SizedBox(height: 16),
+
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          // Navigate to details
+                        },
+                        icon: const Icon(Icons.info_outline, size: 16),
+                        label: const Text('Learn More'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: kMainColor,
+                          side: const BorderSide(color: kMainColor),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
