@@ -79,99 +79,124 @@ class _HomeRecentPlantIssueState extends State<HomeRecentPlantIssue> {
         // Header section
         Padding(
           padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Left side - Title with icon
-              Row(
-                children: [
-                  // Decorative element
-                  Container(
-                    height: 24,
-                    width: 4,
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade400,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  // Title
-                  Text(
-                    "Common Diseases",
-                    style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                ],
-              ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // Check if we're on a small screen
+              final bool isSmallScreen = constraints.maxWidth < 360;
 
-              // Right side - View All button
-              OutlinedButton.icon(
-                onPressed: () {
-                  // Navigate to all issues
-                },
-                icon: const Icon(
-                  Icons.arrow_forward,
-                  size: 16,
-                ),
-                label: const Text('View All'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: kMainColor,
-                  side: const BorderSide(color: kMainColor, width: 1.5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Left side - Title with icon
+                  Expanded(
+                    child: Row(
+                      children: [
+                        // Decorative element
+                        Container(
+                          height: 24,
+                          width: 4,
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade400,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        // Title
+                        Flexible(
+                          child: Text(
+                            "Common Diseases",
+                            style: GoogleFonts.poppins(
+                              fontSize: isSmallScreen ? 18 : 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade800,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                ),
-              ),
-            ],
+
+                  // Right side - View All button
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      // Navigate to all issues
+                    },
+                    icon: Icon(
+                      Icons.arrow_forward,
+                      size: isSmallScreen ? 14 : 16,
+                    ),
+                    label: Text(
+                      isSmallScreen ? 'All' : 'View All',
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 12 : 14,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: kMainColor,
+                      side: const BorderSide(color: kMainColor, width: 1.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isSmallScreen ? 8 : 12,
+                        vertical: isSmallScreen ? 6 : 8,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
 
         // Disease cards with PageView
         Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: SizedBox(
-            height: 270,
-            child: PageView.builder(
-              controller: _pageController,
-              physics: const BouncingScrollPhysics(),
-              // Adjust padding to align first card with left edge
-              padEnds: false,
-              itemCount: _issues.length,
-              itemBuilder: (context, index) {
-                // Add staggered animation effect
-                return TweenAnimationBuilder<double>(
-                  tween: Tween(begin: 0.0, end: 1.0),
-                  duration: Duration(milliseconds: 500 + (index * 100)),
-                  curve: Curves.easeOutQuad,
-                  builder: (context, value, child) {
-                    return Transform.translate(
-                      offset: Offset(50 * (1 - value), 0),
-                      child: Opacity(
-                        opacity: value,
-                        child: child,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // Adjust height based on screen width
+              final double cardHeight = constraints.maxWidth < 360 ? 270 : 300;
+
+              return SizedBox(
+                height: cardHeight,
+                child: PageView.builder(
+                  controller: _pageController,
+                  physics: const BouncingScrollPhysics(),
+                  // Adjust padding to align first card with left edge
+                  padEnds: false,
+                  itemCount: _issues.length,
+                  itemBuilder: (context, index) {
+                    // Add staggered animation effect
+                    return TweenAnimationBuilder<double>(
+                      tween: Tween(begin: 0.0, end: 1.0),
+                      duration: Duration(milliseconds: 500 + (index * 100)),
+                      curve: Curves.easeOutQuad,
+                      builder: (context, value, child) {
+                        return Transform.translate(
+                          offset: Offset(50 * (1 - value), 0),
+                          child: Opacity(
+                            opacity: value,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          right: 16,
+                          top: 4,
+                          bottom: 4,
+                        ),
+                        child: HomePlantIssueItem(
+                          plantIssue: _issues[index],
+                        ),
                       ),
                     );
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 16,
-                      top: 4,
-                      bottom: 4,
-                    ),
-                    child: HomePlantIssueItem(
-                      plantIssue: _issues[index],
-                    ),
-                  ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
 

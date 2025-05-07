@@ -16,7 +16,7 @@ class UserRepositoryImpl implements IUserRepository {
       'user',
       {
         'id': user.id,
-        'user_name': user.username,
+        'name': user.username,
         'email': user.email,
         'phone_number': user.phone,
         'points': user.points,
@@ -49,7 +49,7 @@ class UserRepositoryImpl implements IUserRepository {
     await db.update(
       'user',
       {
-        'user_name': '', // أو يمكن تركه كما هو إن أردت الاحتفاظ بالاسم
+        'name': '', // أو يمكن تركه كما هو إن أردت الاحتفاظ بالاسم
         'phone_number': '',
         'points': 0,
         'token': '',

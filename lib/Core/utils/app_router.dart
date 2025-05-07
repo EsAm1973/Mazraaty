@@ -47,9 +47,10 @@ import 'package:mazraaty/Features/scan_plant/presentation/manager/Scan/scan_cubi
 import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dart';
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/payment/presentation/manager/MyFatoorah%20Cubit/myfatoorah_cubit.dart';
+import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
 
 abstract class AppRouter {
-  //static const String kSplashView = '/';
+  static const String kSplashView = '/';
   static const String kOnboardingView = '/onboarding_view';
   static const String kLoginView = '/login_view';
   static const String kSignupView = '/signup_view';
@@ -60,7 +61,7 @@ abstract class AppRouter {
   static const String kHomeView = '/home_view';
   static const String kLibraryView = '/library_view';
   static const String kProfileView = '/profile_view';
-  static const String kNavigationView = '/';
+  static const String kNavigationView = '/navigation_view';
   static const String kCropImageView = '/cropimage_view';
   static const String kHistoryView = '/history_view';
   static const String kUpdatedDetailsView = '/updatedetails_view';
@@ -71,10 +72,10 @@ abstract class AppRouter {
   static const String kAiChatView = '/aichat_view';
 
   static final router = GoRouter(routes: [
-    // GoRoute(
-    //   path: kSplashView,
-    //   builder: (context, state) => const SplashView(),
-    // ),
+    GoRoute(
+      path: kSplashView,
+      builder: (context, state) => const SplashView(),
+    ),
     GoRoute(
       path: kOnboardingView,
       builder: (context, state) => const OnboardScreensView(),

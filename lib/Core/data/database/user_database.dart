@@ -26,7 +26,7 @@ class UserDatabase {
         await db.execute('''
           CREATE TABLE user(
             id INTEGER PRIMARY KEY,
-            user_name TEXT,
+            name TEXT,
             email TEXT,
             phone_number TEXT,
             points INTEGER,

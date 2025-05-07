@@ -46,7 +46,7 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
       required String email,
       required String password}) async {
     final body = {
-      'user_name': username,
+      'name': username,
       'phone_number': phone,
       'email': email,
       'password': password,

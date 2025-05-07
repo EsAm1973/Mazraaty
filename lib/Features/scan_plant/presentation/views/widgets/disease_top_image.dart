@@ -2,8 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/scan_plant/data/models/disease_details.dart';
@@ -28,19 +26,22 @@ class DiseaseTopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HistoryCubit, HistoryState>(
       listener: (context, state) {
-        // Show success and error responses (loading is handled separately)
-        if (state is HistorySaveSuccess) {
-          DialogHelper.showSaveResponse(context, state.message);
-        } else if (state is HistorySaveError) {
-          DialogHelper.showError(context, 'Error', state.errorMessage);
+        // Close any existing dialog first
+        if (state is HistorySaveSuccess || state is HistorySaveError) {
+          // Close the loading dialog if it's open
+          Navigator.of(context).popUntil((route) => route.isFirst || route.settings.name != null);
+
+          // Then show the appropriate response dialog
+          if (state is HistorySaveSuccess) {
+            DialogHelper.showSaveResponse(context, state.message);
+          } else if (state is HistorySaveError) {
+            DialogHelper.showError(context, 'Error', state.errorMessage);
+          }
         }
       },
       builder: (context, state) {
-        final userCubit = context.read<UserCubit>();
-        final isLoggedIn = userCubit.currentUser != null;
-        
-        // We don't need to check saved status anymore since we always show the same icon
-        
+        // No need to check login status anymore since saving is automatic
+
         return Stack(
           children: [
             // If we have an image from the camera/gallery that's not empty, use it first
@@ -61,7 +62,7 @@ class DiseaseTopImage extends StatelessWidget {
               left: 20,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200.withOpacity(0.7),
+                  color: Colors.grey.shade200.withAlpha(179), // Equivalent to opacity 0.7
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: IconButton(
@@ -73,65 +74,13 @@ class DiseaseTopImage extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              top: 20,
-              right: 20,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                // Only show the save button if coming from scan, not from history
-                child: source == 'scan' ? BlocBuilder<HistoryCubit, HistoryState>(
-                  builder: (context, state) {
-                    // Disable the button during saving to prevent multiple clicks
-                    final bool isLoading = state is HistorySaving;
-                    
-                    return IconButton(
-                      icon: isLoading 
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(kMainColor),
-                              ),
-                            )
-                          : const Icon(
-                              FontAwesomeIcons.download,
-                              color: Colors.black,
-                            ),
-                      onPressed: isLoading 
-                          ? null 
-                          : () {
-                              if (isLoggedIn) {
-                                DialogHelper.showSaveDiseaseConfirmation(
-                                  context,
-                                  () async {
-                                    await context
-                                        .read<HistoryCubit>()
-                                        .saveDiseaseToHistory(disease, image);
-                                  },
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('يجب تسجيل الدخول لحفظ التاريخ'),
-                                  ),
-                                );
-                              }
-                            },
-                    );
-                  },
-                ) : null, // If from history, don't show any button
-              ),
-            ),
+            // Removed manual save button as saving is now automatic
           ],
         );
       },
     );
   }
-  
+
   Widget _buildNetworkImageFallback() {
     // Check if we have a direct image URL passed from history
     if (imageUrl != null) {
@@ -154,7 +103,7 @@ class DiseaseTopImage extends StatelessWidget {
     // Otherwise try to use a disease sample image
     return _buildDiseaseFallbackImage();
   }
-  
+
   Widget _buildDiseaseFallbackImage() {
     if (disease.diseaseImages.isNotEmpty) {
       return CachedNetworkImage(
@@ -180,7 +129,7 @@ class DiseaseTopImage extends StatelessWidget {
         ),
       );
     }
-    
+
     // Final fallback if no images are available
     return Container(
       width: double.infinity,

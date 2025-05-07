@@ -17,10 +17,10 @@ class Profile {
   factory Profile.fromJson(Map<String, dynamic> json) {
     final data = json['data'];
     return Profile(
-      userName: data['user_name'] ?? '',
+      userName: data['name'] ?? '',
       email: data['email'] ?? '',
       phoneNumber: data['phone_number'] ?? '',
-      image: data['image'] ?? '',
+      image: data['image_name'] ?? '',
       points: data['points'] ?? 0,
     );
   }

@@ -49,7 +49,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     };
     try {
       FormData formData = FormData.fromMap({
-        'image': await MultipartFile.fromFile(image.path),
+        'image_name': await MultipartFile.fromFile(image.path),
       });
 
       final response =
