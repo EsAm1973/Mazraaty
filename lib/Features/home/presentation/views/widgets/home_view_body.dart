@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mazraaty/Core/utils/app_router.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_app_features.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_community_section.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_plant_issuelist.dart';
@@ -127,9 +129,7 @@ class _HomeViewBodyState extends State<HomeViewBody>
                         child: child,
                       );
                     },
-                    child: HomePointWidegt(
-                        points: 120,
-                        onHowToEarnTap: () {}), // 120 points = 12 scans
+                    child: HomePointWidegt(onHowToEarnTap: () {}),
                   ),
                 ),
 
@@ -214,7 +214,10 @@ class _HomeViewBodyState extends State<HomeViewBody>
                         child: child,
                       );
                     },
-                    child: HomePremiumUpgradeCard(onSubscribeTap: () {}),
+                    child: HomePremiumUpgradeCard(onSubscribeTap: () {
+                      // Navigate to payment methods view
+                      GoRouter.of(context).push(AppRouter.kPaymentPackgesView);
+                    }),
                   ),
                 ),
 
