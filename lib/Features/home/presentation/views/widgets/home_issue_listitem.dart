@@ -53,8 +53,7 @@ class _HomePlantIssueItemState extends State<HomePlantIssueItem> {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: widget.plantIssue.severityColor!
-                          .withValues(alpha: 0.9),
+                      color:Color(widget.plantIssue.severityColor!.toARGB32()),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Text(
