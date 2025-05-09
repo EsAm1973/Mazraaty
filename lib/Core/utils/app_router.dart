@@ -16,6 +16,7 @@ import 'package:mazraaty/Features/authentication/presentation/views/verify_code_
 import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
+import 'package:mazraaty/Features/home/data/repos/Common%20Disease/common_disease_repo_impl.dart';
 import 'package:mazraaty/Features/home/data/repos/weather_repo_impl.dart';
 import 'package:mazraaty/Features/home/presentation/manager/Weather%20Cubit/weather_cubit.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
@@ -48,6 +49,8 @@ import 'package:mazraaty/Features/scan_plant/presentation/views/disease_view.dar
 import 'package:mazraaty/Features/scan_plant/presentation/views/scan_view.dart';
 import 'package:mazraaty/Features/payment/presentation/manager/MyFatoorah%20Cubit/myfatoorah_cubit.dart';
 import 'package:mazraaty/Features/splash/presentation/views/splash_view.dart';
+
+import '../../Features/home/presentation/manager/Common Disease Cubit/common_disease_cubit.dart';
 
 abstract class AppRouter {
   static const String kSplashView = '/';
@@ -170,7 +173,13 @@ abstract class AppRouter {
               create: (context) => ProfileCubit(
                   ProfileRepositoryImpl(apiService: ApiService(dio: Dio())))
                 ..fetchProfile(
-                    token: context.read<UserCubit>().currentUser!.token))
+                    token: context.read<UserCubit>().currentUser!.token)),
+          BlocProvider(
+            create: (context) => CommonDiseaseCubit(
+                CommonDiseaseRepositoryImpl(apiService: ApiService(dio: Dio())),
+                context.read<UserCubit>())
+              ..fetchCommonDiseases(),
+          ),
         ],
         child: const CustomNavBar(),
       ),

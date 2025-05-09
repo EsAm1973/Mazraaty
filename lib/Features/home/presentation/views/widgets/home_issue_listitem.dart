@@ -1,221 +1,264 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/home/data/models/plant_issue.dart';
 import 'package:mazraaty/constants.dart';
 
 class HomePlantIssueItem extends StatefulWidget {
-  const HomePlantIssueItem({super.key, required this.plantIssue});
   final PlantIssue plantIssue;
+
+  const HomePlantIssueItem({
+    super.key,
+    required this.plantIssue,
+  });
 
   @override
   State<HomePlantIssueItem> createState() => _HomePlantIssueItemState();
 }
 
-class _HomePlantIssueItemState extends State<HomePlantIssueItem>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
-  bool _isHovering = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 200),
-    );
-
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
+class _HomePlantIssueItemState extends State<HomePlantIssueItem> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navigate to issue details
-      },
-      onTapDown: (_) {
-        _animationController.forward();
-        setState(() => _isHovering = true);
-      },
-      onTapUp: (_) {
-        _animationController.reverse();
-        setState(() => _isHovering = false);
-      },
-      onTapCancel: () {
-        _animationController.reverse();
-        setState(() => _isHovering = false);
-      },
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
-            child: child,
-          );
-        },
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: _isHovering
-                    ? (widget.plantIssue.severityColor ?? kMainColor)
-                        .withAlpha(40)
-                    : Colors.black.withAlpha(15),
-                blurRadius: _isHovering ? 12 : 6,
-                spreadRadius: _isHovering ? 2 : 0,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image with gradient overlay
-              Stack(
-                children: [
-                  // Image
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: Image.asset(
-                      widget.plantIssue.image,
-                      height: 140,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+    return Card(
+      elevation: 4,
+      shadowColor: Colors.black.withValues(alpha: 0.4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with image and severity badge
+            Stack(
+              children: [
+                // Image
+                SizedBox(
+                  height: 150,
+                  width: double.infinity,
+                  child: Image.asset(
+                    'assets/images/similar1.png',
+                    fit: BoxFit.cover,
                   ),
+                ),
 
-                  // Gradient overlay
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black.withAlpha(178),
-                          ],
-                          stops: const [0.6, 1.0],
-                        ),
+                // Severity badge
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: widget.plantIssue.severityColor!
+                          .withValues(alpha: 0.9),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      widget.plantIssue.severity,
+                      style: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
                       ),
                     ),
                   ),
+                ),
 
-                  // Severity badge
-                  Positioned(
-                    top: 12,
-                    right: 12,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: widget.plantIssue.severityColor ?? Colors.red,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(51),
-                            blurRadius: 4,
-                            spreadRadius: 0,
-                            offset: const Offset(0, 2),
-                          ),
+                // Title at the bottom of the image
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black.withValues(alpha: 0.7),
+                          Colors.transparent,
                         ],
                       ),
-                      child: Text(
-                        widget.plantIssue.severity,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
-                  ),
-
-                  // Disease name on image
-                  Positioned(
-                    bottom: 12,
-                    left: 12,
-                    right: 12,
                     child: Text(
                       widget.plantIssue.name,
                       style: GoogleFonts.poppins(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withAlpha(128),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // Content
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Description
+                  Text(
+                    widget.plantIssue.description,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.grey[700],
+                      height: 1.4,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 16),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        // Show disease details dialog using DialogHelper
+                        DialogHelper.showDiseaseDetails(
+                          context,
+                          widget.plantIssue.name,
+                          widget.plantIssue.description,
+                          'assets/images/similar1.png',
+                          widget.plantIssue.severity,
+                          widget.plantIssue.severityColor,
+                        );
+                      },
+                      icon: const Icon(Icons.info_outline, size: 16),
+                      label: const Text('Learn More'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: kMainColor,
+                        side: const BorderSide(color: kMainColor),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-              // Content
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+  void _showDiseaseDetailsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        elevation: 8,
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Disease image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.asset(
+                  widget.plantIssue.image,
+                  height: 150,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Title
+              Text(
+                widget.plantIssue.name,
+                style: GoogleFonts.poppins(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+
+              // Severity badge
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: widget.plantIssue.severityColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Description
+                    Icon(
+                      Icons.warning_amber_rounded,
+                      color: widget.plantIssue.severityColor,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 4),
                     Text(
-                      widget.plantIssue.description,
+                      widget.plantIssue.severity,
                       style: GoogleFonts.poppins(
                         fontSize: 14,
-                        color: Colors.grey[700],
-                        height: 1.4,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          // Navigate to details
-                        },
-                        icon: const Icon(Icons.info_outline, size: 16),
-                        label: const Text('Learn More'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: kMainColor,
-                          side: const BorderSide(color: kMainColor),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
+                        fontWeight: FontWeight.w500,
+                        color: widget.plantIssue.severityColor,
                       ),
                     ),
                   ],
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Description
+              Text(
+                widget.plantIssue.description,
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  color: Colors.black87,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+
+              // Close button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kMainColor,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: Text(
+                    'Close',
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
             ],

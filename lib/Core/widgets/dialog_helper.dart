@@ -591,7 +591,8 @@ class DialogHelper {
     showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.black.withAlpha(150), // Slightly darker barrier for focus
+      barrierColor:
+          Colors.black.withAlpha(150), // Slightly darker barrier for focus
       builder: (BuildContext context) {
         return PopScope(
           canPop: false, // Prevent closing with back button
@@ -693,12 +694,173 @@ class DialogHelper {
         Navigator.of(context).pop();
 
         // Show error dialog
-        showError(
-          context,
-          'Error',
-          'An error occurred while saving the disease: ${e.toString()}'
-        );
+        showError(context, 'Error',
+            'An error occurred while saving the disease: ${e.toString()}');
       }
+    }
+  }
+
+  // Show disease details dialog
+  static void showDiseaseDetails(
+    BuildContext context,
+    String title,
+    String description,
+    String imageUrl,
+    String severity,
+    Color? severityColor,
+  ) {
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        barrierColor: Colors.black.withAlpha(150),
+        builder: (BuildContext context) {
+          return Dialog(
+            elevation: 8,
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(
+                  color: kMainColor.withAlpha(50),
+                  width: 1.5,
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Disease image
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      imageUrl,
+                      height: 150,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          height: 150,
+                          width: double.infinity,
+                          color: Colors.grey.shade200,
+                          child: const Icon(
+                            Icons.image_not_supported,
+                            size: 40,
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Title with animation
+                  TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 500),
+                    tween: Tween<double>(begin: 0.8, end: 1.0),
+                    curve: Curves.easeOutBack,
+                    builder: (context, value, child) {
+                      return Transform.scale(
+                        scale: value,
+                        child: child,
+                      );
+                    },
+                    child: Text(
+                      title,
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Severity badge
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: severityColor!.withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      severity,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: severityColor,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Description with fade-in animation
+                  TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 800),
+                    tween: Tween<double>(begin: 0.0, end: 1.0),
+                    builder: (context, value, child) {
+                      return Opacity(
+                        opacity: value,
+                        child: child,
+                      );
+                    },
+                    child: Text(
+                      description,
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: Colors.black87,
+                        height: 1.5,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Animated button
+                  TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 1000),
+                    tween: Tween<double>(begin: 0.0, end: 1.0),
+                    curve: Curves.elasticOut,
+                    builder: (context, value, child) {
+                      return Transform.scale(
+                        scale: value,
+                        child: child,
+                      );
+                    },
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kMainColor,
+                          foregroundColor: Colors.white,
+                          elevation: 4,
+                          shadowColor: kMainColor.withAlpha(100),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        child: Text(
+                          'Close',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
     }
   }
 }
