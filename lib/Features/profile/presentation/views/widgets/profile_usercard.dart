@@ -18,54 +18,163 @@ class ProfileUserCard extends StatelessWidget {
   void _showImageOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) => SafeArea(
-        child: Wrap(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text('Choose from Gallery'),
-              onTap: () async {
-                GoRouter.of(context).pop();
-                // اختيار صورة من المعرض
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                if (pickedFile != null) {
-                  File imageFile = File(pickedFile.path);
-                  // الانتقال إلى شاشة تعديل الصورة (CropImageScreen)
-                  final File? croppedImage = await GoRouter.of(context)
-                      .push<File>(AppRouter.kCropImageView, extra: imageFile);
-                  if (croppedImage != null) {
-                    // استدعاء الـ Cubit لتحديث صورة البروفايل باستخدام الصورة المعدلة
-                    context.read<ProfileCubit>().updateProfileImage(
-                          image: croppedImage,
-                          token: context.read<UserCubit>().currentUser!.token,
-                        );
-                  }
-                }
-              },
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Handle bar
+                Container(
+                  width: 50,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Title
+                Text(
+                  'Change Profile Picture',
+                  style: Styles.textStyle20.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: kMainColor,
+                    fontFamily: kfontFamily,
+                  ),
+                ),
+                const SizedBox(height: 25),
+
+                // Gallery Option
+                _buildImageOption(
+                  context: context,
+                  icon: Icons.photo_library_outlined,
+                  title: 'Choose from Gallery',
+                  subtitle: 'Select a photo from your gallery',
+                  onTap: () async {
+                    GoRouter.of(context).pop();
+                    final pickedFile =
+                        await ImagePicker().pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      File imageFile = File(pickedFile.path);
+                      final File? croppedImage = await GoRouter.of(context)
+                          .push<File>(AppRouter.kCropImageView, extra: imageFile);
+                      if (croppedImage != null) {
+                        context.read<ProfileCubit>().updateProfileImage(
+                              image: croppedImage,
+                              token: context.read<UserCubit>().currentUser!.token,
+                            );
+                      }
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 15),
+
+                // Camera Option
+                _buildImageOption(
+                  context: context,
+                  icon: Icons.camera_alt_outlined,
+                  title: 'Take a Picture',
+                  subtitle: 'Capture a new photo with camera',
+                  onTap: () async {
+                    GoRouter.of(context).pop();
+                    final pickedFile =
+                        await ImagePicker().pickImage(source: ImageSource.camera);
+                    if (pickedFile != null) {
+                      File imageFile = File(pickedFile.path);
+                      final File? croppedImage = await GoRouter.of(context)
+                          .push<File>(AppRouter.kCropImageView, extra: imageFile);
+                      if (croppedImage != null) {
+                        context.read<ProfileCubit>().updateProfileImage(
+                              image: croppedImage,
+                              token: context.read<UserCubit>().currentUser!.token,
+                            );
+                      }
+                    }
+                  },
+                ),
+
+                const SizedBox(height: 20),
+              ],
             ),
-            ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title: const Text('Take a Picture'),
-              onTap: () async {
-                GoRouter.of(context).pop();
-                // التقاط صورة بالكاميرا
-                final pickedFile =
-                    await ImagePicker().pickImage(source: ImageSource.camera);
-                if (pickedFile != null) {
-                  File imageFile = File(pickedFile.path);
-                  // الانتقال إلى شاشة تعديل الصورة (CropImageScreen)
-                  final File? croppedImage = await GoRouter.of(context)
-                      .push<File>(AppRouter.kCropImageView, extra: imageFile);
-                  if (croppedImage != null) {
-                    // استدعاء الـ Cubit لتحديث صورة البروفايل باستخدام الصورة المعدلة
-                    context.read<ProfileCubit>().updateProfileImage(
-                          image: croppedImage,
-                          token: context.read<UserCubit>().currentUser!.token,
-                        );
-                  }
-                }
-              },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageOption({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: kMainColor.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: kMainColor.withOpacity(0.1),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: kMainColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: kMainColor,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Styles.textStyle16.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: Styles.textStyle13.copyWith(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: kMainColor.withOpacity(0.6),
+              size: 16,
             ),
           ],
         ),
@@ -76,79 +185,211 @@ class ProfileUserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
           colors: [
-            kMainColor.withOpacity(0.40),
-            Colors.white24,
+            kMainColor.withOpacity(0.15),
             Colors.white,
+            kMainColor.withOpacity(0.05),
           ],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 5),
+            color: kMainColor.withOpacity(0.1),
+            blurRadius: 20,
+            spreadRadius: 0,
+            offset: const Offset(0, 8),
+          ),
+          BoxShadow(
+            color: Colors.white.withOpacity(0.8),
+            blurRadius: 20,
+            spreadRadius: 0,
+            offset: const Offset(0, -2),
           ),
         ],
       ),
       child: Row(
         children: [
-          // Profile Picture
+          // Enhanced Profile Picture
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-            ),
-            child: ClipOval(
-              child: CachedNetworkImage(
-                width: 80,
-                height: 80,
-                imageUrl: profile.image,
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.error,
-                ),
-                placeholder: (context, url) => const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ),
-                ),
-                fit: BoxFit.cover,
+              gradient: LinearGradient(
+                colors: [
+                  kMainColor.withOpacity(0.2),
+                  kMainColor.withOpacity(0.1),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            ),
-          ),
-          const SizedBox(width: 12),
-
-          // User Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(profile.userName, style: Styles.textStyle18),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  profile.email,
-                  style: Styles.textStyle13.copyWith(color: kMainColor),
+              boxShadow: [
+                BoxShadow(
+                  color: kMainColor.withOpacity(0.3),
+                  blurRadius: 15,
+                  spreadRadius: 0,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  width: 85,
+                  height: 85,
+                  imageUrl: profile.image,
+                  errorWidget: (context, url, error) => Container(
+                    width: 85,
+                    height: 85,
+                    decoration: BoxDecoration(
+                      color: kMainColor.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.person,
+                      size: 40,
+                      color: kMainColor.withOpacity(0.7),
+                    ),
+                  ),
+                  placeholder: (context, url) => Container(
+                    width: 85,
+                    height: 85,
+                    decoration: BoxDecoration(
+                      color: kMainColor.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: kMainColor,
+                        strokeWidth: 2,
+                      ),
+                    ),
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 20),
+
+          // Enhanced User Details
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    profile.userName,
+                    style: Styles.textStyle18.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                      fontFamily: kfontFamily,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: kMainColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: kMainColor.withOpacity(0.2),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      profile.email,
+                      style: Styles.textStyle12.copyWith(
+                        color: kMainColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          kMainColor.withOpacity(0.8),
+                          kMainColor,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [
+                        BoxShadow(
+                          color: kMainColor.withOpacity(0.3),
+                          blurRadius: 6,
+                          spreadRadius: 0,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.stars_rounded,
+                          color: Colors.white,
+                          size: 14,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${profile.points} Points',
+                          style: Styles.textStyle12.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
 
-          // More Options
-          IconButton(
-            icon: const Icon(
-              Icons.more_vert,
-              size: 35,
+          const SizedBox(width: 12),
+
+          // Enhanced More Options Button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: kMainColor.withOpacity(0.2),
+                  blurRadius: 8,
+                  spreadRadius: 0,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-            onPressed: () => _showImageOptions(context),
+            child: IconButton(
+              icon: Icon(
+                Icons.camera_alt_outlined,
+                size: 22,
+                color: kMainColor.withOpacity(0.8),
+              ),
+              onPressed: () => _showImageOptions(context),
+              tooltip: 'Change Profile Picture',
+              padding: const EdgeInsets.all(10),
+            ),
           ),
         ],
       ),
