@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mazraaty/Core/utils/styles.dart';
 
 class LoginSocialMedia extends StatelessWidget {
   final VoidCallback? onGooglePressed;
@@ -14,40 +15,35 @@ class LoginSocialMedia extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          onPressed: onGooglePressed,
-          icon: Image.asset(
-            'assets/images/google.png',
-            width: 35,
-            height: 35,
+    return InkWell(
+      onTap: onGooglePressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.black,
           ),
+          borderRadius: BorderRadius.circular(25),
         ),
-        const SizedBox(
-          width: 25,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/google.png',
+              width: 25,
+              height: 25,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              'Continue with Google',
+              style: Styles.textStyle16.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
-        IconButton(
-          onPressed: onFacebookPressed,
-          icon: Image.asset(
-            'assets/images/facebook.png',
-            width: 35,
-            height: 35,
-          ),
-        ),
-        const SizedBox(
-          width: 25,
-        ),
-        IconButton(
-          onPressed: onApplePressed,
-          icon: Image.asset(
-            'assets/images/apple.png',
-            width: 35,
-            height: 35,
-          ),
-        )
-      ],
+      ),
     );
   }
 }

@@ -8,7 +8,7 @@ class ProfilePaymentListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       leadingIcon: Icons.payment_outlined,
-      title: 'Payment',
+      title: 'Buy Now',
       trailingIcon: const Icon(
         Icons.arrow_forward_ios,
         size: 20,

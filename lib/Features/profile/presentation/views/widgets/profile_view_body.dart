@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazraaty/Core/utils/styles.dart';
-import 'package:mazraaty/Core/widgets/profile_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_changepass_listtile.dart';
 import 'package:mazraaty/Features/profile/presentation/views/widgets/profile_darkmode_listtile.dart';
@@ -70,7 +69,8 @@ class ProfileViewBody extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -159,7 +159,8 @@ class ProfileViewBody extends StatelessWidget {
                                 ),
                                 child: Text(
                                   state.message,
-                                  style: Styles.textStyle16.copyWith(color: Colors.red),
+                                  style: Styles.textStyle16
+                                      .copyWith(color: Colors.red),
                                 ),
                               ),
                             );
@@ -180,7 +181,8 @@ class ProfileViewBody extends StatelessWidget {
                               ),
                               child: const Center(
                                 child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(kMainColor),
+                                  valueColor:
+                                      AlwaysStoppedAnimation<Color>(kMainColor),
                                 ),
                               ),
                             );
@@ -208,10 +210,9 @@ class ProfileViewBody extends StatelessWidget {
                     child: Opacity(
                       opacity: value,
                       child: _buildSectionCard(
-                        title: 'Account',
+                        title: 'Purchase Coins',
                         context: context,
                         children: const [
-                          ProfileListTile(),
                           ProfilePaymentListTile(),
                         ],
                       ),
