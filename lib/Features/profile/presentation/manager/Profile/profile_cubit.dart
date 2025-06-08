@@ -24,6 +24,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
+  Future<void> fetchProfileIfTokenAvailable(String? token) async {
+    if (token != null && token.isNotEmpty) {
+      // Only fetch if we're not already loaded or loading
+      if (state is! ProfileLoaded && state is! ProfileLoading) {
+        await fetchProfile(token: token);
+      }
+    }
+  }
+
   Future<void> updateProfileImage({
     required File image,
     required String token,

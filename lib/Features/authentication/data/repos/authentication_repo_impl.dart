@@ -1,11 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mazraaty/Core/errors/failure.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
 import 'package:mazraaty/Features/authentication/data/repos/authentication_repo.dart';
 
 class AuthenticationRepoImpl implements AuthenticationRepo {
   final ApiService apiService;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   AuthenticationRepoImpl({required this.apiService});
   @override
   Future<Either<Failure, Map<String, dynamic>>> login(
@@ -149,6 +152,55 @@ class AuthenticationRepoImpl implements AuthenticationRepo {
         return left(ServerFailure(errorMessage: response['message']));
       } else {
         return right(response);
+      }
+    } on Exception catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      } else {
+        return left(ServerFailure(errorMessage: e.toString()));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> signInWithGoogle() async {
+    try {
+      // Sign out any existing user first
+      await _googleSignIn.signOut();
+
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        // User cancelled the sign-in
+        return left(ServerFailure(errorMessage: 'Google sign-in was cancelled'));
+      }
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Send the Google user data to your backend
+      final body = {
+        'google_id': googleUser.id,
+        'email': googleUser.email,
+        'name': googleUser.displayName ?? '',
+        'google_token': googleAuth.idToken,
+        'access_token': googleAuth.accessToken,
+      };
+
+      final headers = {
+        'Accept-Language': 'en',
+        'Accept': 'application/json',
+      };
+
+      // Call your backend API to handle Google sign-in
+      final response = await apiService.post('login/google', body, headers: headers);
+
+      if (response['status'] == 'error') {
+        return left(ServerFailure(errorMessage: response['message']));
+      } else {
+        final userData = response['data'];
+        return right(userData);
       }
     } on Exception catch (e) {
       if (e is DioException) {

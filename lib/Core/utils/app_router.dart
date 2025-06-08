@@ -159,10 +159,20 @@ abstract class AppRouter {
                     ScanRepositoryImpl(apiScanService: ApiScanService())),
           ),
           BlocProvider(
-            create: (context) => HistoryCubit(
-              HistoryRepositoryImpl(apiService: ApiService(dio: Dio())),
-              context.read<UserCubit>(),
-            )..loadHistory(),
+            create: (context) {
+              final userCubit = context.read<UserCubit>();
+              final historyCubit = HistoryCubit(
+                HistoryRepositoryImpl(apiService: ApiService(dio: Dio())),
+                userCubit,
+              );
+
+              // Only load history if user is available
+              if (userCubit.currentUser != null) {
+                historyCubit.loadHistory();
+              }
+
+              return historyCubit;
+            },
           ),
           BlocProvider(
             create: (context) =>
@@ -170,15 +180,32 @@ abstract class AppRouter {
                   ..fetchCategories(),
           ),
           BlocProvider(
-              create: (context) => ProfileCubit(
-                  ProfileRepositoryImpl(apiService: ApiService(dio: Dio())))
-                ..fetchProfile(
-                    token: context.read<UserCubit>().currentUser!.token)),
+              create: (context) {
+                final userCubit = context.read<UserCubit>();
+                final profileCubit = ProfileCubit(
+                    ProfileRepositoryImpl(apiService: ApiService(dio: Dio())));
+
+                // Only fetch profile if user is available
+                if (userCubit.currentUser != null) {
+                  profileCubit.fetchProfile(token: userCubit.currentUser!.token);
+                }
+
+                return profileCubit;
+              }),
           BlocProvider(
-            create: (context) => CommonDiseaseCubit(
-                CommonDiseaseRepositoryImpl(apiService: ApiService(dio: Dio())),
-                context.read<UserCubit>())
-              ..fetchCommonDiseases(),
+            create: (context) {
+              final userCubit = context.read<UserCubit>();
+              final commonDiseaseCubit = CommonDiseaseCubit(
+                  CommonDiseaseRepositoryImpl(apiService: ApiService(dio: Dio())),
+                  userCubit);
+
+              // Only fetch diseases if user is available
+              if (userCubit.currentUser != null) {
+                commonDiseaseCubit.fetchCommonDiseases();
+              }
+
+              return commonDiseaseCubit;
+            },
           ),
         ],
         child: const CustomNavBar(),

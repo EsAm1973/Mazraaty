@@ -30,6 +30,13 @@ class LoginViewBody extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.errorMessage)),
           );
+        } else if (state is GoogleSignInSuccess) {
+          context.read<UserCubit>().saveUser(state.user);
+          GoRouter.of(context).pushReplacement(AppRouter.kNavigationView);
+        } else if (state is GoogleSignInError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
         }
       },
       child: SingleChildScrollView(
@@ -59,7 +66,7 @@ class LoginViewBody extends StatelessWidget {
                     const SizedBox(height: 30),
                     BlocBuilder<AuthenticationCubit, AuthenticationState>(
                       builder: (context, state) {
-                        if (state is LoginAuthLoading) {
+                        if (state is LoginAuthLoading || state is GoogleSignInLoading) {
                           return const CircularProgressIndicator();
                         }
                         return LoginButton(
@@ -82,7 +89,11 @@ class LoginViewBody extends StatelessWidget {
                     const SizedBox(
                       height: 25,
                     ),
-                    const LoginSocialMedia(),
+                    LoginSocialMedia(
+                      onGooglePressed: () {
+                        context.read<AuthenticationCubit>().signInWithGoogle();
+                      },
+                    ),
                     const SizedBox(
                       height: 25,
                     ),

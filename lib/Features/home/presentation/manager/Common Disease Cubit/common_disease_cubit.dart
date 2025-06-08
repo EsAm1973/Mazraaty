@@ -27,4 +27,14 @@ class CommonDiseaseCubit extends Cubit<CommonDiseaseState> {
     result.fold((failure) => emit(CommonDiseaseError(failure.errorMessage)),
         (diseases) => emit(CommonDiseaseLoaded(diseases)));
   }
+
+  Future<void> fetchCommonDiseasesIfUserAvailable() async {
+    final user = userCubit.currentUser;
+    if (user != null) {
+      // Only fetch if we're not already loaded or loading
+      if (state is! CommonDiseaseLoaded && state is! CommonDiseaseLoading) {
+        await fetchCommonDiseases();
+      }
+    }
+  }
 }

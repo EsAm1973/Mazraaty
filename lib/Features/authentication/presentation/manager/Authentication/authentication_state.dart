@@ -33,6 +33,21 @@ final class RegisterAuthError extends AuthenticationState {
   RegisterAuthError({required this.errorMessage});
 }
 
+// Google Sign-In States
+final class GoogleSignInLoading extends AuthenticationState {}
+
+final class GoogleSignInSuccess extends AuthenticationState {
+  final User user;
+
+  GoogleSignInSuccess({required this.user});
+}
+
+final class GoogleSignInError extends AuthenticationState {
+  final String errorMessage;
+
+  GoogleSignInError({required this.errorMessage});
+}
+
 /// ====================== ///
 /// Forgot Password States ///
 /// ====================== ///

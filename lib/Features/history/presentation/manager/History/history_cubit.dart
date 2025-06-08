@@ -29,6 +29,16 @@ class HistoryCubit extends Cubit<HistoryState> {
         (diseases) => emit(HistoryLoaded(diseases)));
   }
 
+  Future<void> loadHistoryIfUserAvailable() async {
+    final user = userCubit.currentUser;
+    if (user != null) {
+      // Only load if we're not already loaded or loading
+      if (state is! HistoryLoaded && state is! HistoryLoading) {
+        await loadHistory();
+      }
+    }
+  }
+
   Future<void> saveDiseaseToHistory(
       DiseaseDetailsModel disease, Uint8List imageBytes) async {
     final user = userCubit.currentUser;

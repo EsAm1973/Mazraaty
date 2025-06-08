@@ -38,6 +38,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     });
   }
 
+  Future<void> signInWithGoogle() async {
+    emit(GoogleSignInLoading());
+    final result = await authenticationRepo.signInWithGoogle();
+    result.fold(
+      (failure) => emit(GoogleSignInError(errorMessage: failure.errorMessage)),
+      (userData) => emit(GoogleSignInSuccess(user: User.fromJson(userData))),
+    );
+  }
+
   /// =============== ///
   /// Forget Password ///
   /// =============== ///

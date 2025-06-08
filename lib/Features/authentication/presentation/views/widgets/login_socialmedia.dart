@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class LoginSocialMedia extends StatelessWidget {
-  const LoginSocialMedia({super.key});
+  final VoidCallback? onGooglePressed;
+  final VoidCallback? onFacebookPressed;
+  final VoidCallback? onApplePressed;
+
+  const LoginSocialMedia({
+    super.key,
+    this.onGooglePressed,
+    this.onFacebookPressed,
+    this.onApplePressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +18,7 @@ class LoginSocialMedia extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: onGooglePressed,
           icon: Image.asset(
             'assets/images/google.png',
             width: 35,
@@ -20,7 +29,7 @@ class LoginSocialMedia extends StatelessWidget {
           width: 25,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: onFacebookPressed,
           icon: Image.asset(
             'assets/images/facebook.png',
             width: 35,
@@ -31,7 +40,7 @@ class LoginSocialMedia extends StatelessWidget {
           width: 25,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: onApplePressed,
           icon: Image.asset(
             'assets/images/apple.png',
             width: 35,
