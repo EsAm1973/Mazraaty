@@ -25,7 +25,7 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: kMainColor.withOpacity(0.32),
+        color: kMainColor.withValues(alpha: 0.32),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),

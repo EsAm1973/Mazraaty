@@ -283,28 +283,29 @@ class ProfileUserCard extends StatelessWidget {
 
           // Enhanced User Details
           Expanded(
+            flex: 3,
             child: Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     profile.userName,
-                    style: Styles.textStyle18.copyWith(
+                    style: Styles.textStyle20.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
                       fontFamily: kfontFamily,
                     ),
-                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: kMainColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: kMainColor.withOpacity(0.2),
                         width: 1,
@@ -312,7 +313,7 @@ class ProfileUserCard extends StatelessWidget {
                     ),
                     child: Text(
                       profile.email,
-                      style: Styles.textStyle12.copyWith(
+                      style: Styles.textStyle13.copyWith(
                         color: kMainColor,
                         fontWeight: FontWeight.w500,
                       ),
@@ -320,9 +321,9 @@ class ProfileUserCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -330,11 +331,11 @@ class ProfileUserCard extends StatelessWidget {
                           kMainColor,
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(14),
+                      borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
                           color: kMainColor.withOpacity(0.3),
-                          blurRadius: 6,
+                          blurRadius: 8,
                           spreadRadius: 0,
                           offset: const Offset(0, 2),
                         ),
@@ -346,12 +347,12 @@ class ProfileUserCard extends StatelessWidget {
                         const Icon(
                           Icons.stars_rounded,
                           color: Colors.white,
-                          size: 14,
+                          size: 16,
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 6),
                         Text(
                           '${profile.points} Points',
-                          style: Styles.textStyle12.copyWith(
+                          style: Styles.textStyle13.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
@@ -364,7 +365,7 @@ class ProfileUserCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(width: 12),
+          const SizedBox(width: 16),
 
           // Enhanced More Options Button
           Container(
@@ -383,12 +384,12 @@ class ProfileUserCard extends StatelessWidget {
             child: IconButton(
               icon: Icon(
                 Icons.camera_alt_outlined,
-                size: 22,
+                size: 24,
                 color: kMainColor.withOpacity(0.8),
               ),
               onPressed: () => _showImageOptions(context),
               tooltip: 'Change Profile Picture',
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(12),
             ),
           ),
         ],
