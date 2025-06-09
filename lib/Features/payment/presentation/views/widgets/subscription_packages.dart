@@ -111,16 +111,20 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: Text(
-                                        "\$${package.price}",
-                                        style: GoogleFonts.poppins(
-                                          color: kMainColor,
-                                          fontSize: MediaQuery.of(context).size.width * 0.065, // 6.5% of screen width
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
+                                    BlocBuilder<PackagesCubit, PackagesState>(
+                                      builder: (context, state) {
+                                        return FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Text(
+                                            "${_getCurrencySymbol(context)} ${package.price}",
+                                            style: GoogleFonts.poppins(
+                                              color: kMainColor,
+                                              fontSize: MediaQuery.of(context).size.width * 0.065, // 6.5% of screen width
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                     SizedBox(height: MediaQuery.of(context).size.height * 0.005), // 0.5% of screen height
                                     Text(
@@ -195,5 +199,38 @@ class _SubscriptionPackagesState extends State<SubscriptionPackages> {
         'currency': packagesCubit.selectedCurrency,
       },
     );
+  }
+
+  // Helper method to get currency symbol based on selected currency
+  String _getCurrencySymbol(BuildContext context) {
+    final packagesCubit = context.read<PackagesCubit>();
+    final currency = packagesCubit.selectedCurrency;
+
+    switch (currency) {
+      case 'USD':
+        return '\$';
+      case 'EUR':
+        return '€';
+      case 'GBP':
+        return '£';
+      case 'JPY':
+        return '¥';
+      case 'AUD':
+        return 'A\$';
+      case 'CAD':
+        return 'C\$';
+      case 'EGP':
+        return 'L.E';
+      case 'CHF':
+        return 'CHF ';
+      case 'CNY':
+        return '¥';
+      case 'INR':
+        return '₹';
+      case 'BRL':
+        return 'R\$';
+      default:
+        return '\$';
+    }
   }
 }

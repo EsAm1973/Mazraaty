@@ -62,10 +62,9 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
     });
   }
 
-  // Helper method to get currency symbol based on selected currency
-  String _getCurrencySymbol(BuildContext context) {
-    final packagesCubit = context.read<PackagesCubit>();
-    final currency = packagesCubit.selectedCurrency;
+  // Helper method to get currency symbol based on the widget's currency parameter
+  String _getCurrencySymbol() {
+    final currency = widget.currency;
 
     switch (currency) {
       case 'USD':
@@ -81,7 +80,7 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
       case 'CAD':
         return 'C\$';
       case 'EGP':
-        return 'E£';
+        return 'L.E';
       case 'CHF':
         return 'CHF ';
       case 'CNY':
@@ -180,7 +179,7 @@ class _PaymentMethodsViewBodyState extends State<PaymentMethodsViewBody> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                'Select your payment method for ${widget.packageName} - ${_getCurrencySymbol(context)}${widget.price.toStringAsFixed(2)}',
+                'Select your payment method for ${widget.packageName} - ${_getCurrencySymbol()}${widget.price.toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,

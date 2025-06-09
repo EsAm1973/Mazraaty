@@ -200,7 +200,7 @@ class ProfileViewBody extends StatelessWidget {
 
               const SizedBox(height: 30),
 
-              // Account Section
+              // Payment Section
               TweenAnimationBuilder<double>(
                 duration: const Duration(milliseconds: 1200),
                 tween: Tween(begin: 0.0, end: 1.0),

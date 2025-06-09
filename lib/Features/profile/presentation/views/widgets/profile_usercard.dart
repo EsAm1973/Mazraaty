@@ -64,16 +64,18 @@ class ProfileUserCard extends StatelessWidget {
                   subtitle: 'Select a photo from your gallery',
                   onTap: () async {
                     GoRouter.of(context).pop();
-                    final pickedFile =
-                        await ImagePicker().pickImage(source: ImageSource.gallery);
+                    final pickedFile = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
                     if (pickedFile != null) {
                       File imageFile = File(pickedFile.path);
                       final File? croppedImage = await GoRouter.of(context)
-                          .push<File>(AppRouter.kCropImageView, extra: imageFile);
+                          .push<File>(AppRouter.kCropImageView,
+                              extra: imageFile);
                       if (croppedImage != null) {
                         context.read<ProfileCubit>().updateProfileImage(
                               image: croppedImage,
-                              token: context.read<UserCubit>().currentUser!.token,
+                              token:
+                                  context.read<UserCubit>().currentUser!.token,
                             );
                       }
                     }
@@ -90,16 +92,18 @@ class ProfileUserCard extends StatelessWidget {
                   subtitle: 'Capture a new photo with camera',
                   onTap: () async {
                     GoRouter.of(context).pop();
-                    final pickedFile =
-                        await ImagePicker().pickImage(source: ImageSource.camera);
+                    final pickedFile = await ImagePicker()
+                        .pickImage(source: ImageSource.camera);
                     if (pickedFile != null) {
                       File imageFile = File(pickedFile.path);
                       final File? croppedImage = await GoRouter.of(context)
-                          .push<File>(AppRouter.kCropImageView, extra: imageFile);
+                          .push<File>(AppRouter.kCropImageView,
+                              extra: imageFile);
                       if (croppedImage != null) {
                         context.read<ProfileCubit>().updateProfileImage(
                               image: croppedImage,
-                              token: context.read<UserCubit>().currentUser!.token,
+                              token:
+                                  context.read<UserCubit>().currentUser!.token,
                             );
                       }
                     }
@@ -302,7 +306,8 @@ class ProfileUserCard extends StatelessWidget {
                   const SizedBox(height: 10),
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: kMainColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
@@ -323,7 +328,8 @@ class ProfileUserCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
