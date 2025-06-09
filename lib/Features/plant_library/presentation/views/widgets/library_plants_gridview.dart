@@ -49,7 +49,7 @@ class LibraryPlantGrid extends StatelessWidget {
                 child: PlantCard(
                   title: plant.name,
                   description: plant.description,
-                  imagePath: plant.image,
+                  imagePath: plant.headerImage,
                 ),
               );
             },

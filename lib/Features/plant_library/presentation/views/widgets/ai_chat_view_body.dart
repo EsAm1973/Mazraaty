@@ -649,10 +649,12 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
 
     // Calculate responsive aspect ratio based on screen width
     // Taller cards on smaller screens, wider cards on larger screens
-    final childAspectRatio = screenWidth < 400 ? 0.9 : (screenWidth < 600 ? 1.0 : 1.1);
+    final childAspectRatio =
+        screenWidth < 400 ? 0.9 : (screenWidth < 600 ? 1.0 : 1.1);
 
     // Calculate responsive font sizes
-    final titleFontSize = screenWidth < 400 ? 15.0 : (screenWidth < 600 ? 16.0 : 17.0);
+    final titleFontSize =
+        screenWidth < 400 ? 15.0 : (screenWidth < 600 ? 16.0 : 17.0);
     final subtitleFontSize = screenWidth < 400 ? 13.0 : 14.0;
 
     return Padding(
@@ -680,7 +682,8 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
           SizedBox(height: screenWidth * 0.05),
           // Container with background color for cards
           Container(
-            padding: EdgeInsets.symmetric(vertical: verticalPadding, horizontal: horizontalPadding),
+            padding: EdgeInsets.symmetric(
+                vertical: verticalPadding, horizontal: horizontalPadding),
             decoration: BoxDecoration(
               color: Colors.green.shade50.withOpacity(0.5),
               borderRadius: BorderRadius.circular(24),
@@ -724,12 +727,15 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
     required double screenWidth,
   }) {
     // Calculate responsive dimensions based on screen width
-    final cardWidth = (screenWidth / 2) - (screenWidth * 0.08); // Account for spacing
+    final cardWidth =
+        (screenWidth / 2) - (screenWidth * 0.08); // Account for spacing
     final horizontalPadding = screenWidth * 0.03; // 3% of screen width
     final verticalPadding = screenWidth * 0.04; // 4% of screen width
-    final emojiSize = screenWidth < 400 ? 20.0 : (screenWidth < 600 ? 22.0 : 24.0);
+    final emojiSize =
+        screenWidth < 400 ? 20.0 : (screenWidth < 600 ? 22.0 : 24.0);
     final emojiPadding = screenWidth * 0.03; // 3% of screen width
-    final titleFontSize = screenWidth < 400 ? 12.0 : (screenWidth < 600 ? 13.0 : 14.0);
+    final titleFontSize =
+        screenWidth < 400 ? 12.0 : (screenWidth < 600 ? 13.0 : 14.0);
     final borderRadius = screenWidth < 400 ? 14.0 : 16.0;
 
     return Container(
@@ -759,8 +765,10 @@ class _AiChatViewBodyState extends State<AiChatViewBody>
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
-        crossAxisAlignment: CrossAxisAlignment.center, // Center content horizontally
+        mainAxisAlignment:
+            MainAxisAlignment.center, // Center content vertically
+        crossAxisAlignment:
+            CrossAxisAlignment.center, // Center content horizontally
         children: [
           // Emoji container with improved styling
           Container(

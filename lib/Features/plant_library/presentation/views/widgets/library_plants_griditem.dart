@@ -16,30 +16,22 @@ class PlantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen width for responsive sizing
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // Calculate available width in a 2-column layout
-    final availableWidth = (screenWidth / 2) - (screenWidth * 0.05); // Account for spacing
-
     return Container(
       // Use available width instead of fixed width
       width: double.infinity,
-      // Constrain height to prevent overflow in GridView
-      constraints: BoxConstraints(
-        maxWidth: availableWidth,
-      ),
       decoration: BoxDecoration(
+        color: const Color(0xFFD0E2B6), // Fill with bottom section color
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: screenWidth < 400 ? 3 : 4, // Smaller blur on small screens
-            offset: const Offset(2, 2),
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 5,
+            offset: const Offset(0, 1),
           ),
         ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           LibraryPlantsGridItemTopSection(
             imagePath: imagePath,

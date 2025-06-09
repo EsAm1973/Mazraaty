@@ -12,7 +12,6 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get screen dimensions for responsive sizing
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     // Calculate responsive padding and image height for 2-column layout
     final padding = screenWidth * 0.03; // 3% of screen width
@@ -23,7 +22,10 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(padding),
+      constraints: BoxConstraints(
+        minHeight: imageHeight,
+        maxHeight: imageHeight + 50, // Allow some flexibility
+      ),
       decoration: BoxDecoration(
         color: kMainColor.withValues(alpha: 0.32),
         borderRadius: const BorderRadius.only(
@@ -32,32 +34,70 @@ class LibraryPlantsGridItemTopSection extends StatelessWidget {
           bottomRight: Radius.circular(40),
         ),
       ),
-      child: Column(
+      child: Stack(
         children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: CachedNetworkImage(
-              height: imageHeight,
-              imageUrl: imagePath,
-              errorWidget: (context, url, error) => const Icon(
-                Icons.error,
+          // Image positioned to fill the entire container
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+                bottomRight: Radius.circular(40),
               ),
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
+              child: CachedNetworkImage(
+                imageUrl: imagePath,
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.error,
                 ),
+                placeholder: (context, url) => const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                  ),
+                ),
+                fit: BoxFit.cover,
               ),
-              fit: BoxFit.contain,
             ),
           ),
-          SizedBox(height: screenHeight * 0.01), // Responsive spacing
-          Align(
-            alignment: Alignment.topLeft,
+          // Gradient overlay for better text contrast
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+                bottomRight: Radius.circular(40),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.6),
+                    ],
+                    stops: const [0.0, 0.5, 1.0],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // Title positioned at the bottom with clear background
+          Positioned(
+            bottom: padding,
+            left: padding,
+            right: padding,
             child: Text(
               title,
               style: screenWidth < 400
-                ? Styles.textStyle15.copyWith(color: kMainColor)
-                : Styles.textStyle16.copyWith(color: kMainColor),
+                ? Styles.textStyle15.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  )
+                : Styles.textStyle16.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
