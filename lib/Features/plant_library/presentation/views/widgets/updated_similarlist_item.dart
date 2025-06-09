@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UpdatedDetailsSimilarItem extends StatelessWidget {
   const UpdatedDetailsSimilarItem(
@@ -25,7 +25,10 @@ class UpdatedDetailsSimilarItem extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             name,
-            style: Styles.textStyle16.copyWith(fontWeight: FontWeight.w600),
+            style: GoogleFonts.montserrat(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),

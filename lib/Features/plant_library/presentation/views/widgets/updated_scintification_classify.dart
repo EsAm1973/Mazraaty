@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsScientificClassification extends StatelessWidget {
   const UpdatedDetailsScientificClassification(
@@ -22,7 +21,10 @@ class UpdatedDetailsScientificClassification extends StatelessWidget {
       children: [
         Text(
           "Scientific classification",
-          style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 12),
         Column(

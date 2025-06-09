@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 import 'package:mazraaty/constants.dart';
 
 class UpdatedDetailsRequirementsSection extends StatelessWidget {
@@ -52,7 +51,10 @@ class UpdatedDetailsRequirementsSection extends StatelessWidget {
       children: [
         Text(
           "Requirements",
-          style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 8),
         Wrap(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsConditionsSection extends StatelessWidget {
   const UpdatedDetailsConditionsSection(
@@ -14,7 +13,10 @@ class UpdatedDetailsConditionsSection extends StatelessWidget {
       children: [
         Text(
           "Conditions",
-          style: Styles.textStyle23.copyWith(fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 12),
         Row(

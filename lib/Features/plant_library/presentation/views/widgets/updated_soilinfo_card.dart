@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsSoilInfoCard extends StatelessWidget {
   final String soilType;
@@ -49,7 +48,8 @@ class UpdatedDetailsSoilInfoCard extends StatelessWidget {
           // معلومات التربة
           RichText(
             text: TextSpan(
-              style: Styles.textStyle16.copyWith(
+              style: GoogleFonts.montserrat(
+                fontSize: 16,
                 color: Colors.black,
                 height: 1.7, // التحكم في المسافة بين الأسطر
               ),

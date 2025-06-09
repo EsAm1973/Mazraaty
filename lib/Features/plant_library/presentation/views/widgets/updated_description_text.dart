@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
 
 class UpdatedDetailsPlantDescription extends StatefulWidget {
   const UpdatedDetailsPlantDescription({super.key, required this.description});
@@ -20,8 +19,11 @@ class _UpdatedDetailsPlantDescriptionState
       children: [
         Text(
           "Description",
-          style: Styles.textStyle23
-              .copyWith(color: Colors.black87, fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+            fontSize: 23,
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 8),
         AnimatedCrossFade(
@@ -29,7 +31,7 @@ class _UpdatedDetailsPlantDescriptionState
             widget.description,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: Styles.textStyle15,
+            style: GoogleFonts.montserrat(fontSize: 15),
           ),
           secondChild: Text(
             widget.description,
