@@ -87,25 +87,30 @@ class _ScanViewState extends State<ScanView> with WidgetsBindingObserver {
                   builder: (context, state) {
                     Widget child;
                     if (state is PointsLoaded) {
-                      child = Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.star_rounded,
-                            color: Colors.amber[700],
-                            size: 18,
-                          ),
-                          const SizedBox(width: 2),
-                          Text(
-                            '${state.points.points}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.amber[800],
+                      child = Flexible(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star_rounded,
+                              color: Colors.amber[700],
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 2),
+                            Flexible(
+                              child: Text(
+                                '${state.points.points}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.amber[800],
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     } else if (state is PointsLoading) {
                       child = const SizedBox(
@@ -120,25 +125,30 @@ class _ScanViewState extends State<ScanView> with WidgetsBindingObserver {
                       // Fallback to user points
                       final userCubit = context.watch<UserCubit>();
                       if (userCubit.currentUser != null) {
-                        child = Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Colors.amber[700],
-                              size: 18,
-                            ),
-                            const SizedBox(width: 2),
-                            Text(
-                              '${userCubit.currentUser!.points}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.amber[800],
+                        child = Flexible(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.star_rounded,
+                                color: Colors.amber[700],
+                                size: 16,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 2),
+                              Flexible(
+                                child: Text(
+                                  '${userCubit.currentUser!.points}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Colors.amber[800],
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
                         );
                       } else {
                         child = const SizedBox.shrink();
