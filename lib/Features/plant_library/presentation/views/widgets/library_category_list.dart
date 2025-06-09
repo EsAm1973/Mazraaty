@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Features/plant_library/presentation/manager/LibraryCubit/library_cubit.dart';
 import 'package:mazraaty/constants.dart';
 
@@ -22,7 +22,7 @@ class LibraryCategoriesList extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4, bottom: 12),
                 child: Text(
                   'Categories',
-                  style: TextStyle(
+                  style: GoogleFonts.montserrat(
                     fontSize: screenWidth * 0.045,
                     fontWeight: FontWeight.w600,
                     color: kMainColor,
@@ -87,7 +87,8 @@ class LibraryCategoriesList extends StatelessWidget {
                         child: Center(
                           child: Text(
                             state.categories[index].name,
-                            style: Styles.textStyle16.copyWith(
+                            style: GoogleFonts.montserrat(
+                              fontSize: 16,
                               color: isSelected ? Colors.white : kMainColor,
                               fontWeight: isSelected
                                   ? FontWeight.w600
@@ -117,25 +118,25 @@ class LibraryCategoriesList extends StatelessWidget {
   Widget _buildLoadingState(double screenHeight) {
     return SizedBox(
       height: screenHeight * 0.08,
-      child: Row(
-        children: List.generate(
-          4,
-          (index) => Container(
-            margin: const EdgeInsets.only(right: 12),
-            width: 80,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: const Center(
-              child: SizedBox(
-                width: 16,
-                height: 16,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: kMainColor,
-                ),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        itemCount: 4,
+        itemBuilder: (context, index) => Container(
+          margin: const EdgeInsets.only(right: 12),
+          width: 80,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: const Center(
+            child: SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: kMainColor,
               ),
             ),
           ),
@@ -163,7 +164,7 @@ class LibraryCategoriesList extends StatelessWidget {
           Expanded(
             child: Text(
               message,
-              style: TextStyle(
+              style: GoogleFonts.montserrat(
                 color: Colors.red[700],
                 fontSize: screenWidth * 0.035,
                 fontWeight: FontWeight.w500,
