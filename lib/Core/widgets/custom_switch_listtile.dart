@@ -30,25 +30,28 @@ class _CustomSwitchTileState extends State<CustomSwitchTile> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        widget.leadingIcon,
-        color: Colors.black,
-        size: 26,
-      ),
-      title: Text(widget.title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-      trailing: Switch(
-        activeColor: kMainColor,
-        value: _switchValue,
-        onChanged: (value) {
-          setState(() {
-            _switchValue = value;
-          });
-          if (widget.onChanged != null) {
-            widget.onChanged!(value);
-          }
-        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: ListTile(
+        leading: Icon(
+          widget.leadingIcon,
+          color: Colors.black,
+          size: 26,
+        ),
+        title: Text(widget.title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        trailing: Switch(
+          activeColor: kMainColor,
+          value: _switchValue,
+          onChanged: (value) {
+            setState(() {
+              _switchValue = value;
+            });
+            if (widget.onChanged != null) {
+              widget.onChanged!(value);
+            }
+          },
+        ),
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/data/Cubits/Change%20Pass%20Cubit/change_password_cubit.dart';
 import 'package:mazraaty/Core/data/Cubits/User%20Cubit/user_cubit.dart';
 import 'package:mazraaty/Core/utils/api_service.dart';
+import 'package:mazraaty/Core/utils/service_locator.dart';
 import 'package:mazraaty/Core/widgets/custom_nav_bar.dart';
 import 'package:mazraaty/Features/authentication/data/repos/authentication_repo_impl.dart';
 import 'package:mazraaty/Features/authentication/presentation/manager/Authentication/authentication_cubit.dart';
@@ -17,8 +17,6 @@ import 'package:mazraaty/Features/history/data/repos/history_repo_impl.dart';
 import 'package:mazraaty/Features/history/presentation/manager/History/history_cubit.dart';
 import 'package:mazraaty/Features/history/presentation/views/history_view.dart';
 import 'package:mazraaty/Features/home/data/repos/Common%20Disease/common_disease_repo_impl.dart';
-import 'package:mazraaty/Features/home/data/repos/weather_repo_impl.dart';
-import 'package:mazraaty/Features/home/presentation/manager/Weather%20Cubit/weather_cubit.dart';
 import 'package:mazraaty/Features/home/presentation/views/home_view.dart';
 import 'package:mazraaty/Features/onboardeing/presentation/views/onboard_view.dart';
 import 'package:mazraaty/Features/payment/data/repos/Package%20Repo/package_repo_impl.dart';
@@ -86,34 +84,32 @@ abstract class AppRouter {
     GoRoute(
       path: kLoginView,
       builder: (context, state) => BlocProvider(
-        create: (context) => AuthenticationCubit(
-            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) =>
+            AuthenticationCubit(getit<AuthenticationRepoImpl>()),
         child: const LoginView(),
       ),
     ),
     GoRoute(
       path: kSignupView,
       builder: (context, state) => BlocProvider(
-        create: (context) => AuthenticationCubit(
-            AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) =>
+            AuthenticationCubit(getit<AuthenticationRepoImpl>()),
         child: const SignupView(),
       ),
     ),
     GoRoute(
       path: kRecoverPassView,
       builder: (context, state) => BlocProvider(
-        create: (context) => PasswordCubit(
-            authenticationRepo:
-                AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) =>
+            PasswordCubit(authenticationRepo: getit<AuthenticationRepoImpl>()),
         child: const RecoverPassView(),
       ),
     ),
     GoRoute(
       path: kVerifyCodeView,
       builder: (context, state) => BlocProvider(
-        create: (context) => PasswordCubit(
-            authenticationRepo:
-                AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) =>
+            PasswordCubit(authenticationRepo: getit<AuthenticationRepoImpl>()),
         child: VerifyCodeView(
           email: state.extra as String,
         ),
@@ -122,9 +118,8 @@ abstract class AppRouter {
     GoRoute(
       path: kResetPassView,
       builder: (context, state) => BlocProvider(
-        create: (context) => PasswordCubit(
-            authenticationRepo:
-                AuthenticationRepoImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) =>
+            PasswordCubit(authenticationRepo: getit<AuthenticationRepoImpl>()),
         child: ResetPassView(
           email: (state.extra as Map)['email'],
           token: (state.extra as Map)['token'],
@@ -136,33 +131,26 @@ abstract class AppRouter {
       builder: (context, state) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => WeatherCubit(
-              WeatherRepositoryImpl(
-                Dio(),
-                //LocationService(),
-              ),
-            )..getWeather('Mansoura'),
-          ),
-          BlocProvider(
             create: (context) => PointsCubit(
                 userCubit: context.read<UserCubit>(),
                 pointsRepository:
-                    PointsRepositoryImpl(apiService: ApiService(dio: Dio()))),
+                    PointsRepositoryImpl(apiService: getit<ApiService>()))
+              ..fetchUserPoints(context.read<UserCubit>().currentUser!.token),
           ),
           BlocProvider(
               create: (context) => DiseaseDetailsCubit(
-                  diseaseRepository: DiseaseRepositoryImpl(
-                      apiService: ApiService(dio: Dio())))),
+                  diseaseRepository:
+                      DiseaseRepositoryImpl(apiService: getit<ApiService>()))),
           BlocProvider(
             create: (context) => ScanCubit(
-                repository:
-                    ScanRepositoryImpl(apiScanService: ApiScanService())),
+                repository: ScanRepositoryImpl(
+                    apiScanService: getit<ApiScanService>())),
           ),
           BlocProvider(
             create: (context) {
               final userCubit = context.read<UserCubit>();
               final historyCubit = HistoryCubit(
-                HistoryRepositoryImpl(apiService: ApiService(dio: Dio())),
+                getit<HistoryRepositoryImpl>(),
                 userCubit,
               );
 
@@ -176,27 +164,25 @@ abstract class AppRouter {
           ),
           BlocProvider(
             create: (context) =>
-                LibraryCubit(PlantRepositoryImpl(ApiService(dio: Dio())))
+                LibraryCubit(PlantRepositoryImpl(getit<ApiService>()))
                   ..fetchCategories(),
           ),
-          BlocProvider(
-              create: (context) {
-                final userCubit = context.read<UserCubit>();
-                final profileCubit = ProfileCubit(
-                    ProfileRepositoryImpl(apiService: ApiService(dio: Dio())));
+          BlocProvider(create: (context) {
+            final userCubit = context.read<UserCubit>();
+            final profileCubit = ProfileCubit(getit<ProfileRepositoryImpl>());
 
-                // Only fetch profile if user is available
-                if (userCubit.currentUser != null) {
-                  profileCubit.fetchProfile(token: userCubit.currentUser!.token);
-                }
+            // Only fetch profile if user is available
+            if (userCubit.currentUser != null) {
+              profileCubit.fetchProfile(token: userCubit.currentUser!.token);
+            }
 
-                return profileCubit;
-              }),
+            return profileCubit;
+          }),
           BlocProvider(
             create: (context) {
               final userCubit = context.read<UserCubit>();
               final commonDiseaseCubit = CommonDiseaseCubit(
-                  CommonDiseaseRepositoryImpl(apiService: ApiService(dio: Dio())),
+                  CommonDiseaseRepositoryImpl(apiService: getit<ApiService>()),
                   userCubit);
 
               // Only fetch diseases if user is available
@@ -242,8 +228,7 @@ abstract class AppRouter {
       path: kDiseaseView,
       builder: (context, state) => BlocProvider(
         create: (context) => HistoryCubit(
-            HistoryRepositoryImpl(apiService: ApiService(dio: Dio())),
-            context.read<UserCubit>()),
+            getit<HistoryRepositoryImpl>(), context.read<UserCubit>()),
         child: DiseaseView(
           details: (state.extra as Map)['details'],
           imageBytes: (state.extra as Map)['imageBytes'],
@@ -255,16 +240,14 @@ abstract class AppRouter {
     GoRoute(
       path: kDeleteAccountView,
       builder: (context, state) => BlocProvider(
-        create: (context) => ProfileCubit(
-            ProfileRepositoryImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) => ProfileCubit(getit<ProfileRepositoryImpl>()),
         child: const DeleteAccountView(),
       ),
     ),
     GoRoute(
       path: kCropImageView,
       builder: (context, state) => BlocProvider(
-        create: (context) => ProfileCubit(
-            ProfileRepositoryImpl(apiService: ApiService(dio: Dio()))),
+        create: (context) => ProfileCubit(getit<ProfileRepositoryImpl>()),
         child: CropImageView(
           imageFile: state.extra as File,
         ),
@@ -275,8 +258,7 @@ abstract class AppRouter {
       builder: (context, state) => BlocProvider(
         create: (context) => PackagesCubit(
             userCubit: context.read<UserCubit>(),
-            packagesRepository:
-                PackagesRepositoryImpl(apiService: ApiService(dio: Dio()))),
+            packagesRepository: getit<PackagesRepositoryImpl>()),
         child: const PackagesView(),
       ),
     ),
@@ -288,27 +270,22 @@ abstract class AppRouter {
             create: (context) => PaymentCubit(
                 userCubit: context.read<UserCubit>(),
                 packagesCubit: PackagesCubit(
-                    packagesRepository: PackagesRepositoryImpl(
-                        apiService: ApiService(dio: Dio())),
+                    packagesRepository: getit<PackagesRepositoryImpl>(),
                     userCubit: context.read<UserCubit>()),
-                paymentRepository:
-                    PaymentRepositoryImpl(apiService: ApiService(dio: Dio()))),
+                paymentRepository: getit<PaymentRepositoryImpl>()),
           ),
           BlocProvider(
             create: (context) => PackagesCubit(
                 userCubit: context.read<UserCubit>(),
-                packagesRepository:
-                    PackagesRepositoryImpl(apiService: ApiService(dio: Dio()))),
+                packagesRepository: getit<PackagesRepositoryImpl>()),
           ),
           BlocProvider(
             create: (context) => MyFatoorahCubit(
                 userCubit: context.read<UserCubit>(),
                 packagesCubit: PackagesCubit(
-                    packagesRepository: PackagesRepositoryImpl(
-                        apiService: ApiService(dio: Dio())),
+                    packagesRepository: getit<PackagesRepositoryImpl>(),
                     userCubit: context.read<UserCubit>()),
-                paymentRepository:
-                    PaymentRepositoryImpl(apiService: ApiService(dio: Dio()))),
+                paymentRepository: getit<PaymentRepositoryImpl>()),
           ),
         ],
         child: PaymentMethodsView(

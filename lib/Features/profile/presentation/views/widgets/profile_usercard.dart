@@ -63,6 +63,10 @@ class ProfileUserCard extends StatelessWidget {
                   title: 'Choose from Gallery',
                   subtitle: 'Select a photo from your gallery',
                   onTap: () async {
+                    // Capture cubits before async operations
+                    final profileCubit = context.read<ProfileCubit>();
+                    final userCubit = context.read<UserCubit>();
+
                     GoRouter.of(context).pop();
                     final pickedFile = await ImagePicker()
                         .pickImage(source: ImageSource.gallery);
@@ -72,11 +76,10 @@ class ProfileUserCard extends StatelessWidget {
                           .push<File>(AppRouter.kCropImageView,
                               extra: imageFile);
                       if (croppedImage != null) {
-                        context.read<ProfileCubit>().updateProfileImage(
-                              image: croppedImage,
-                              token:
-                                  context.read<UserCubit>().currentUser!.token,
-                            );
+                        profileCubit.updateProfileImage(
+                          image: croppedImage,
+                          token: userCubit.currentUser!.token,
+                        );
                       }
                     }
                   },
@@ -91,6 +94,10 @@ class ProfileUserCard extends StatelessWidget {
                   title: 'Take a Picture',
                   subtitle: 'Capture a new photo with camera',
                   onTap: () async {
+                    // Capture cubits before async operations
+                    final profileCubit = context.read<ProfileCubit>();
+                    final userCubit = context.read<UserCubit>();
+
                     GoRouter.of(context).pop();
                     final pickedFile = await ImagePicker()
                         .pickImage(source: ImageSource.camera);
@@ -100,11 +107,10 @@ class ProfileUserCard extends StatelessWidget {
                           .push<File>(AppRouter.kCropImageView,
                               extra: imageFile);
                       if (croppedImage != null) {
-                        context.read<ProfileCubit>().updateProfileImage(
-                              image: croppedImage,
-                              token:
-                                  context.read<UserCubit>().currentUser!.token,
-                            );
+                        profileCubit.updateProfileImage(
+                          image: croppedImage,
+                          token: userCubit.currentUser!.token,
+                        );
                       }
                     }
                   },
@@ -327,44 +333,53 @@ class ProfileUserCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          kMainColor.withOpacity(0.8),
-                          kMainColor,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: kMainColor.withOpacity(0.3),
-                          blurRadius: 8,
-                          spreadRadius: 0,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.stars_rounded,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          '${profile.points} Points',
-                          style: Styles.textStyle13.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                  BlocBuilder<UserCubit, UserState>(
+                    builder: (context, userState) {
+                      // Use points from UserCubit if available, fallback to profile points
+                      final points = userState is UserLoaded
+                          ? userState.user.points
+                          : profile.points;
+
+                      return Container(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              kMainColor.withOpacity(0.8),
+                              kMainColor,
+                            ],
                           ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: kMainColor.withOpacity(0.3),
+                              blurRadius: 8,
+                              spreadRadius: 0,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.stars_rounded,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '$points Points',
+                              style: Styles.textStyle13.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

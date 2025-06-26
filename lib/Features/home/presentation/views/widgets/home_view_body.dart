@@ -9,6 +9,8 @@ import 'package:mazraaty/Features/home/presentation/views/widgets/home_user_poin
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_weather_card.dart';
 import 'package:mazraaty/Features/home/presentation/views/widgets/home_welcome_card.dart';
 import 'package:mazraaty/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mazraaty/Features/scan_plant/presentation/manager/Points Cubit/cubit/points_cubit.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key});
@@ -129,7 +131,19 @@ class _HomeViewBodyState extends State<HomeViewBody>
                         child: child,
                       );
                     },
-                    child: HomePointWidegt(onHowToEarnTap: () {}),
+                    child: BlocBuilder<PointsCubit, PointsState>(
+                      builder: (context, state) {
+                        if (state is PointsLoaded) {
+                          return HomePointWidegt(points: state.points, onHowToEarnTap: () {});
+                        } else if (state is PointsLoading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (state is PointsError) {
+                          return Text('Error loading points: \\${state.message}');
+                        } else {
+                          return SizedBox.shrink();
+                        }
+                      },
+                    ),
                   ),
                 ),
 

@@ -21,15 +21,36 @@ class CustomNavBar extends StatefulWidget {
 
 class _CustomNavBarState extends State<CustomNavBar> {
   int selectedIndex = 0;
+  late PageController _pageController;
 
   final List<Widget> pages = [
-    const HomeView(),
-    const LibraryView(),
-    const ScanView(),
+    const KeepAliveHomeView(),
+    const KeepAliveLibraryView(),
+    const KeepAliveScanView(),
+    //const KeepAliveHistoryView(),
     const HistoryView(),
-    const ProfileView(),
+    const KeepAliveProfileView(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: selectedIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   void _onItemTapped(int index) {
+    if (index == selectedIndex) return;
+    setState(() => selectedIndex = index);
+    _pageController.jumpToPage(index);  // ← instant switch, no intermediate pages
+  }
+
+  void _onPageChanged(int index) {
     setState(() {
       selectedIndex = index;
     });
@@ -53,7 +74,12 @@ class _CustomNavBarState extends State<CustomNavBar> {
       },
       child: SafeArea(
           child: Scaffold(
-        body: pages[selectedIndex],
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: _onPageChanged,
+          physics: const NeverScrollableScrollPhysics(),
+          children: pages,
+        ),
         bottomNavigationBar: CurvedNavigationBar(
           height: 55,
           index: selectedIndex,
@@ -91,5 +117,101 @@ class _CustomNavBarState extends State<CustomNavBar> {
         ),
       )),
     );
+  }
+}
+
+// KeepAlive wrapper classes to maintain screen state
+class KeepAliveHomeView extends StatefulWidget {
+  const KeepAliveHomeView({super.key});
+
+  @override
+  State<KeepAliveHomeView> createState() => _KeepAliveHomeViewState();
+}
+
+class _KeepAliveHomeViewState extends State<KeepAliveHomeView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return const HomeView();
+  }
+}
+
+class KeepAliveLibraryView extends StatefulWidget {
+  const KeepAliveLibraryView({super.key});
+
+  @override
+  State<KeepAliveLibraryView> createState() => _KeepAliveLibraryViewState();
+}
+
+class _KeepAliveLibraryViewState extends State<KeepAliveLibraryView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return const LibraryView();
+  }
+}
+
+class KeepAliveScanView extends StatefulWidget {
+  const KeepAliveScanView({super.key});
+
+  @override
+  State<KeepAliveScanView> createState() => _KeepAliveScanViewState();
+}
+
+class _KeepAliveScanViewState extends State<KeepAliveScanView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return const ScanView();
+  }
+}
+
+class KeepAliveHistoryView extends StatefulWidget {
+  const KeepAliveHistoryView({super.key});
+
+  @override
+  State<KeepAliveHistoryView> createState() => _KeepAliveHistoryViewState();
+}
+
+class _KeepAliveHistoryViewState extends State<KeepAliveHistoryView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return const HistoryView();
+  }
+}
+
+class KeepAliveProfileView extends StatefulWidget {
+  const KeepAliveProfileView({super.key});
+
+  @override
+  State<KeepAliveProfileView> createState() => _KeepAliveProfileViewState();
+}
+
+class _KeepAliveProfileViewState extends State<KeepAliveProfileView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // Required for AutomaticKeepAliveClientMixin
+    return const ProfileView();
   }
 }

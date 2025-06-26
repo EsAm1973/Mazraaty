@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mazraaty/Features/profile/presentation/manager/Profile/profile_cubit.dart';
 import 'package:mazraaty/constants.dart';
+import 'package:mazraaty/Features/scan_plant/data/models/points.dart';
 
 class HomePointWidegt extends StatefulWidget {
   const HomePointWidegt({
     super.key,
+    required this.points,
     this.onHowToEarnTap
   });
 
+  final PointsModel points;
   final VoidCallback? onHowToEarnTap; // Callback for info button
 
   @override
@@ -46,180 +47,146 @@ class _HomePointWidegtState extends State<HomePointWidegt> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(
-      builder: (context, state) {
-        if (state is ProfileLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is ProfileError) {
-          return Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.red.shade50,
-            ),
-            child: Text(
-              'Error loading points: ${state.message}',
-              style: TextStyle(color: Colors.red.shade800),
-            ),
-          );
-        } else if (state is ProfileLoaded) {
-          final profile = state.profile;
-          // Calculate available scans (1 scan = 10 points)
-          final int availableScans = profile.points ~/ 10;
-
-          return Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.teal.shade50,
-                  Colors.white,
-                ],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withAlpha(15),
-                  blurRadius: 10,
-                  spreadRadius: 0,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-              border: Border.all(
-                color: Colors.teal.withAlpha(50),
-                width: 1,
-              ),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    // Animated camera/scan icon
-                    AnimatedBuilder(
-                      animation: _rotateAnimation,
-                      builder: (context, child) {
-                        return Transform.rotate(
-                          angle: _rotateAnimation.value,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: kMainColor.withAlpha(30),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: kMainColor,
-                              size: 24,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 12),
-
-                    // Points and scans information
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                '$availableScans',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                  color: kMainColor,
-                                ),
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                'Scans Available',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '${profile.points} Points (10 points per scan)',
-                            style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ],
+    final profile = widget.points;
+    final int availableScans = profile.points ~/ 10;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.teal.shade50,
+            Colors.white,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(15),
+            blurRadius: 10,
+            spreadRadius: 0,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.teal.withAlpha(50),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              // Animated camera/scan icon
+              AnimatedBuilder(
+                animation: _rotateAnimation,
+                builder: (context, child) {
+                  return Transform.rotate(
+                    angle: _rotateAnimation.value,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: kMainColor.withAlpha(30),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: kMainColor,
+                        size: 24,
                       ),
                     ),
+                  );
+                },
+              ),
+              const SizedBox(width: 12),
 
-                    // Info icon with tooltip
-                    Tooltip(
-                      message: 'Subscribe to Premium for unlimited scans',
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.info_outline,
-                          color: kMainColor,
-                          size: 22,
+              // Points and scans information
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '$availableScans',
+                          style: GoogleFonts.poppins(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: kMainColor,
+                          ),
                         ),
-                        onPressed: widget.onHowToEarnTap,
+                        const SizedBox(width: 4),
+                        Text(
+                          'Scans Available',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '${profile.points} Points (10 points per scan)',
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+              ),
 
-                // Info section
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.blue.shade100,
-                      width: 1,
-                    ),
+              // Info icon with tooltip
+              Tooltip(
+                message: 'Subscribe to Premium for unlimited scans',
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.info_outline,
+                    color: kMainColor,
+                    size: 22,
                   ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        color: Colors.blue.shade700,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Use your scans to identify plant diseases by taking photos of affected plants. Subscribe to Premium for unlimited scans.',
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            color: Colors.blue.shade800,
-                          ),
-                        ),
-                      ),
-                    ],
+                  onPressed: widget.onHowToEarnTap,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+
+          // Info section
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.blue.shade100,
+                width: 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  color: Colors.blue.shade700,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Use your scans to identify plant diseases by taking photos of affected plants. Subscribe to Premium for unlimited scans.',
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: Colors.blue.shade800,
+                    ),
                   ),
                 ),
               ],
             ),
-          );
-        } else {
-          // Initial state or any other state
-          return Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: Colors.white,
-            ),
-            child: const Center(
-              child: Text('Loading points...'),
-            ),
-          );
-        }
-      },
+          ),
+        ],
+      ),
     );
   }
 }

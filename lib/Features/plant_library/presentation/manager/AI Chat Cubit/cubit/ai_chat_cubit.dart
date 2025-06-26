@@ -173,7 +173,7 @@ class AIChatCubit extends Cubit<AIChatState> {
     
     // Clear conversation history in the service
     if (_aiChatRepo is AIChatRepoImpl) {
-      final service = (_aiChatRepo as AIChatRepoImpl).aiChatService;
+      final service = (_aiChatRepo).aiChatService;
       service.clearConversation();
     }
     emit(AIChatInitial());

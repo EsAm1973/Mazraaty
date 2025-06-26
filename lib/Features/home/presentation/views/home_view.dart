@@ -68,44 +68,55 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        final weatherCubit = WeatherCubit(
-          WeatherRepositoryImpl(
-            Dio(),
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, userState) {
+        final user = (userState is UserLoaded) ? userState.user : null;
+        if (user == null || user.token.isEmpty) {
+          // Show loading or login prompt
+          return const Scaffold(body: Center(child: Text('Please log in')));
+        }
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) {
+                final weatherCubit = WeatherCubit(
+                  WeatherRepositoryImpl(
+                    Dio(),
+                  ),
+                );
+                weatherCubit.getWeather('Alexandria');
+                return weatherCubit;
+              },
+            ),
+          ],
+          child: Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    kScaffoldColor,
+                    Color.alphaBlend(
+                        kScaffoldColor.withAlpha(242), Colors.white),
+                    Colors.white.withAlpha(230),
+                  ],
+                  stops: const [0.0, 0.6, 1.0],
+                ),
+              ),
+              child: SafeArea(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    // Refresh profile data when the user pulls down to refresh
+                    _refreshProfileData();
+                  },
+                  child: const HomeViewBody(),
+                ),
+              ),
+            ),
           ),
         );
-
-        // Fetch weather data for Alexandria
-        weatherCubit.getWeather('Alexandria');
-
-        return weatherCubit;
       },
-      child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                kScaffoldColor,
-                Color.alphaBlend(kScaffoldColor.withAlpha(242), Colors.white),
-                Colors.white.withAlpha(230),
-              ],
-              stops: const [0.0, 0.6, 1.0],
-            ),
-          ),
-          child: SafeArea(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                // Refresh profile data when the user pulls down to refresh
-                _refreshProfileData();
-              },
-              child: const HomeViewBody(),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

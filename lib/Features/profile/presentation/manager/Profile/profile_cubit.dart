@@ -33,6 +33,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
+  /// Force refresh the profile data from the API
+  Future<void> refreshProfile(String token) async {
+    await fetchProfile(token: token);
+  }
+
   Future<void> updateProfileImage({
     required File image,
     required String token,
