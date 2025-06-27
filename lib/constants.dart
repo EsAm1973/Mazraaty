@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String baseUrl = 'http://rmrmrm-001-site1.mtempurl.com/api-mobile/';
+const String baseUrl = 'https://0290-197-121-150-179.ngrok-free.app/api-mobile/';
 const Color kPrimaryColor = Colors.white;
 const Color kMainColor = Color(0xff3E7B27);
 const Color kScaffoldColor = Color(0xffF1F1F1);

@@ -35,7 +35,7 @@ class SymptomItem extends StatelessWidget {
             children: [
               Container(
                 width: 6,
-                height: description.length * 0.7,
+                height: description.length * 0.6,
                 decoration: BoxDecoration(
                   color: kMainColor,
                   borderRadius: BorderRadius.circular(3.0),

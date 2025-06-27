@@ -92,6 +92,8 @@ class HistoryListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     disease.originName,
                     style: Styles.textStyle16.copyWith(
                       color: kMainColor,

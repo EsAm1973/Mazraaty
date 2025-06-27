@@ -1,16 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mazraaty/Core/data/Cubits/Change%20Pass%20Cubit/change_password_cubit.dart';
 import 'package:mazraaty/Core/utils/app_router.dart';
+import 'package:mazraaty/Core/utils/styles.dart';
+import 'package:mazraaty/Core/widgets/dialog_helper.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_backbutton.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_otpbox.dart';
-import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_resend.dart';
 import 'package:mazraaty/Features/authentication/presentation/views/widgets/verifycode_title.dart';
 
 class VerifyCodeViewBody extends StatefulWidget {
   const VerifyCodeViewBody({super.key, required this.email});
   final String email;
+
   @override
   State<VerifyCodeViewBody> createState() => _VerifyCodeViewBodyState();
 }
@@ -28,8 +32,19 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
   final FocusNode _digit3Focus = FocusNode();
   final FocusNode _digit4Focus = FocusNode();
 
+  Timer? _timer;
+  int _secondsRemaining = 60;
+  bool get _canResend => _secondsRemaining == 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCounting();
+  }
+
   @override
   void dispose() {
+    _timer?.cancel();
     _digit1Controller.dispose();
     _digit2Controller.dispose();
     _digit3Controller.dispose();
@@ -41,16 +56,36 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
     super.dispose();
   }
 
+  void _startCounting() {
+    _timer?.cancel();
+    setState(() => _secondsRemaining = 60);
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_secondsRemaining > 0) {
+        setState(() => _secondsRemaining--);
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  String get _formattedTime {
+    final m = (_secondsRemaining ~/ 60).toString().padLeft(2, '0');
+    final s = (_secondsRemaining % 60).toString().padLeft(2, '0');
+    return '$m:$s';
+  }
+
+  void _onResendPressed() {
+    context.read<PasswordCubit>().sendOtp(widget.email);
+  }
+
   void _verifyOtp() {
     final otp = _digit1Controller.text +
         _digit2Controller.text +
         _digit3Controller.text +
         _digit4Controller.text;
-
     context.read<PasswordCubit>().verifyOtp(widget.email, otp);
   }
 
-  /// Helper method to check if all 4 text fields are filled
   bool _allFieldsFilled() {
     return _digit1Controller.text.length == 1 &&
         _digit2Controller.text.length == 1 &&
@@ -58,8 +93,7 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
         _digit4Controller.text.length == 1;
   }
 
-  /// Callback when any of the 4 fields changes
-  void _onFieldChanged(String value) {
+  void _onFieldChanged(String _) {
     if (_allFieldsFilled()) {
       _verifyOtp();
     }
@@ -69,6 +103,30 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<PasswordCubit, ChangePasswordState>(
       listener: (context, state) {
+        // Resend-code states
+        if (state is ForgotPasswordLoading) {
+          DialogHelper.showLoading(context);
+        } else if (state is ForgotPasswordSuccess) {
+          DialogHelper.hideLoading();
+          DialogHelper.showSuccess(
+            context,
+            'Verification Sent!',
+            'A new code has been sent to your email.',
+            () {
+              // close success dialog
+              _startCounting(); // start countdown
+            },
+          );
+        } else if (state is ForgotPasswordError) {
+          DialogHelper.hideLoading();
+          DialogHelper.showError(
+            context,
+            'Sending Failed',
+            state.errorMessage,
+          );
+        }
+
+        // Verify-OTP states
         if (state is VerifyOtpSuccess) {
           GoRouter.of(context).push(
             AppRouter.kResetPassView,
@@ -88,18 +146,14 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
                 VerifyCodeBackButton(onPressed: () {
                   GoRouter.of(context).pop();
                 }),
-                const SizedBox(
-                  height: 110,
-                ),
+                const SizedBox(height: 110),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     children: [
                       const VerifyCodeTitle(),
-                      const SizedBox(
-                        height: 33,
-                      ),
+                      const SizedBox(height: 33),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -129,12 +183,37 @@ class _VerifyCodeViewBodyState extends State<VerifyCodeViewBody> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 40,
+                      const SizedBox(height: 40),
+                      Column(
+                        children: [
+                          Text(
+                            'Didn\'t receive OTP?',
+                            style:
+                                Styles.textStyle15.copyWith(color: Colors.grey),
+                          ),
+                          const SizedBox(height: 4),
+                          _canResend
+                              ? TextButton(
+                                  onPressed: _onResendPressed,
+                                  child: Text(
+                                    'Resend code',
+                                    style: Styles.textStyle15.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  'You can resend in $_formattedTime',
+                                  style: Styles.textStyle15
+                                      .copyWith(color: Colors.grey),
+                                ),
+                        ],
                       ),
-                      const VerifyCodeResendCode(),
-                      if (state is VerifyOtpLoading)
+                      if (state is VerifyOtpLoading) ...[
+                        const SizedBox(height: 16),
                         const CircularProgressIndicator(),
+                      ],
                     ],
                   ),
                 ),

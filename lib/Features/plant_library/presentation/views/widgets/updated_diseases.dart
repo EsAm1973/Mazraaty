@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 class UpdatedDetailsDiseases extends StatelessWidget {
   const UpdatedDetailsDiseases(
       {super.key, required this.pests, required this.diseases});
-  final List<String> pests;
-  final List<String> diseases;
+  final String pests;
+  final String diseases;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,11 +39,21 @@ class UpdatedDetailsDiseases extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildCategoryColumn("Pests", pests, Colors.red.shade400),
+              _buildCategoryColumn(
+                "Pests",
+                // هنا بنفصل النص عند كل فاصلة ونشيل الفراغات الزائدة
+                pests.split(',').map((e) => e.trim()).toList(),
+                Colors.red.shade400,
+              ),
               const SizedBox(width: 16),
               _buildDynamicDivider(),
               const SizedBox(width: 16),
-              _buildCategoryColumn("Diseases", diseases, Colors.pink.shade400),
+              _buildCategoryColumn(
+                "Diseases",
+                // هنا بفصل الـ String عند الفواصل وبشيل الفراغات الزايدة
+                diseases.split(',').map((e) => e.trim()).toList(),
+                Colors.pink.shade400,
+              ),
             ],
           ),
         ],
@@ -56,14 +66,21 @@ class UpdatedDetailsDiseases extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: GoogleFonts.montserrat(
-                  fontSize: 16,
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: GoogleFonts.montserrat(
+              fontSize: 16,
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 4),
-          ...items.map((item) =>
-              Text("- $item", style: GoogleFonts.montserrat(fontSize: 16))),
+          ...items.map(
+            (item) => Text(
+              "- $item",
+              style: GoogleFonts.montserrat(fontSize: 16),
+            ),
+          ),
         ],
       ),
     );

@@ -45,6 +45,36 @@ class _ScanViewState extends State<ScanView> with WidgetsBindingObserver {
     }
   }
 
+  // Helper function to build points display
+  Widget _buildPointsDisplay(String points) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 80), // تحديد عرض أقصى
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.star_rounded,
+            color: Colors.amber[700],
+            size: 16,
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: Text(
+              points,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: Colors.amber[800],
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,31 +117,8 @@ class _ScanViewState extends State<ScanView> with WidgetsBindingObserver {
                   builder: (context, state) {
                     Widget child;
                     if (state is PointsLoaded) {
-                      child = Flexible(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              color: Colors.amber[700],
-                              size: 16,
-                            ),
-                            const SizedBox(width: 2),
-                            Flexible(
-                              child: Text(
-                                '${state.points.points}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                  color: Colors.amber[800],
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      child =
+                          _buildPointsDisplay(state.points.points.toString());
                     } else if (state is PointsLoading) {
                       child = const SizedBox(
                         width: 16,
@@ -125,31 +132,8 @@ class _ScanViewState extends State<ScanView> with WidgetsBindingObserver {
                       // Fallback to user points
                       final userCubit = context.watch<UserCubit>();
                       if (userCubit.currentUser != null) {
-                        child = Flexible(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.star_rounded,
-                                color: Colors.amber[700],
-                                size: 16,
-                              ),
-                              const SizedBox(width: 2),
-                              Flexible(
-                                child: Text(
-                                  '${userCubit.currentUser!.points}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: Colors.amber[800],
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                        child = _buildPointsDisplay(
+                            userCubit.currentUser!.points.toString());
                       } else {
                         child = const SizedBox.shrink();
                       }

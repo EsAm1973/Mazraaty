@@ -77,6 +77,7 @@ class UpdatedDetailsViewbody extends StatelessWidget {
                     const SizedBox(height: 20),
                     UpdatedDetailsSimilarPlantList(
                       plantName: plant.name,
+                      similarPlants: plant.similarPlants,
                     ),
                     const SizedBox(height: 20),
                     UpdatedDetailsPlantDescription(

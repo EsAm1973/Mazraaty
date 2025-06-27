@@ -5,6 +5,7 @@ class Plant {
   final String scientificName;
   final String alsoKnownAs;
   final String description;
+  final List<SimilarPlant> similarPlants;
   final String genus;
   final String family;
   final String order;
@@ -30,8 +31,8 @@ class Plant {
   final String pruning;
   final String uses;
   final String culture;
-  final List<String> pests;
-  final List<String> diseases;
+  final String pests;
+  final String diseases;
   final List<String> tags;
   final String image;
   final String headerImage;
@@ -73,6 +74,7 @@ class Plant {
     required this.tags,
     required this.image,
     required this.headerImage,
+    required this.similarPlants,
   });
 
   // دالة مساعدة لتحويل القيمة إلى double
@@ -118,11 +120,33 @@ class Plant {
       pruning: json['pruning'] ?? '',
       uses: json['uses'] ?? '',
       culture: json['cluture'] ?? '',
-      pests: List<String>.from(json['pests'] ?? []),
-      diseases: List<String>.from(json['diseases'] ?? []),
+      // pests: List<String>.from(json['pests'] ?? []),
+      pests: json['pests'] ?? '',
+    diseases: json['diseases'] ?? '',
       tags: List<String>.from(json['tags'] ?? []),
       image: json['images']?['image'] ?? '',
       headerImage: json['images']?['header_image'] ?? '',
+      similarPlants: (json['similar_plants'] as List<dynamic>?)
+              ?.map((e) => SimilarPlant.fromJson(e))
+              .toList() ??
+          [],
+    );
+  }
+}
+
+class SimilarPlant {
+  final String name;
+  final String image;
+
+  SimilarPlant({
+    required this.name,
+    required this.image,
+  });
+
+  factory SimilarPlant.fromJson(Map<String, dynamic> json) {
+    return SimilarPlant(
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
     );
   }
 }

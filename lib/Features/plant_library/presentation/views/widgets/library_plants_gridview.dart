@@ -139,9 +139,9 @@ class LibraryPlantGrid extends StatelessWidget {
                     const TextSpan(text: 'No plants available in '),
                     TextSpan(
                       text: '"$currentCategory"',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF3E7B27),
+                        color: Color(0xFF3E7B27),
                       ),
                     ),
                     const TextSpan(text: ' category at the moment.'),

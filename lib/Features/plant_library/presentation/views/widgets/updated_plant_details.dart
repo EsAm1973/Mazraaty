@@ -17,7 +17,7 @@ class UpdatedDetailsPlantDetails extends StatelessWidget {
       children: [
         _buildRichText("Botanical Name: ", botanicalName),
         const SizedBox(height: 8),
-        _buildRichText("Scientific Name: ", scientificName),
+        _buildRichText("Scientific Name: ", botanicalName),
         const SizedBox(height: 12),
         _buildRichText(
           "Also known as: ",

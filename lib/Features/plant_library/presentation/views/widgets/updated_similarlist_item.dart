@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,11 +16,14 @@ class UpdatedDetailsSimilarItem extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              imagePath,
+            child: CachedNetworkImage(
+              imageUrl: imagePath,
               width: 130,
               height: 130,
               fit: BoxFit.cover,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           const SizedBox(height: 6),

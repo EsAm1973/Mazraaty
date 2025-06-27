@@ -25,7 +25,6 @@ class _HomeViewBodyState extends State<HomeViewBody>
   late AnimationController _floatingButtonController;
   late ScrollController _scrollController;
 
-  // Animations for each widget
   late Animation<double> _fadeInAnimation;
   late Animation<double> _floatingButtonAnimation;
 
@@ -36,7 +35,6 @@ class _HomeViewBodyState extends State<HomeViewBody>
     super.initState();
     _scrollController = ScrollController();
 
-    // Main animation controller for content
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
@@ -47,7 +45,6 @@ class _HomeViewBodyState extends State<HomeViewBody>
       curve: Curves.easeOut,
     );
 
-    // Floating button animation controller
     _floatingButtonController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -58,24 +55,21 @@ class _HomeViewBodyState extends State<HomeViewBody>
       curve: Curves.easeOut,
     );
 
-    // Listen to scroll events to show/hide floating button
     _scrollController.addListener(_onScroll);
-
-    _animationController.forward();
+    _animationController.forward().then((_) {
+      _animationController.stop();
+    });
   }
 
   void _onScroll() {
-    // Show floating button when scrolled down
-    if (_scrollController.offset > 300 && !_showFloatingButton) {
-      setState(() {
-        _showFloatingButton = true;
+    final bool shouldShow = _scrollController.offset > 300;
+    if (shouldShow != _showFloatingButton) {
+      _showFloatingButton = shouldShow;
+      if (shouldShow) {
         _floatingButtonController.forward();
-      });
-    } else if (_scrollController.offset <= 300 && _showFloatingButton) {
-      setState(() {
-        _showFloatingButton = false;
+      } else {
         _floatingButtonController.reverse();
-      });
+      }
     }
   }
 
@@ -83,7 +77,9 @@ class _HomeViewBodyState extends State<HomeViewBody>
   void dispose() {
     _animationController.dispose();
     _floatingButtonController.dispose();
-    _scrollController.dispose();
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
     super.dispose();
   }
 
@@ -91,7 +87,6 @@ class _HomeViewBodyState extends State<HomeViewBody>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Main content
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: FadeTransition(
@@ -100,149 +95,30 @@ class _HomeViewBodyState extends State<HomeViewBody>
               controller: _scrollController,
               physics: const BouncingScrollPhysics(),
               slivers: [
-                // Add some space at the top
                 const SliverToBoxAdapter(child: SizedBox(height: 10)),
-
-                // Welcome Card
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 20),
-                        child: child,
-                      );
-                    },
-                    child: const HomeWelcomeCard(),
-                  ),
-                ),
-
+                _buildAnimatedWidget(const HomeWelcomeCard(), 20),
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                // Scan Credits Widget
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 25),
-                        child: child,
-                      );
-                    },
-                    child: BlocBuilder<PointsCubit, PointsState>(
-                      builder: (context, state) {
-                        if (state is PointsLoaded) {
-                          return HomePointWidegt(points: state.points, onHowToEarnTap: () {});
-                        } else if (state is PointsLoading) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (state is PointsError) {
-                          return Text('Error loading points: \\${state.message}');
-                        } else {
-                          return SizedBox.shrink();
-                        }
-                      },
-                    ),
-                  ),
-                ),
-
+                _buildPointsWidget(),
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                // Common Diseases
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 30),
-                        child: child,
-                      );
-                    },
-                    child: const HomeRecentPlantIssue(),
-                  ),
-                ),
-
+                _buildAnimatedWidget(const HomeRecentPlantIssue(), 30),
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                // Weather Card
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 35),
-                        child: child,
-                      );
-                    },
-                    child: const HomeWeatherCard(),
-                  ),
-                ),
-
+                _buildAnimatedWidget(const HomeWeatherCard(), 35),
                 const SliverToBoxAdapter(child: SizedBox(height: 30)),
-
-                // Community Website Section
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 40),
-                        child: child,
-                      );
-                    },
-                    child: const HomeCommunitySection(),
-                  ),
-                ),
-
+                _buildAnimatedWidget(const HomeCommunitySection(), 40),
                 const SliverToBoxAdapter(child: SizedBox(height: 30)),
-
-                // App Features Section
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 45),
-                        child: child,
-                      );
-                    },
-                    child: const HomeAppFeatures(),
-                  ),
-                ),
-
+                _buildAnimatedWidget(const HomeAppFeatures(), 45),
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                // Premium Upgrade Card
-                SliverToBoxAdapter(
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return Transform.translate(
-                        offset:
-                            Offset(0, (1 - _animationController.value) * 50),
-                        child: child,
-                      );
-                    },
-                    child: HomePremiumUpgradeCard(onSubscribeTap: () {
-                      // Navigate to payment methods view
-                      GoRouter.of(context).push(AppRouter.kPaymentPackgesView);
-                    }),
-                  ),
+                _buildAnimatedWidget(
+                  HomePremiumUpgradeCard(onSubscribeTap: () {
+                    GoRouter.of(context).push(AppRouter.kPaymentPackgesView);
+                  }),
+                  50,
                 ),
-
-                // Add some space at the bottom
                 const SliverToBoxAdapter(child: SizedBox(height: 30)),
               ],
             ),
           ),
         ),
-
-        // Floating action button to scroll to top
         Positioned(
           bottom: 20,
           right: 20,
@@ -267,6 +143,40 @@ class _HomeViewBodyState extends State<HomeViewBody>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildAnimatedWidget(Widget child, double offsetFactor) {
+    return SliverToBoxAdapter(
+      child: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, _) {
+          return Transform.translate(
+            offset: Offset(0, (1 - _animationController.value) * offsetFactor),
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildPointsWidget() {
+    return _buildAnimatedWidget(
+      BlocBuilder<PointsCubit, PointsState>(
+        buildWhen: (previous, current) => current is! PointsLoading,
+        builder: (context, state) {
+          if (state is PointsLoaded) {
+            return HomePointWidegt(
+              points: state.points,
+              onHowToEarnTap: () {},
+            );
+          } else if (state is PointsError) {
+            return Text('Error loading points: ${state.message}');
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+      25,
     );
   }
 }

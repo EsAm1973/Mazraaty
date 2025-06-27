@@ -11,16 +11,13 @@ class LibraryPlantsGridItemButtomSection extends StatelessWidget {
 
     // Calculate responsive padding and button size
     final padding = screenWidth * 0.025; // 2.5% of screen width
-    final buttonSize =
-        screenWidth < 400 ? 28.0 : (screenWidth < 700 ? 30.0 : 35.0);
-    final rightPadding = buttonSize + 10; // Add some extra space
 
     // Calculate font size based on screen width
     final fontSize =
         screenWidth < 400 ? 10.0 : (screenWidth < 700 ? 11.0 : 12.0);
 
     // Adjust max lines to prevent overflow in 2-column layout
-    final maxLines = screenWidth < 400 ? 2 : (screenWidth < 600 ? 3 : 4);
+    final maxLines = screenWidth < 400 ? 5 : (screenWidth < 600 ? 3 : 4);
 
     return Flexible(
       child: Container(

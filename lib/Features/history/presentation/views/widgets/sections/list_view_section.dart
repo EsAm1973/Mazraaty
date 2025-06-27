@@ -37,7 +37,8 @@ class ListViewSection extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: kMainColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
@@ -53,7 +54,8 @@ class ListViewSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          // List view with enhanced styling
+
+          // الحل الرئيسي: إضافة Expanded هنا
           Expanded(
             child: diseases.isEmpty
                 ? const EmptyStateWidget(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mazraaty/Core/widgets/dialog_helper.dart';
@@ -37,12 +38,14 @@ class _HomePlantIssueItemState extends State<HomePlantIssueItem> {
                 SizedBox(
                   height: 150,
                   width: double.infinity,
-                  child: Image.asset(
-                    'assets/images/similar1.png',
+                  child: CachedNetworkImage(
+                    imageUrl: widget.plantIssue.image,
                     fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
-
                 // Severity badge
                 Positioned(
                   top: 12,
