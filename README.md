@@ -130,23 +130,63 @@ This project is for educational and demonstration purposes. Please contact the a
 
 Here are some screenshots showcasing the UI of Mazraaty:
 
-| Onboarding | Login | Home | Plant Library |
-|---|---|---|---|
-| ![Onboarding1](ScreenShots/onboarding1.png) | ![Login](ScreenShots/login_screen.png) | ![Home1](ScreenShots/Home_Screen1.png) | ![Plant Library](ScreenShots/Plant_Library.png) |
-| ![Onboarding2](ScreenShots/onboarding2.png) | ![Signup](ScreenShots/signup_screen.png) | ![Home2](ScreenShots/Home_Screen2.png) | ![Plant Details1](ScreenShots/Plant_Details1.png) |
-| ![Onboarding3](ScreenShots/onboarding3.png) | ![Forget Password1](ScreenShots/ForgetPassword1.png) | ![Home3](ScreenShots/Home_Screen3.png) | ![Plant Details2](ScreenShots/Plant_Details2.png) |
-| ![Onboarding4](ScreenShots/onboarding4.png) | ![Forget Password2](ScreenShots/ForgetPassword2.png) | | ![Plant Details3](ScreenShots/Plant_Details3.png) |
+### Onboarding
+<img src="ScreenShots/onboarding1.png" width="300" alt="Onboarding 1" />
+<img src="ScreenShots/onboarding2.png" width="300" alt="Onboarding 2" />
+<img src="ScreenShots/onboarding3.png" width="300" alt="Onboarding 3" />
+<img src="ScreenShots/onboarding4.png" width="300" alt="Onboarding 4" />
 
-| Scan | History | Profile | Payment |
-|---|---|---|---|
-| ![Scan1](ScreenShots/Scan_Screen1.png) | ![History1](ScreenShots/History_Screen1.png) | ![Profile1](ScreenShots/Profile_Screen1.png) | ![Payment Methods](ScreenShots/Payment_Methods.png) |
-| ![Scan2](ScreenShots/Scan_Screen2.png) | ![History2](ScreenShots/History_Screen2.png) | ![Profile2](ScreenShots/Profile_Screen2.png) | ![Payment Packages](ScreenShots/Payment_Packages.png) |
-| | ![History3](ScreenShots/History_Screen3.png) | | |
+### Login & Signup
+<img src="ScreenShots/login_screen.png" width="300" alt="Login Screen" />
+<img src="ScreenShots/signup_screen.png" width="300" alt="Signup Screen" />
+<img src="ScreenShots/ForgetPassword1.png" width="300" alt="Forget Password 1" />
+<img src="ScreenShots/ForgetPassword2.png" width="300" alt="Forget Password 2" />
+<img src="ScreenShots/ForgetPassword3.png" width="300" alt="Forget Password 3" />
 
-| AI Chat | Disease Details | Delete Account | Splash |
-|---|---|---|---|
-| ![AI Chat1](ScreenShots/AI_Chat1.png) | ![Disease Details1](ScreenShots/Disease_Details1.png) | ![Delete Account](ScreenShots/Delete_Account.png) | ![Splash](ScreenShots/splash.png) |
-| ![AI Chat2](ScreenShots/AI_Chat2.png) | ![Disease Details2](ScreenShots/Disease_Details2.png) | | |
-| | ![Disease Details3](ScreenShots/Disases_Details3.png) | | |
+### Home
+<img src="ScreenShots/Home_Screen1.png" width="300" alt="Home Screen 1" />
+<img src="ScreenShots/Home_Screen2.png" width="300" alt="Home Screen 2" />
+<img src="ScreenShots/Home_Screen3.png" width="300" alt="Home Screen 3" />
+
+### Plant Library
+<img src="ScreenShots/Plant_Library.png" width="300" alt="Plant Library" />
+<img src="ScreenShots/Plant_Details1.png" width="300" alt="Plant Details 1" />
+<img src="ScreenShots/Plant_Details2.png" width="300" alt="Plant Details 2" />
+<img src="ScreenShots/Plant_Details3.png" width="300" alt="Plant Details 3" />
+<img src="ScreenShots/Plant_Details4.png" width="300" alt="Plant Details 4" />
+<img src="ScreenShots/Plant_Details5.png" width="300" alt="Plant Details 5" />
+<img src="ScreenShots/Plant_Details6.png" width="300" alt="Plant Details 6" />
+
+### Scan
+<img src="ScreenShots/Scan_Screen1.png" width="300" alt="Scan Screen 1" />
+<img src="ScreenShots/Scan_Screen2.png" width="300" alt="Scan Screen 2" />
+
+### History
+<img src="ScreenShots/History_Screen1.png" width="300" alt="History Screen 1" />
+<img src="ScreenShots/History_Screen2.png" width="300" alt="History Screen 2" />
+<img src="ScreenShots/History_Screen3.png" width="300" alt="History Screen 3" />
+
+### Profile
+<img src="ScreenShots/Profile_Screen1.png" width="300" alt="Profile Screen 1" />
+<img src="ScreenShots/Profile_Screen2.png" width="300" alt="Profile Screen 2" />
+
+### Payment
+<img src="ScreenShots/Payment_Methods.png" width="300" alt="Payment Methods" />
+<img src="ScreenShots/Payment_Packages.png" width="300" alt="Payment Packages" />
+
+### AI Chat
+<img src="ScreenShots/AI_Chat1.png" width="300" alt="AI Chat 1" />
+<img src="ScreenShots/AI_Chat2.png" width="300" alt="AI Chat 2" />
+
+### Disease Details
+<img src="ScreenShots/Disease_Details1.png" width="300" alt="Disease Details 1" />
+<img src="ScreenShots/Disease_Details2.png" width="300" alt="Disease Details 2" />
+<img src="ScreenShots/Disases_Details3.png" width="300" alt="Disease Details 3" />
+
+### Delete Account
+<img src="ScreenShots/Delete_Account.png" width="300" alt="Delete Account" />
+
+### Splash
+<img src="ScreenShots/splash.png" width="300" alt="Splash Screen" />
 
 > For more screens, see the `ScreenShots` folder in the repository.
