@@ -83,9 +83,11 @@ The AI model for plant disease prediction was trained using the dataset and code
    ```sh
    flutter pub get
    ```
-4. **Run the Flask Server for Scan Feature:**
+4. **Download and Run the Flask Server for Scan Feature:**
    - The Scan Feature (plant disease detection) requires a local Flask server.
-   - Navigate to the `flask_server` folder and run the `all_disease_flask.py` file:
+   - Download the `flask_server` folder from the following link:
+     [Download flask_server from Google Drive](https://drive.google.com/drive/folders/1M5P0d3RaGXA8bjyGcZYmI5S5kI53jqgw?usp=sharing)
+   - After downloading, navigate to the `flask_server` folder and run the `all_disease_flask.py` file:
      ```sh
      cd flask_server
      python all_disease_flask.py
