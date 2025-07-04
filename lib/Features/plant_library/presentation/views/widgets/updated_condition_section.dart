@@ -57,23 +57,25 @@ class UpdatedDetailsConditionsSection extends StatelessWidget {
             const SizedBox(
               width: 8,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 15, color: Colors.black54),
-                ),
-                Text(
-                  value,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 8),
+                  Text(
+                    title,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 15, color: Colors.black54),
+                  ),
+                  Text(
+                    value,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

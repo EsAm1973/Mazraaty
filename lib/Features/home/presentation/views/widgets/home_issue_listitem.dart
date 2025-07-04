@@ -131,7 +131,7 @@ class _HomePlantIssueItemState extends State<HomePlantIssueItem> {
                           context,
                           widget.plantIssue.name,
                           widget.plantIssue.description,
-                          'assets/images/similar1.png',
+                          widget.plantIssue.image,
                           widget.plantIssue.severity,
                           widget.plantIssue.severityColor,
                         );

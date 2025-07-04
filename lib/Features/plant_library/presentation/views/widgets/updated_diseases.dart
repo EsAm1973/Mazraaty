@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -87,9 +86,20 @@ class UpdatedDetailsDiseases extends StatelessWidget {
   }
 
   Widget _buildDynamicDivider() {
-    int maxLength = max(pests.length, diseases.length);
-    double dividerHeight =
-        maxLength * 30.0; // كل عنصر يأخذ تقريبًا 20 بكسل في الارتفاع
+    // نفصل النص عند الفواصل وننظف الفراغات
+    final pestsCount =
+        pests.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).length;
+    final diseasesCount = diseases
+        .split(',')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .length;
+
+    // أكبر عدد من العناصر
+    final maxCount = pestsCount > diseasesCount ? pestsCount : diseasesCount;
+
+    // نفترض لكل عنصر ارتفاع ~20 بكسل (تقدر تعدله)
+    final dividerHeight = maxCount * 40.0;
 
     return Container(
       width: 2,

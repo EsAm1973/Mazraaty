@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -735,23 +736,31 @@ class DialogHelper {
                   // Disease image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      imageUrl,
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
                       height: 150,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: 150,
-                          width: double.infinity,
-                          color: Colors.grey.shade200,
-                          child: const Icon(
-                            Icons.image_not_supported,
-                            size: 40,
-                            color: Colors.grey,
-                          ),
-                        );
-                      },
+                      // عنصر يظهر أثناء التحميل
+                      placeholder: (context, url) => Container(
+                        height: 150,
+                        width: double.infinity,
+                        color: Colors.grey.shade200,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      // عنصر يظهر عند حدوث خطأ
+                      errorWidget: (context, url, error) => Container(
+                        height: 150,
+                        width: double.infinity,
+                        color: Colors.grey.shade200,
+                        child: const Icon(
+                          Icons.image_not_supported,
+                          size: 40,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -811,7 +820,7 @@ class DialogHelper {
                     child: Text(
                       description,
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Colors.black87,
                         height: 1.5,
                       ),

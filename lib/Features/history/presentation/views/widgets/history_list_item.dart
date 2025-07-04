@@ -14,6 +14,7 @@ class HistoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? imageUrl = disease.imageHistory;
+    print('Image URL: $imageUrl');
     return GestureDetector(
       onTap: () {
         // Create a DiseaseDetailsModel from the history disease

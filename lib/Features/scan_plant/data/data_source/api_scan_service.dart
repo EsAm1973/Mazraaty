@@ -10,7 +10,7 @@ class ApiScanService {
 
   Future<Map<String, dynamic>> predictDisease(XFile file) async {
     // http://10.0.2.2:5000
-    const String url = 'http://10.0.2.2:5000/predict';
+    const String url = 'http://192.168.1.5:5000/predict';
 
     // Determine MIME type
     final mimeType = lookupMimeType(file.path) ?? 'image/jpeg';
