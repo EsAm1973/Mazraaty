@@ -170,6 +170,12 @@ Here are some screenshots showcasing the UI of Mazraaty:
   <img src="screenshots/Plant_Details6.png" width="200" alt="Plant Details 6" />
 </div>
 
+### AI Chat
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
+  <img src="screenshots/AI_Chat1.png" width="200" alt="AI Chat 1" />
+  <img src="screenshots/AI_Chat2.png" width="200" alt="AI Chat 2" />
+</div>
+
 ### Scan
 <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
   <img src="screenshots/Scan_Screen1.png" width="200" alt="Scan Screen 1" />
@@ -195,11 +201,6 @@ Here are some screenshots showcasing the UI of Mazraaty:
   <img src="screenshots/Payment_Packages.png" width="200" alt="Payment Packages" />
 </div>
 
-### AI Chat
-<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
-  <img src="screenshots/AI_Chat1.png" width="200" alt="AI Chat 1" />
-  <img src="screenshots/AI_Chat2.png" width="200" alt="AI Chat 2" />
-</div>
 
 ### Disease Details
 <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
@@ -212,5 +213,3 @@ Here are some screenshots showcasing the UI of Mazraaty:
 <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
   <img src="screenshots/Delete_Account.png" width="200" alt="Delete Account" />
 </div>
-
-> For more screens, see the `ScreenShots` folder in the repository.
