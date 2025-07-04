@@ -34,7 +34,7 @@ class SignupViewBody extends StatelessWidget {
           DialogHelper.showSuccess(
             context,
             'Registration Successful!',
-            'Your account has been created successfully',
+            'Check your email for verification link',
             () => GoRouter.of(context).pushReplacement(AppRouter.kLoginView),
           );
         } else if (state is RegisterAuthError) {

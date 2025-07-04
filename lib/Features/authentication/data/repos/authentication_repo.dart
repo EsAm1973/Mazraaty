@@ -12,7 +12,10 @@ abstract class AuthenticationRepo {
     required String password,
   });
 
-  //Forget Password Methods
+  // Google Sign-In Method
+  Future<Either<Failure, Map<String, dynamic>>> signInWithGoogle();
+
+  // Forget Password Methods
   Future<Either<Failure, Map<String, dynamic>>> sendOtp(String email);
   Future<Either<Failure, Map<String, dynamic>>> verifyOtp(
       String email, String otp);

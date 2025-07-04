@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-
-const String baseUrl='https://780f-197-121-196-199.ngrok-free.app/api/';
+const String baseUrl = 'http://rmrmrm-001-site1.mtempurl.com/api-mobile/';
 const Color kPrimaryColor = Colors.white;
 const Color kMainColor = Color(0xff3E7B27);
+const Color kScaffoldColor = Color(0xffF1F1F1);
+const String testImage = 'assets/images/testImage.png';
 const String kfontFamily = 'MagicTropic';
 
 const List<Map<String, String>> onboardingData = [
@@ -31,4 +32,53 @@ const List<Map<String, String>> onboardingData = [
         "Join Mazraaty today to access smart tools, tailored solutions, and expert guidance for your agricultural needs",
     "image": "assets/images/onboard4.png",
   },
+];
+
+final List<String> tags = [
+  "Edible",
+  "Flowering",
+  "Fruit-bearing",
+  "Easy",
+  "Toxic",
+  "Tall"
+];
+
+// قائمة النباتات المشابهة (يتم استبدالها ببيانات من API إذا لزم الأمر)
+final List<Map<String, String>> similarPlants = [
+  {"name": "Lemon Balm", "image": "assets/images/similar3.png"},
+  {"name": "Peppermint", "image": "assets/images/similar2.png"},
+  {"name": "Spearmint", "image": "assets/images/similar1.png"},
+];
+
+class RequirementItem {
+  final String title;
+  final String description;
+  final String iconPath;
+
+  RequirementItem(
+      {required this.title, required this.description, required this.iconPath});
+}
+
+// ✅ بيانات اختبارية (يمكنك استبدالها ببيانات API)
+final List<RequirementItem> requirementsData = [
+  RequirementItem(
+      title: "Water",
+      description: "Every 2-3 Days",
+      iconPath: "assets/images/droplet.png"),
+  RequirementItem(
+      title: "Repotting",
+      description: "Every 1-2 Years",
+      iconPath: "assets/images/plant-02.png"),
+  RequirementItem(
+      title: "Fertilizer",
+      description: "Once a month",
+      iconPath: "assets/images/soil-moisture-field.png"),
+  RequirementItem(
+      title: "Misting",
+      description: "Hot, Dry Climates",
+      iconPath: "assets/images/water-energy.png"),
+  RequirementItem(
+      title: "Pruning",
+      description: "Spring, Summer",
+      iconPath: "assets/images/scissor.png"),
 ];
