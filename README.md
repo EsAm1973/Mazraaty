@@ -176,10 +176,17 @@ Here are some screenshots showcasing the UI of Mazraaty:
   <img src="screenshots/AI_Chat2.png" width="200" alt="AI Chat 2" />
 </div>
 
-### Scan
+### Scan Disease
 <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
   <img src="screenshots/Scan_Screen1.png" width="200" alt="Scan Screen 1" />
   <img src="screenshots/Scan_Screen2.png" width="200" alt="Scan Screen 2" />
+</div>
+
+### Scan Disease Details
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
+  <img src="screenshots/Disease_Details1.png" width="200" alt="Disease Details 1" />
+  <img src="screenshots/Disease_Details2.png" width="200" alt="Disease Details 2" />
+  <img src="screenshots/Disases_Details3.png" width="200" alt="Disease Details 3" />
 </div>
 
 ### History
@@ -199,14 +206,6 @@ Here are some screenshots showcasing the UI of Mazraaty:
 <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
   <img src="screenshots/Payment_Methods.png" width="200" alt="Payment Methods" />
   <img src="screenshots/Payment_Packages.png" width="200" alt="Payment Packages" />
-</div>
-
-
-### Disease Details
-<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start;">
-  <img src="screenshots/Disease_Details1.png" width="200" alt="Disease Details 1" />
-  <img src="screenshots/Disease_Details2.png" width="200" alt="Disease Details 2" />
-  <img src="screenshots/Disases_Details3.png" width="200" alt="Disease Details 3" />
 </div>
 
 ### Delete Account
