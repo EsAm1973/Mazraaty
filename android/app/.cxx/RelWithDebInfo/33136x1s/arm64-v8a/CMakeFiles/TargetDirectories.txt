@@ -1,0 +1,2 @@
+D:/CS.4/Graduation Project/Project/mazraaty/android/app/.cxx/RelWithDebInfo/33136x1s/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/CS.4/Graduation Project/Project/mazraaty/android/app/.cxx/RelWithDebInfo/33136x1s/arm64-v8a/CMakeFiles/rebuild_cache.dir

@@ -21,13 +21,9 @@ void main() async {
     await Permission.camera.request();
   }
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => UserCubit(
-              userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
-        ),
-      ],
+    BlocProvider(
+      create: (context) => UserCubit(
+          userRepository: UserRepositoryImpl(userDatabase: UserDatabase())),
       child: const MyApp(),
     ),
   );
