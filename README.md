@@ -130,63 +130,63 @@ This project is for educational and demonstration purposes. Please contact the a
 
 Here are some screenshots showcasing the UI of Mazraaty:
 
+### Splash
+<img src="screenshots/splash.png" width="300" alt="Splash Screen" />
+
 ### Onboarding
-<img src="ScreenShots/onboarding1.png" width="300" alt="Onboarding 1" />
-<img src="ScreenShots/onboarding2.png" width="300" alt="Onboarding 2" />
-<img src="ScreenShots/onboarding3.png" width="300" alt="Onboarding 3" />
-<img src="ScreenShots/onboarding4.png" width="300" alt="Onboarding 4" />
+<img src="screenshots/onboarding1.png" width="300" alt="Onboarding 1" />
+<img src="screenshots/onboarding2.png" width="300" alt="Onboarding 2" />
+<img src="screenshots/onboarding3.png" width="300" alt="Onboarding 3" />
+<img src="screenshots/onboarding4.png" width="300" alt="Onboarding 4" />
 
 ### Login & Signup
-<img src="ScreenShots/login_screen.png" width="300" alt="Login Screen" />
-<img src="ScreenShots/signup_screen.png" width="300" alt="Signup Screen" />
-<img src="ScreenShots/ForgetPassword1.png" width="300" alt="Forget Password 1" />
-<img src="ScreenShots/ForgetPassword2.png" width="300" alt="Forget Password 2" />
-<img src="ScreenShots/ForgetPassword3.png" width="300" alt="Forget Password 3" />
+<img src="screenshots/login_screen.png" width="300" alt="Login Screen" />
+<img src="screenshots/signup_screen.png" width="300" alt="Signup Screen" />
+<img src="screenshots/ForgetPassword1.png" width="300" alt="Forget Password 1" />
+<img src="screenshots/ForgetPassword2.png" width="300" alt="Forget Password 2" />
+<img src="screenshots/ForgetPassword3.png" width="300" alt="Forget Password 3" />
 
 ### Home
-<img src="ScreenShots/Home_Screen1.png" width="300" alt="Home Screen 1" />
-<img src="ScreenShots/Home_Screen2.png" width="300" alt="Home Screen 2" />
-<img src="ScreenShots/Home_Screen3.png" width="300" alt="Home Screen 3" />
+<img src="screenshots/Home_Screen1.png" width="300" alt="Home Screen 1" />
+<img src="screenshots/Home_Screen2.png" width="300" alt="Home Screen 2" />
+<img src="screenshots/Home_Screen3.png" width="300" alt="Home Screen 3" />
 
 ### Plant Library
-<img src="ScreenShots/Plant_Library.png" width="300" alt="Plant Library" />
-<img src="ScreenShots/Plant_Details1.png" width="300" alt="Plant Details 1" />
-<img src="ScreenShots/Plant_Details2.png" width="300" alt="Plant Details 2" />
-<img src="ScreenShots/Plant_Details3.png" width="300" alt="Plant Details 3" />
-<img src="ScreenShots/Plant_Details4.png" width="300" alt="Plant Details 4" />
-<img src="ScreenShots/Plant_Details5.png" width="300" alt="Plant Details 5" />
-<img src="ScreenShots/Plant_Details6.png" width="300" alt="Plant Details 6" />
+<img src="screenshots/Plant_Library.png" width="300" alt="Plant Library" />
+<img src="screenshots/Plant_Details1.png" width="300" alt="Plant Details 1" />
+<img src="screenshots/Plant_Details2.png" width="300" alt="Plant Details 2" />
+<img src="screenshots/Plant_Details3.png" width="300" alt="Plant Details 3" />
+<img src="screenshots/Plant_Details4.png" width="300" alt="Plant Details 4" />
+<img src="screenshots/Plant_Details5.png" width="300" alt="Plant Details 5" />
+<img src="screenshots/Plant_Details6.png" width="300" alt="Plant Details 6" />
 
 ### Scan
-<img src="ScreenShots/Scan_Screen1.png" width="300" alt="Scan Screen 1" />
-<img src="ScreenShots/Scan_Screen2.png" width="300" alt="Scan Screen 2" />
+<img src="screenshots/Scan_Screen1.png" width="300" alt="Scan Screen 1" />
+<img src="screenshots/Scan_Screen2.png" width="300" alt="Scan Screen 2" />
 
 ### History
-<img src="ScreenShots/History_Screen1.png" width="300" alt="History Screen 1" />
-<img src="ScreenShots/History_Screen2.png" width="300" alt="History Screen 2" />
-<img src="ScreenShots/History_Screen3.png" width="300" alt="History Screen 3" />
+<img src="screenshots/History_Screen1.png" width="300" alt="History Screen 1" />
+<img src="screenshots/History_Screen2.png" width="300" alt="History Screen 2" />
+<img src="screenshots/History_Screen3.png" width="300" alt="History Screen 3" />
 
 ### Profile
-<img src="ScreenShots/Profile_Screen1.png" width="300" alt="Profile Screen 1" />
-<img src="ScreenShots/Profile_Screen2.png" width="300" alt="Profile Screen 2" />
+<img src="screenshots/Profile_Screen1.png" width="300" alt="Profile Screen 1" />
+<img src="screenshots/Profile_Screen2.png" width="300" alt="Profile Screen 2" />
 
 ### Payment
-<img src="ScreenShots/Payment_Methods.png" width="300" alt="Payment Methods" />
-<img src="ScreenShots/Payment_Packages.png" width="300" alt="Payment Packages" />
+<img src="screenshots/Payment_Methods.png" width="300" alt="Payment Methods" />
+<img src="screenshots/Payment_Packages.png" width="300" alt="Payment Packages" />
 
 ### AI Chat
-<img src="ScreenShots/AI_Chat1.png" width="300" alt="AI Chat 1" />
-<img src="ScreenShots/AI_Chat2.png" width="300" alt="AI Chat 2" />
+<img src="screenshots/AI_Chat1.png" width="300" alt="AI Chat 1" />
+<img src="screenshots/AI_Chat2.png" width="300" alt="AI Chat 2" />
 
 ### Disease Details
-<img src="ScreenShots/Disease_Details1.png" width="300" alt="Disease Details 1" />
-<img src="ScreenShots/Disease_Details2.png" width="300" alt="Disease Details 2" />
-<img src="ScreenShots/Disases_Details3.png" width="300" alt="Disease Details 3" />
+<img src="screenshots/Disease_Details1.png" width="300" alt="Disease Details 1" />
+<img src="screenshots/Disease_Details2.png" width="300" alt="Disease Details 2" />
+<img src="screenshots/Disases_Details3.png" width="300" alt="Disease Details 3" />
 
 ### Delete Account
-<img src="ScreenShots/Delete_Account.png" width="300" alt="Delete Account" />
-
-### Splash
-<img src="ScreenShots/splash.png" width="300" alt="Splash Screen" />
+<img src="screenshots/Delete_Account.png" width="300" alt="Delete Account" />
 
 > For more screens, see the `ScreenShots` folder in the repository.
