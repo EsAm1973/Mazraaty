@@ -76,7 +76,7 @@ The AI model for plant disease prediction was trained using the dataset and code
 1. **Install Flutter:** [Flutter Install Guide](https://flutter.dev/docs/get-started/install)
 2. **Clone the repository:**
    ```sh
-   git clone <your-repo-url>
+   git clone https://github.com/EsAm1973/Mazraaty.git
    cd mazraaty
    ```
 3. **Install dependencies:**
