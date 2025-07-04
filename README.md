@@ -93,6 +93,13 @@ The AI model for plant disease prediction was trained using the dataset and code
      python all_disease_flask.py
      ```
    - Make sure the server is running before using the Scan Feature in the app.
+   
+   > **Important:**
+   > - If you use the Scan Feature on an Android emulator, the base URL in `api_scan_service.dart` should be:
+   >   ```python
+   >   url = 'http://10.0.2.2:5000/predict'
+   >   ```
+   > - If you run the app on a real device or deploy the Flask server to a remote server, you must change the URL in `api_scan_service.dart` to the new server address.
 5. **Run the app:**
    ```sh
    flutter run
