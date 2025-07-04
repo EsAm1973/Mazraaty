@@ -8,6 +8,7 @@ Mazraaty is a smart agricultural companion app designed especially for people in
 
 ## 🚀 Features
 
+- **Splash & Onboarding:** Smooth onboarding experience for new users.
 - **User Authentication:** Register, log in, and manage your credentials securely to personalize your experience and access all app features. If you forget your password, you can easily recover and reset it through the app's password recovery process.
 - **Educational Guidance:** Step-by-step support and tips for plant care and agriculture basics.
 - **Library of Plants:** Explore a vast collection of plant species with detailed information, care methods, and common diseases.
@@ -19,7 +20,6 @@ Mazraaty is a smart agricultural companion app designed especially for people in
 - **Common Diseases:** Learn about common plant diseases and how to prevent or treat them.
 - **User Profile:** Manage your account, crop your profile image, change your password, and delete your account if needed. Password change and recovery options are available for your security and convenience.
 - **Subscription & Payments:** Access premium features and purchase points via Paypal or MyFatoorah payment gateways.
-- **Onboarding & Splash:** Smooth onboarding experience for new users.
 
 ## 🗂️ Project Structure
 
