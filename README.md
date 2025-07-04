@@ -125,3 +125,28 @@ This project is for educational and demonstration purposes. Please contact the a
 ---
 
 *Empower your farming journey with Mazraaty!*
+
+## 🖼️ Screenshots
+
+Here are some screenshots showcasing the UI of Mazraaty:
+
+| Onboarding | Login | Home | Plant Library |
+|---|---|---|---|
+| ![Onboarding1](ScreenShots/onboarding1.png) | ![Login](ScreenShots/login_screen.png) | ![Home1](ScreenShots/Home_Screen1.png) | ![Plant Library](ScreenShots/Plant_Library.png) |
+| ![Onboarding2](ScreenShots/onboarding2.png) | ![Signup](ScreenShots/signup_screen.png) | ![Home2](ScreenShots/Home_Screen2.png) | ![Plant Details1](ScreenShots/Plant_Details1.png) |
+| ![Onboarding3](ScreenShots/onboarding3.png) | ![Forget Password1](ScreenShots/ForgetPassword1.png) | ![Home3](ScreenShots/Home_Screen3.png) | ![Plant Details2](ScreenShots/Plant_Details2.png) |
+| ![Onboarding4](ScreenShots/onboarding4.png) | ![Forget Password2](ScreenShots/ForgetPassword2.png) | | ![Plant Details3](ScreenShots/Plant_Details3.png) |
+
+| Scan | History | Profile | Payment |
+|---|---|---|---|
+| ![Scan1](ScreenShots/Scan_Screen1.png) | ![History1](ScreenShots/History_Screen1.png) | ![Profile1](ScreenShots/Profile_Screen1.png) | ![Payment Methods](ScreenShots/Payment_Methods.png) |
+| ![Scan2](ScreenShots/Scan_Screen2.png) | ![History2](ScreenShots/History_Screen2.png) | ![Profile2](ScreenShots/Profile_Screen2.png) | ![Payment Packages](ScreenShots/Payment_Packages.png) |
+| | ![History3](ScreenShots/History_Screen3.png) | | |
+
+| AI Chat | Disease Details | Delete Account | Splash |
+|---|---|---|---|
+| ![AI Chat1](ScreenShots/AI_Chat1.png) | ![Disease Details1](ScreenShots/Disease_Details1.png) | ![Delete Account](ScreenShots/Delete_Account.png) | ![Splash](ScreenShots/splash.png) |
+| ![AI Chat2](ScreenShots/AI_Chat2.png) | ![Disease Details2](ScreenShots/Disease_Details2.png) | | |
+| | ![Disease Details3](ScreenShots/Disases_Details3.png) | | |
+
+> For more screens, see the `ScreenShots` folder in the repository.
