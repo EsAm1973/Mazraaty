@@ -15,7 +15,7 @@ class AiChatViewBody extends StatefulWidget {
   const AiChatViewBody({super.key, required this.plantName});
   final String plantName;
   static const String deepSeekApiKey =
-      "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";
+      "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";
   @override
   State<AiChatViewBody> createState() => _AiChatViewBodyState();
 }
