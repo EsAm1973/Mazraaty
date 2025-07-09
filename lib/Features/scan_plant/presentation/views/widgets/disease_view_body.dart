@@ -79,10 +79,10 @@ class DiseaseViewBody extends StatelessWidget {
                     DiseaseDescription(
                       description: details.description,
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const DiseaseSimilarList(),
+                    // const SizedBox(
+                    //   height: 24,
+                    // ),
+                    // const DiseaseSimilarList(),
                     const SizedBox(
                       height: 24,
                     ),
